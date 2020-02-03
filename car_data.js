@@ -203,7 +203,7 @@ var car_data = [
             gear: 1,
             previous_gear: 1,
             shift_progress: 1,
-            shift_time: 0.5,
+            shift_time: 0.7,
             rpm: 800,
             speed: 2.022,
             throttle: 0,
