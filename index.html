@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<title>Autosim</title>
+		<link rel="stylesheet" type="text/css" href="styles.css"/>
+		<script src="car_data.js"></script>
+		<script src="car.js"></script>
+		<script src="script.js"></script>
+	</head>
+
+
+
+	<body>
+		<div id="info_box">
+			<div id="instrument_cluster">
+				<div class="gauge_container">
+				<div id="rpm_gauge" class="gauge">
+					<div class="needle current_needle"><span></span></div>
+					<div class="center"></div>
+				</div>
+				</div>
+
+
+				<div class="gauge_container">
+				<div id="speed_gauge" class="gauge">
+					<div class="needle current_needle"><span></span></div>
+					<div class="center"></div>
+				</div>
+				</div>
+
+
+				<div id="gear_indicator">0</div>
+			</div>
+
+
+			<div id="additional_info_container"></div>
+		</div>
+
+
+
+		<div id="environment_controls_box">
+			<div class="input_set">
+				<label>Steigung</label>
+				<input id="angle_input" type="range" min="-30" max="30" step="3" value="0"/>
+			</div>
+
+
+			<div class="input_set">
+				<label>Aerodynamik</label>
+				<input id="aerodynamics_input" type="checkbox" checked/>
+			</div>
+		</div>
+
+
+
+		<div id="car_controls_box">
+			<div id="other_controls_container">
+				<button onclick="car.start();">Start</button>
+
+
+				<div class="input_set">
+					<label>Autoshift</label>
+					<input id="autoshift_input" type="checkbox" checked/>
+				</div>
+			</div>
+
+
+			<div id="shift_button_container">
+				<button onclick="car.shift_down();">-</button>
+				<button onclick="car.shift_up();">+</button>
+			</div>
+
+
+			<div id="pedals_container">
+				<div class="input_set">
+					<input id="brake_input" type="range" min="0" max="100" value="0" orient="vertical"/>
+					<label>Bremse</label>
+				</div>
+
+
+				<div class="input_set">
+					<input id="throttle_input" type="range" min="1" max="100" value="0" orient="vertical"/>
+					<label>Gas</label>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+
+
+		<div id="container">
+			<div id="car">
+				<div class="tyre"></div>
+				<div class="tyre"></div>
+			</div>
+
+
+			<div id="street" style="left:0vw;">
+				<div class="street_part"></div>
+				<div class="street_part"></div>
+				<div class="street_part"></div>
+				<div class="street_part"></div>
+				<div class="street_part"></div>
+				<div class="street_part"></div>
+				<div class="street_part"></div>
+				<div class="street_part"></div>
+				<div class="street_part"></div>
+				<div class="street_part"></div>
+				<div class="street_part"></div>
+			</div>
+		</div>
+	</body>
+</html>

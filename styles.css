@@ -1,0 +1,264 @@
+body {
+	background-color: #555;
+	height: 100%;
+	font-family: sans-serif;
+	line-height: 1.3;
+	color: #FFF;
+}
+
+:root {
+	--scale: 1.5;
+}
+
+button {
+	font-size: 1rem;
+}
+
+
+
+#info_box {
+	position: fixed;
+	top: 0;
+	right: 0;
+	z-index: 10;
+	background-color: rgba(0,0,0,0.5);
+	box-sizing: border-box;
+}
+#info_box > span {
+	display: block;
+}
+#additional_info_container {
+	padding: 5px;
+}
+
+
+
+#car_controls_box, #environment_controls_box {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	z-index: 10;
+	padding: 5px;
+	width: 100%;
+	max-width: 400px;
+	height: 150px;
+	box-sizing: border-box;
+	background-color: rgba(0,0,0,0.5);
+}
+#car_controls_box {
+	bottom: 0;
+	display: flex;
+}
+#other_controls_container {
+	flex-grow: 1;
+}
+#other_controls_container > button {
+	width: 100%;
+}
+#pedals_container {
+	display: inline-grid;
+	grid-template-columns: 1fr 1fr;
+}
+#pedals_container > .input_set {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	width: 75px;
+}
+#pedals_container input {
+	-webkit-appearance: slider-vertical;
+	flex-grow: 1;
+	height: 50px;
+}
+#car_controls_box #shift_button_container {
+	display: flex;
+	flex-direction: column;
+	width: 100px;
+}
+#car_controls_box #shift_button_container > button {
+	flex-grow: 1;
+}
+#car_controls_box button {
+	background: #FFF;
+	height: 50px;
+	border: 2px solid #AAA;
+	font-size: 1rem;
+}
+
+
+
+#environment_controls_box {
+	bottom: 150px;
+	height: auto;
+}
+
+
+
+#instrument_cluster {
+	position: relative;
+	margin: auto;
+	z-index: 10;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	justify-items: center;
+	box-sizing: border-box;
+	/*background-color: #000;*/
+	text-align: center;
+}
+#instrument_cluster > .gauge_container {
+	width: 50vmin;
+	height: 50vmin;
+	max-width: 300px;
+	max-height: 300px;
+	position: relative;
+}
+#instrument_cluster .gauge {
+	position: absolute;
+	display: inline-block;
+	transform: translate(-50%, -50%);
+	top: 50%;
+	left: 50%;
+	width: 50%;
+	height: 50%;
+	width: calc(100% - 100px);
+	height: calc(100% - 100px);
+	border: 2px solid #888;
+	border-radius: 50%;
+	background-color: #FFF;
+	box-sizing: border-box;
+}
+#instrument_cluster .gauge > .center {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 80%;
+	height: 80%;
+	background-color: #FFF;
+	transform: translate(-50%, -50%);
+	border-radius: 50%;
+	z-index: 10;
+}
+#instrument_cluster .gauge::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 22%;
+	height: 22%;
+	background-color: #888;
+	transform: translate(-50%, -50%);
+	border-radius: 50%;
+	z-index: 30;
+}
+#instrument_cluster .gauge > .needle, #instrument_cluster .gauge > .indicator {
+	position: absolute;
+	left: 50%;
+	transform-origin: 50% 100%;
+	transform: rotate(-120deg);
+	height: 50%;
+	width: 2px;
+}
+#instrument_cluster .gauge > .current_needle {
+	background-color: #F00;
+	z-index: 20;
+}
+#instrument_cluster .gauge > .indicator {
+	background-color: #888;
+}
+
+#instrument_cluster .gauge > .needle > span, #instrument_cluster .gauge > .indicator > span {
+	line-height: 1rem;
+	transform: translate(-50%, -50%);
+	display: block;
+	width: 10vmin;
+	height: 10vmin;
+	width: 50px;
+	height: 50px;
+	text-align: center;
+}
+#instrument_cluster .gauge > .needle > span {
+	height: 100px;
+}
+
+#instrument_cluster > #gear_indicator {
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	font-size: 2rem;
+	line-height: 50px;
+	background-color: #555;
+	width: 50px;
+}
+
+
+
+#container {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border: 0;
+	box-sizing: border-box;
+	transform: rotate(0deg);
+}
+
+#car {
+	position: fixed;
+	bottom: calc(30vh + 0.25vw * var(--scale));
+	left: 20vw;
+	width: calc(4.5vw * var(--scale));
+	height: calc(1.5vw * var(--scale));
+	background-color: #FFF;
+}
+#car::after {
+	content: "";
+	position: fixed;
+	bottom: calc(30vh + 0.25vw * var(--scale) + 1.5vw * var(--scale) - 0.5vw * var(--scale));
+	left: calc(20vw + 4.5vw * var(--scale) - 1.5vw * var(--scale));
+	width: calc(1.5vw * var(--scale));
+	height: calc(0.5vw * var(--scale));
+	background-color: #555;
+}
+#car::before {
+	content: "";
+	position: fixed;
+	bottom: calc(30vh + 0.25vw * var(--scale) + 1.5vw * var(--scale) - 0.5vw * var(--scale));
+	left: 20vw;
+	width: calc(1vw * var(--scale));
+	height: calc(0.5vw * var(--scale));
+	background-color: #555;
+}
+#car > .tyre {
+	width: calc(0.7vw * var(--scale));
+	height: calc(0.7vw * var(--scale));
+	background-color: #000;
+	position: fixed;
+	bottom: 30vh;
+	border-radius: 50%;
+}
+#car > .tyre:nth-child(1) {
+	left: calc(20vw + 0.5vw * var(--scale));
+}
+#car > .tyre:nth-child(2) {
+	left: calc(20vw + 4.5vw * var(--scale) - 1.2vw * var(--scale));
+}
+
+#street {
+	position: fixed;
+	top: 70vh;
+	left: 0;
+	height: 30vh;
+	background-color: #0F0;
+
+	display: grid;
+	grid-template-columns: repeat(11, calc(10vw * var(--scale)));
+}
+
+#street > .street_part {
+	height: 100%;
+	background-color: #00A;
+	box-sizing: border_box;
+	border: 1px solid #AAA;
+}
