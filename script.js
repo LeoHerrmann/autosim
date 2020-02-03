@@ -121,7 +121,8 @@ if (sound === true) {
 
 
 function speed_from_rpm(car, rpm) {
-    var wheel_rpm = rpm / (car.data.shift_progress * car.data.gear_ratios[car.data.gear - 1] + (1 - car.data.shift_progress) * car.data.gear_ratios[car.data.previous_gear - 1]) / car.data.final_drive;
+    //var wheel_rpm = rpm / (car.data.shift_progress * car.data.gear_ratios[car.data.gear - 1] + (1 - car.data.shift_progress) * car.data.gear_ratios[car.data.previous_gear - 1]) / car.data.final_drive;
+    var wheel_rpm = rpm / (Math.sin(car.data.shift_progress / 2 * Math.PI) * car.data.gear_ratios[car.data.gear - 1] + (1 - Math.sin((car.data.shift_progress / 2 * Math.PI))) * car.data.gear_ratios[car.data.previous_gear - 1]) / car.data.final_drive;
     var wheel_rps = wheel_rpm / 60;
     var wheel_speed =  Math.PI * car.data.tire_diameter * wheel_rps;
 
@@ -133,7 +134,8 @@ function speed_from_rpm(car, rpm) {
 function rpm_from_speed(car, speed) {
     var wheel_rps = speed / (Math.PI * car.data.tire_diameter);
     var wheel_rpm = wheel_rps * 60;
-    var engine_rpm = wheel_rpm * car.data.final_drive * (car.data.shift_progress * car.data.gear_ratios[car.data.gear - 1] + (1 - car.data.shift_progress) * car.data.gear_ratios[car.data.previous_gear - 1]);
+    //var engine_rpm = wheel_rpm * car.data.final_drive * (car.data.shift_progress * car.data.gear_ratios[car.data.gear - 1] + (1 - car.data.shift_progress) * car.data.gear_ratios[car.data.previous_gear - 1]);
+    var engine_rpm = wheel_rpm * car.data.final_drive * (Math.sin(car.data.shift_progress / 2 * Math.PI) * car.data.gear_ratios[car.data.gear - 1] + (1 - Math.sin(car.data.shift_progress / 2 * Math.PI)) * car.data.gear_ratios[car.data.previous_gear - 1]);
 
     return engine_rpm;
 }
@@ -185,6 +187,7 @@ function frame() {
 
     if (car.data.shift_progress < 1) {
         car.data.shift_progress += 1 / car.data.shift_time * (frame_rate / 1000) ;
+        //car.data.shift_progress += Math.sin((1 / car.data.shift_time * (frame_rate / 1000)) * 2 * Math.PI);
     }
     if (car.data.shift_progress > 1) {
         car.data.shift_progress = 1;
