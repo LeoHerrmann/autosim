@@ -12,6 +12,8 @@ body {
 
 button {
 	font-size: 1rem;
+	background-color: #FFF;
+	border: 2px solid #AAA;
 }
 
 
@@ -23,73 +25,18 @@ button {
 	z-index: 10;
 	background-color: rgba(0,0,0,0.5);
 	box-sizing: border-box;
+	width: 100%;
+	max-width: 400px;
 }
 #info_box > span {
 	display: block;
 }
+#info_box > button {
+	width: 100%;
+}
 #additional_info_container {
+	display: none;
 	padding: 5px;
-}
-
-
-
-#car_controls_box, #environment_controls_box {
-	position: fixed;
-	bottom: 0;
-	right: 0;
-	z-index: 10;
-	padding: 5px;
-	width: 100%;
-	max-width: 400px;
-	height: 150px;
-	box-sizing: border-box;
-	background-color: rgba(0,0,0,0.5);
-}
-#car_controls_box {
-	bottom: 0;
-	display: flex;
-}
-#other_controls_container {
-	flex-grow: 1;
-}
-#other_controls_container > button {
-	width: 100%;
-}
-#pedals_container {
-	display: inline-grid;
-	grid-template-columns: 1fr 1fr;
-}
-#pedals_container > .input_set {
-	display: flex;
-	flex-direction: column;
-	text-align: center;
-	width: 75px;
-}
-#pedals_container input {
-	-webkit-appearance: slider-vertical;
-	flex-grow: 1;
-	height: 50px;
-}
-#car_controls_box #shift_button_container {
-	display: flex;
-	flex-direction: column;
-	width: 100px;
-}
-#car_controls_box #shift_button_container > button {
-	flex-grow: 1;
-}
-#car_controls_box button {
-	background: #FFF;
-	height: 50px;
-	border: 2px solid #AAA;
-	font-size: 1rem;
-}
-
-
-
-#environment_controls_box {
-	bottom: 150px;
-	height: auto;
 }
 
 
@@ -102,14 +49,13 @@ button {
 	grid-template-columns: 1fr 1fr;
 	justify-items: center;
 	box-sizing: border-box;
-	/*background-color: #000;*/
 	text-align: center;
 }
 #instrument_cluster > .gauge_container {
 	width: 50vmin;
 	height: 50vmin;
-	max-width: 300px;
-	max-height: 300px;
+	max-width: 200px;
+	max-height: 200px;
 	position: relative;
 }
 #instrument_cluster .gauge {
@@ -189,6 +135,64 @@ button {
 	line-height: 50px;
 	background-color: #555;
 	width: 50px;
+}
+
+
+
+#car_controls_box, #environment_controls_box {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	z-index: 10;
+	padding: 5px;
+	width: 100%;
+	max-width: 400px;
+	height: 150px;
+	box-sizing: border-box;
+	background-color: rgba(0,0,0,0.5);
+}
+#car_controls_box {
+	bottom: 0;
+	display: flex;
+}
+#other_controls_container {
+	flex-grow: 1;
+}
+#other_controls_container > button {
+	width: 100%;
+}
+#pedals_container {
+	display: inline-grid;
+	grid-template-columns: 1fr 1fr;
+}
+#pedals_container > .input_set {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	width: 75px;
+}
+#pedals_container input {
+	-webkit-appearance: slider-vertical;
+	flex-grow: 1;
+	height: 50px;
+}
+#car_controls_box #shift_button_container {
+	display: flex;
+	flex-direction: column;
+	width: 100px;
+}
+#car_controls_box #shift_button_container > button {
+	flex-grow: 1;
+}
+#car_controls_box button {
+	height: 50px;
+}
+
+
+
+#environment_controls_box {
+	bottom: 150px;
+	height: auto;
 }
 
 

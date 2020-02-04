@@ -1,3 +1,7 @@
+04.02.2020:
+Collapsible additional_info_container
+
+
 03.02.2020:
 Smoother shifting
 
