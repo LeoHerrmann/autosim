@@ -1,3 +1,6 @@
+05.02.2020:
+Lower shift point on low throttle
+
 04.02.2020:
 Collapsible additional_info_container
 

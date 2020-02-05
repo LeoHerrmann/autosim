@@ -106,8 +106,8 @@ var gauges = {
 
 
 
-car.sound = car_data[0].sound;
-car.data = car_data[0].data;
+car.sound = car_data[1].sound;
+car.data = car_data[1].data;
 
 
 
@@ -192,7 +192,6 @@ function frame() {
 
     if (car.data.shift_progress < 1) {
         car.data.shift_progress += 1 / car.data.shift_time * (frame_rate / 1000) ;
-        //car.data.shift_progress += Math.sin((1 / car.data.shift_time * (frame_rate / 1000)) * 2 * Math.PI);
     }
     if (car.data.shift_progress > 1) {
         car.data.shift_progress = 1;
@@ -239,7 +238,7 @@ function frame() {
                     acceleration_upshift = car.data.rpm_limiter - 1;
                 }
 
-                var fuel_upshift = (car.data.idle_rpm + 500 ) * (car.data.gear_ratios[car.data.gear - 1] / car.data.gear_ratios[car.data.gear]); 
+                var fuel_upshift = (car.data.idle_rpm + 250/* + 500 */) * (car.data.gear_ratios[car.data.gear - 1] / car.data.gear_ratios[car.data.gear]);
 
                 var upshift = (1 - car.data.throttle ** 2) * fuel_upshift + car.data.throttle ** 2 * acceleration_upshift;
 
@@ -265,7 +264,7 @@ function frame() {
 
                 var acceleration_downshift = (2 * car.data.gear_ratios[car.data.gear - 1] * car.data.max_torque_rpm * (car.data.throttle * car.data.gear_ratios[car.data.gear - 2] + car.data.throttle * car.data.gear_ratios[car.data.gear - 1])) / (car.data.gear_ratios[car.data.gear - 2]**2 + car.data.gear_ratios[car.data.gear - 2] * car.data.gear_ratios[car.data.gear - 1] + car.data.gear_ratios[car.data.gear - 1]**2);
 
-                var fuel_downshift = car.data.idle_rpm + 500;
+                var fuel_downshift = car.data.idle_rpm + 250;// + 500;
 
                 var downshift = (1 - car.data.throttle ** 2) * fuel_downshift + car.data.throttle ** 2 * acceleration_downshift - 250;
                 var temp_car = JSON.parse(JSON.stringify(car));
@@ -280,6 +279,8 @@ function frame() {
                 }
             }
         }
+        
+        console.log(upshift, downshift)
     }
 
 
