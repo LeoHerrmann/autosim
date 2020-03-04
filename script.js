@@ -222,25 +222,40 @@ function frame() {
         car.sound.update_sound();
     }
 
+
+
     //automatic shifting
     if (autoshift == true) {
-        if (car.data.shift_progress == 1) {
+        var sportiness;
 
+        if (document.getElementById("autostrategy_input").checked === true) {
+            sportiness = car.data.throttle ** 3;
+            document.querySelector("#shift_strategy_input").value = sportiness;
+            document.querySelector("#shift_strategy_input").disabled = true;
+        }
+        else {
+            sportiness = parseFloat(document.querySelector("#shift_strategy_input").value);
+            document.querySelector("#shift_strategy_input").disabled = false;
+        }
+
+
+
+        if (car.data.shift_progress == 1) {
             var did_shift = true;
 
             while (did_shift == true) {
 
                did_shift = false;
 
-                var acceleration_upshift = (2 * car.data.gear_ratios[car.data.gear - 1] * car.data.max_torque_rpm * (car.data.throttle * car.data.gear_ratios[car.data.gear] + car.data.throttle * car.data.gear_ratios[car.data.gear - 1])) / (car.data.gear_ratios[car.data.gear]**2 + car.data.gear_ratios[car.data.gear] * car.data.gear_ratios[car.data.gear - 1] + car.data.gear_ratios[car.data.gear - 1]**2)
+                var acceleration_upshift = (2 * car.data.gear_ratios[car.data.gear - 1] * car.data.max_torque_rpm * (car.data.throttle * car.data.gear_ratios[car.data.gear] + car.data.throttle * car.data.gear_ratios[car.data.gear - 1])) / (car.data.gear_ratios[car.data.gear]**2 + car.data.gear_ratios[car.data.gear] * car.data.gear_ratios[car.data.gear - 1] + car.data.gear_ratios[car.data.gear - 1]**2);
 
                 if (acceleration_upshift > car.data.rpm_limiter) {
                     acceleration_upshift = car.data.rpm_limiter - 1;
                 }
 
-                var fuel_upshift = (car.data.idle_rpm + 250/* + 500 */) * (car.data.gear_ratios[car.data.gear - 1] / car.data.gear_ratios[car.data.gear]);
+                var eco_upshift = (car.data.idle_rpm + 500) * (car.data.gear_ratios[car.data.gear - 1] / car.data.gear_ratios[car.data.gear]);
 
-                var upshift = (1 - car.data.throttle ** 2) * fuel_upshift + car.data.throttle ** 2 * acceleration_upshift;
+                var upshift = (1 - sportiness) * eco_upshift + sportiness * acceleration_upshift;
 
                 var temp_car = JSON.parse(JSON.stringify(car));
                 temp_car.data.shift_progress = 1;
@@ -264,9 +279,9 @@ function frame() {
 
                 var acceleration_downshift = (2 * car.data.gear_ratios[car.data.gear - 1] * car.data.max_torque_rpm * (car.data.throttle * car.data.gear_ratios[car.data.gear - 2] + car.data.throttle * car.data.gear_ratios[car.data.gear - 1])) / (car.data.gear_ratios[car.data.gear - 2]**2 + car.data.gear_ratios[car.data.gear - 2] * car.data.gear_ratios[car.data.gear - 1] + car.data.gear_ratios[car.data.gear - 1]**2);
 
-                var fuel_downshift = car.data.idle_rpm + 250;// + 500;
+                var eco_downshift = car.data.idle_rpm + 500;
 
-                var downshift = (1 - car.data.throttle ** 2) * fuel_downshift + car.data.throttle ** 2 * acceleration_downshift - 250;
+                var downshift = (1 - sportiness) * eco_downshift + sportiness * acceleration_downshift - (250 + 250 * car.data.throttle); //Up- / Downshift-Verschiebung in Abhängigkeit von Last
                 var temp_car = JSON.parse(JSON.stringify(car));
                 temp_car.data.shift_progress = 1;
 
@@ -279,8 +294,8 @@ function frame() {
                 }
             }
         }
-        
-        console.log(upshift, downshift)
+
+        //console.log(upshift, downshift);
     }
 
 
@@ -310,12 +325,12 @@ function frame() {
     //print information
 	document.getElementById("additional_info_container").innerText = 
 	    `Geschwindigkeit: ${(car.data.speed * 3.6).toFixed(2)} km/h \n` +
-	    `Beschleunigung: ${(acceleration(car)).toFixed(2)} m/s² \n` +
 	    `Drehzahl: ${car.data.rpm.toFixed(2)} U/min \n` +
-	    `Motordrehmoment: ${car.engine_torque().toFixed(2)} Nm \n` +
-	    `Raddrehmoment: ${wheel_torque(car).toFixed(2)} Nm \n` +
 	    `Gang: ${car.data.gear} \n` +
 	    `Vorheriger Gang: ${car.data.previous_gear} \n` +
+	    `Beschleunigung: ${(acceleration(car)).toFixed(2)} m/s² \n` +
+	    `Motordrehmoment: ${car.engine_torque().toFixed(2)} Nm \n` +
+	    `Raddrehmoment: ${wheel_torque(car).toFixed(2)} Nm \n` +
 	    `Shiftprogress ${parseInt(car.data.shift_progress * 100) + "%"} \n` +
 	    `Gas: ${(car.data.throttle * 100).toFixed(2) + "%"} \n` +
 	    `Bremse: ${car.data.brake * 100 + "%"} \n` +

@@ -66,8 +66,19 @@
 					<label>Autoshift</label>
 					<input id="autoshift_input" type="checkbox" checked/>
 				</div>
+
+
+				<div class="input_set">
+					<label>Autostrategie</label>
+					<input id="autostrategy_input" type="checkbox" checked/>
+				</div>
 			</div>
 
+
+			<div class="input_set" id="shift_strategy_input_container">
+				<input id="shift_strategy_input" type="range" min="0" max="1" value="1" step="0.05" orient="vertical" disabled/>
+				<label>Strategie</label>
+			</div>
 
 			<div id="shift_button_container">
 				<button onclick="car.shift_down();">-</button>
