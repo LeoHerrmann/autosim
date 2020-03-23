@@ -12,17 +12,6 @@ Always shift down when idle rpm is reached
 In between: Shift for maximum fuel economy; Go closer to redline the more throttle you give
 */
 
-/*
-Formular for calculating rpm for maximum acceleration
-wheel_torque(current_rpm, current_gear) = wheel_torque(new_rpm, new_gear)
-//rpm = (b * g * o * (n + o)) / (n ** 2 + n * o + o ** 2)
-rpm = (2 * car.gear_ratios[car.gear - 1] * 4000 *(car.throttle * car.gear_ratios[car.gear] + car.throttle * car.gear_ratios[car.gear - 1])) / (car.gear_ratios[car.gear]**2 + car.gear_ratios[car.gear] * car.gear_ratios[car.gear - 1] + car.gear_ratios[car.gear - 1]**2)
-
-Formular for shifting at lowest rpm possible:
-idle_rpm = current_rpm * (new_gear / current_gear);
-rpm = car.idle_rpm * (car.gear_ratios[car.gear - 1] / car.gear_ratios[car.gear]);
-*/
-
 
 
 const frame_rate = 1000 / 60;
@@ -32,6 +21,8 @@ var current_frame_rate = 0;
 
 const sound = true;
 var context = new AudioContext();
+
+const first_car_index = 1;
 
 var autoshift;
 var aerodynamics;
@@ -106,13 +97,14 @@ var gauges = {
 
 
 
-car.sound = car_data[1].sound;
-car.data = car_data[1].data;
+car.sound = car_data[first_car_index].sound;
+car.data = car_data[first_car_index].data;
 
 
 
 if (sound === true) {
     car.sound.setup_sound();
+
     window.onclick = function() {
         context.resume();
     }
@@ -121,10 +113,8 @@ if (sound === true) {
 
 
 function speed_from_rpm(car, rpm) {
-    //var wheel_rpm = rpm / (car.data.shift_progress * car.data.gear_ratios[car.data.gear - 1] + (1 - car.data.shift_progress) * car.data.gear_ratios[car.data.previous_gear - 1]) / car.data.final_drive;
-    
     var smooth_shift_progress = Math.sin(car.data.shift_progress / 2 * Math.PI);
-    
+
     var wheel_rpm = rpm / (smooth_shift_progress * car.data.gear_ratios[car.data.gear - 1] + (1 - smooth_shift_progress) * car.data.gear_ratios[car.data.previous_gear - 1]) / car.data.final_drive;
     var wheel_rps = wheel_rpm / 60;
     var wheel_speed =  Math.PI * car.data.tire_diameter * wheel_rps;
@@ -139,7 +129,6 @@ function rpm_from_speed(car, speed) {
 
     var wheel_rps = speed / (Math.PI * car.data.tire_diameter);
     var wheel_rpm = wheel_rps * 60;
-    //var engine_rpm = wheel_rpm * car.data.final_drive * (car.data.shift_progress * car.data.gear_ratios[car.data.gear - 1] + (1 - car.data.shift_progress) * car.data.gear_ratios[car.data.previous_gear - 1]);
     var engine_rpm = wheel_rpm * car.data.final_drive * (smooth_shift_progress * car.data.gear_ratios[car.data.gear - 1] + (1 - smooth_shift_progress) * car.data.gear_ratios[car.data.previous_gear - 1]);
 
     return engine_rpm;
@@ -294,8 +283,6 @@ function frame() {
                 }
             }
         }
-
-        //console.log(upshift, downshift);
     }
 
 
@@ -312,7 +299,7 @@ function frame() {
 
     //frame rate calulation
     if (frame_number >= 50) {
-        var current_date = Date.now();
+        let current_date = Date.now();
         current_frame_rate = 1000 / ((current_date - first_frame_date) / 50);
         first_frame_date = Date.now();
         frame_number = 0;
@@ -323,22 +310,32 @@ function frame() {
 
 
     //print information
-	document.getElementById("additional_info_container").innerText = 
-	    `Geschwindigkeit: ${(car.data.speed * 3.6).toFixed(2)} km/h \n` +
-	    `Drehzahl: ${car.data.rpm.toFixed(2)} U/min \n` +
-	    `Gang: ${car.data.gear} \n` +
-	    `Vorheriger Gang: ${car.data.previous_gear} \n` +
-	    `Beschleunigung: ${(acceleration(car)).toFixed(2)} m/s² \n` +
-	    `Motordrehmoment: ${car.engine_torque().toFixed(2)} Nm \n` +
-	    `Raddrehmoment: ${wheel_torque(car).toFixed(2)} Nm \n` +
-	    `Shiftprogress ${parseInt(car.data.shift_progress * 100) + "%"} \n` +
-	    `Gas: ${(car.data.throttle * 100).toFixed(2) + "%"} \n` +
-	    `Bremse: ${car.data.brake * 100 + "%"} \n` +
-	    `FPS: ${current_frame_rate.toFixed(0)}`;
+    document.getElementById("additional_info_container").innerHTML = 
+	    "<span>Geschwindigkeit:</span>" +
+	    `<span>${(car.data.speed * 3.6).toFixed(2)} km/h</span>` +
+	    "<span>Drehzahl:</span>" +
+	    `<span>${car.data.rpm.toFixed(2)} U/min</span>` +
+	    "<span>Gang:</span>" +
+	    `<span>${car.data.gear}</span>` +
+	    "<span>Vorheriger Gang:</span>" +
+	    `<span>${car.data.previous_gear}</span>` +
+	    "<span>Beschleunigung:</span>" +
+	    `<span>${(acceleration(car)).toFixed(2)} m/s²</span>` +
+	    "<span>Motordrehmoment:</span>" +
+	    `<span>${car.engine_torque().toFixed(2)} Nm</span>` +
+	    "<span>Raddrehmoment:</span>" +
+	    `<span>${wheel_torque(car).toFixed(2)} Nm</span>` +
+	    "<span>Shiftprogress:</span>" +
+	    `<span>${parseInt(car.data.shift_progress * 100) + "%"}</span>` +
+	    "<span>Gas:</span>" +
+	    `<span>${(car.data.throttle * 100).toFixed(2) + "%"}</span>` +
+	    "<span>Bremse:</span>" +
+	    `<span>${car.data.brake * 100 + "%"}</span>` +
+	    "<span>FPS:</span>" +
+	    `<span>${current_frame_rate.toFixed(0)}`;
 
     gauges.update();
 }
-
 
 
 

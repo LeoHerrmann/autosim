@@ -10,33 +10,46 @@ body {
 	--scale: 1.5;
 }
 
-button {
+h1, h2, h3, h4, h5, h6 {
+	margin: 0;
+}
+
+button, select {
 	font-size: 1rem;
 	background-color: #FFF;
 	border: 2px solid #AAA;
+	box-sizing: border-box;
 }
 
 
 
-#info_box {
+#info_box, #car_controls_box, #environment_controls_box {
 	position: fixed;
-	top: 0;
-	right: 0;
 	z-index: 10;
 	background-color: rgba(0,0,0,0.5);
 	box-sizing: border-box;
 	width: 100%;
 	max-width: 400px;
+	right: 0;
 }
+
+#info_box {
+	top: 0;
+}
+
 #info_box > span {
 	display: block;
 }
+
 #info_box > button {
 	width: 100%;
 }
+
 #additional_info_container {
 	display: none;
-	padding: 5px;
+	/*display: grid;*/
+	grid-template-columns: auto 1fr;
+	grid-gap: 0 1ch;
 }
 
 
@@ -51,6 +64,7 @@ button {
 	box-sizing: border-box;
 	text-align: center;
 }
+
 #instrument_cluster > .gauge_container {
 	width: 50vmin;
 	height: 50vmin;
@@ -58,6 +72,7 @@ button {
 	max-height: 200px;
 	position: relative;
 }
+
 #instrument_cluster .gauge {
 	position: absolute;
 	display: inline-block;
@@ -73,6 +88,7 @@ button {
 	background-color: #FFF;
 	box-sizing: border-box;
 }
+
 #instrument_cluster .gauge > .center {
 	position: absolute;
 	top: 50%;
@@ -96,6 +112,7 @@ button {
 	border-radius: 50%;
 	z-index: 30;
 }
+
 #instrument_cluster .gauge > .needle, #instrument_cluster .gauge > .indicator {
 	position: absolute;
 	left: 50%;
@@ -104,10 +121,12 @@ button {
 	height: 50%;
 	width: 2px;
 }
+
 #instrument_cluster .gauge > .current_needle {
 	background-color: #F00;
 	z-index: 20;
 }
+
 #instrument_cluster .gauge > .indicator {
 	background-color: #888;
 }
@@ -122,6 +141,7 @@ button {
 	height: 50px;
 	text-align: center;
 }
+
 #instrument_cluster .gauge > .needle > span {
 	height: 100px;
 }
@@ -139,20 +159,12 @@ button {
 
 
 
-#car_controls_box, #environment_controls_box {
-	position: fixed;
-	bottom: 0;
-	right: 0;
-	z-index: 10;
-	padding: 5px;
-	width: 100%;
-	max-width: 400px;
-	height: 150px;
-	box-sizing: border-box;
-	background-color: rgba(0,0,0,0.5);
-}
 #car_controls_box {
 	bottom: 0;
+	height: 150px;
+}
+
+#car_controls_box > .controls {
 	display: flex;
 }
 
@@ -169,6 +181,7 @@ button {
 	flex-direction: column;
 	width: 100px;
 }
+
 #shift_strategy_input_container > label {
 	display: block;
 	text-align: center;
@@ -205,7 +218,10 @@ button {
 
 #environment_controls_box {
 	bottom: 150px;
-	height: auto;
+}
+
+#environment_controls_box > select {
+	width: 100%;
 }
 
 

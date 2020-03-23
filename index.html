@@ -15,20 +15,23 @@
 
 	<body>
 		<div id="info_box">
+			<h2>Info</h2>
+
+
 			<div id="instrument_cluster">
 				<div class="gauge_container">
-				<div id="rpm_gauge" class="gauge">
-					<div class="needle current_needle"><span></span></div>
-					<div class="center"></div>
-				</div>
+					<div id="rpm_gauge" class="gauge">
+						<div class="needle current_needle"><span></span></div>
+						<div class="center"></div>
+					</div>
 				</div>
 
 
 				<div class="gauge_container">
-				<div id="speed_gauge" class="gauge">
-					<div class="needle current_needle"><span></span></div>
-					<div class="center"></div>
-				</div>
+					<div id="speed_gauge" class="gauge">
+						<div class="needle current_needle"><span></span></div>
+						<div class="center"></div>
+					</div>
 				</div>
 
 
@@ -37,12 +40,17 @@
 
 
 			<div id="additional_info_container"></div>
+
+
 			<button onclick="toggle_additional_info_container(this);">+</button>
 		</div>
 
 
 
 		<div id="environment_controls_box">
+			<h2>Andere</h2>
+
+
 			<div class="input_set">
 				<label>Steigung</label>
 				<input id="angle_input" type="range" min="-30" max="30" step="3" value="0"/>
@@ -53,49 +61,56 @@
 				<label>Aerodynamik</label>
 				<input id="aerodynamics_input" type="checkbox" checked/>
 			</div>
+
+
+			<select id="car_select"></select>
 		</div>
 
 
 
 		<div id="car_controls_box">
-			<div id="other_controls_container">
-				<button onclick="car.start();">Start</button>
+			<h2>Auto</h2>
+
+			<div class="controls">
+				<div id="other_controls_container">
+					<button onclick="car.start();">Start</button>
 
 
-				<div class="input_set">
-					<label>Autoshift</label>
-					<input id="autoshift_input" type="checkbox" checked/>
+					<div class="input_set">
+						<label>Autoshift</label>
+						<input id="autoshift_input" type="checkbox" checked/>
+					</div>
+
+
+					<div class="input_set">
+						<label>Autostrategie</label>
+						<input id="autostrategy_input" type="checkbox" checked/>
+					</div>
 				</div>
 
 
-				<div class="input_set">
-					<label>Autostrategie</label>
-					<input id="autostrategy_input" type="checkbox" checked/>
+				<div class="input_set" id="shift_strategy_input_container">
+					<input id="shift_strategy_input" type="range" min="0" max="1" value="1" step="0.05" orient="vertical" disabled/>
+					<label>Strategie</label>
 				</div>
-			</div>
 
-
-			<div class="input_set" id="shift_strategy_input_container">
-				<input id="shift_strategy_input" type="range" min="0" max="1" value="1" step="0.05" orient="vertical" disabled/>
-				<label>Strategie</label>
-			</div>
-
-			<div id="shift_button_container">
-				<button onclick="car.shift_down();">-</button>
-				<button onclick="car.shift_up();">+</button>
-			</div>
-
-
-			<div id="pedals_container">
-				<div class="input_set">
-					<input id="brake_input" type="range" min="0" max="100" value="0" orient="vertical"/>
-					<label>Bremse</label>
+				<div id="shift_button_container">
+					<button onclick="car.shift_down();">-</button>
+					<button onclick="car.shift_up();">+</button>
 				</div>
 
 
-				<div class="input_set">
-					<input id="throttle_input" type="range" min="1" max="100" value="0" orient="vertical"/>
-					<label>Gas</label>
+				<div id="pedals_container">
+					<div class="input_set">
+						<input id="brake_input" type="range" min="0" max="100" value="0" orient="vertical"/>
+						<label>Bremse</label>
+					</div>
+
+
+					<div class="input_set">
+						<input id="throttle_input" type="range" min="1" max="100" value="0" orient="vertical"/>
+						<label>Gas</label>
+					</div>
 				</div>
 			</div>
 		</div>
