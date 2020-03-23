@@ -24,13 +24,13 @@ var car = {
             var temp_car = JSON.parse(JSON.stringify(car));
             temp_car.data.gear = car.data.gear + 1;
 
-            if (rpm_from_speed(temp_car, temp_car.data.speed) >= car.data.idle_rpm) {
+            if (calculator.rpm_from_speed(temp_car, temp_car.data.speed) >= car.data.idle_rpm) {
                 if (car.data.shift_progress == 1) {
                     car.data.previous_gear = car.data.gear;
                 }
                 car.data.shift_progress = 0;
                 car.data.gear += 1;
-                car.data.rpm = rpm_from_speed(car, car.data.speed);
+                car.data.rpm = calculator.rpm_from_speed(car, car.data.speed);
                 return true;
             }
         }
@@ -45,13 +45,13 @@ var car = {
             var temp_car = JSON.parse(JSON.stringify(car));
             temp_car.data.gear = car.data.gear - 1;
 
-            if (rpm_from_speed(temp_car, temp_car.data.speed) <= car.data.rpm_limiter) {
+            if (calculator.rpm_from_speed(temp_car, temp_car.data.speed) <= car.data.rpm_limiter) {
                 if (car.data.shift_progress == 1) {
                     car.data.previous_gear = car.data.gear;
                 }
                 car.data.shift_progress = 0;
                 car.data.gear -= 1;
-                car.data.rpm = rpm_from_speed(car, car.data.speed);
+                car.data.rpm = calculator.rpm_from_speed(car, car.data.speed);
                 return true;
             }
         }
@@ -63,7 +63,7 @@ var car = {
 
     start: function() {
         car.data.gear = 1;
-        var start_speed = speed_from_rpm(car, car.data.idle_rpm);
+        var start_speed = calculator.speed_from_rpm(car, car.data.idle_rpm);
         car.set_speed(start_speed);
     },
 
@@ -71,6 +71,6 @@ var car = {
 
     set_speed: function(new_speed) {
         car.data.speed = new_speed;
-        car.data.rpm = rpm_from_speed(car, car.data.speed);
+        car.data.rpm = calculator.rpm_from_speed(car, car.data.speed);
     },
 };
