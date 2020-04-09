@@ -273,11 +273,15 @@ function frame() {
             while (did_shift == true) {
                 did_shift = false;
 
-                var acceleration_downshift = (2 * car.data.gear_ratios[car.data.gear - 1] * car.data.max_torque_rpm * (car.data.throttle * car.data.gear_ratios[car.data.gear - 2] + car.data.throttle * car.data.gear_ratios[car.data.gear - 1])) / (car.data.gear_ratios[car.data.gear - 2]**2 + car.data.gear_ratios[car.data.gear - 2] * car.data.gear_ratios[car.data.gear - 1] + car.data.gear_ratios[car.data.gear - 1]**2);
+                var acceleration_downshift = (2 * car.data.gear_ratios[car.data.gear - 1] * car.data.max_torque_rpm * (car.data.throttle * car.data.gear_ratios[car.data.gear - 2] + car.data.throttle * car.data.gear_ratios[car.data.gear - 1])) / (car.data.gear_ratios[car.data.gear - 2]**2 + car.data.gear_ratios[car.data.gear - 2] * car.data.gear_ratios[car.data.gear - 1] + car.data.gear_ratios[car.data.gear - 1]**2) - 500;
 
-                var eco_downshift = car.data.idle_rpm + 500;
+                if (acceleration_downshift < car.data.idle_rpm) {
+                    acceleration_downshift = car.data.idle_rpm;
+                }
 
-                var downshift = (1 - sportiness) * eco_downshift + sportiness * acceleration_downshift - (250 + 250 * car.data.throttle); //Up- / Downshift-Verschiebung in Abhängigkeit von Last
+                var eco_downshift = car.data.idle_rpm;
+
+                var downshift = (1 - sportiness) * eco_downshift + sportiness * acceleration_downshift;
                 var temp_car = JSON.parse(JSON.stringify(car));
                 temp_car.data.shift_progress = 1;
 
@@ -292,6 +296,10 @@ function frame() {
         }
     }
 
+
+    if (frame_number % 10 == 0) {
+        console.log(upshift, downshift);
+    }
 
 
     //visualization

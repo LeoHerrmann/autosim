@@ -1,3 +1,7 @@
+09.04.2020
+Reduced gear hunting on steeper inclines 
+
+
 04.03.2020:
 Display and set shift strategy using range input 
 
