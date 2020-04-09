@@ -1,5 +1,6 @@
 09.04.2020
 Reduced gear hunting on steeper inclines 
+Introduction of up_down_offset
 
 
 04.03.2020:

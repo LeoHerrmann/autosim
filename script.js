@@ -2,8 +2,6 @@
 //speed in m/s
 //frame_rate in ms
 
-//No Downshift when braking (can break traction limit and no ABS)
-
 /*
 Always shift up when redline is reached
 Always shift down when idle rpm is reached
@@ -224,6 +222,9 @@ function frame() {
     if (autoshift == true) {
         var sportiness;
 
+        var up_down_offset = car.data.rpm_limiter / 8;
+
+
         if (document.getElementById("autostrategy_input").checked === true) {
             sportiness = car.data.throttle ** 3;
             document.querySelector("#shift_strategy_input").value = sportiness;
@@ -249,7 +250,7 @@ function frame() {
                     acceleration_upshift = car.data.rpm_limiter - 1;
                 }
 
-                var eco_upshift = (car.data.idle_rpm + 500) * (car.data.gear_ratios[car.data.gear - 1] / car.data.gear_ratios[car.data.gear]);
+                var eco_upshift = (car.data.idle_rpm + up_down_offset) * (car.data.gear_ratios[car.data.gear - 1] / car.data.gear_ratios[car.data.gear]);
 
                 var upshift = (1 - sportiness) * eco_upshift + sportiness * acceleration_upshift;
 
@@ -273,7 +274,7 @@ function frame() {
             while (did_shift == true) {
                 did_shift = false;
 
-                var acceleration_downshift = (2 * car.data.gear_ratios[car.data.gear - 1] * car.data.max_torque_rpm * (car.data.throttle * car.data.gear_ratios[car.data.gear - 2] + car.data.throttle * car.data.gear_ratios[car.data.gear - 1])) / (car.data.gear_ratios[car.data.gear - 2]**2 + car.data.gear_ratios[car.data.gear - 2] * car.data.gear_ratios[car.data.gear - 1] + car.data.gear_ratios[car.data.gear - 1]**2) - 500;
+                var acceleration_downshift = (2 * car.data.gear_ratios[car.data.gear - 1] * car.data.max_torque_rpm * (car.data.throttle * car.data.gear_ratios[car.data.gear - 2] + car.data.throttle * car.data.gear_ratios[car.data.gear - 1])) / (car.data.gear_ratios[car.data.gear - 2]**2 + car.data.gear_ratios[car.data.gear - 2] * car.data.gear_ratios[car.data.gear - 1] + car.data.gear_ratios[car.data.gear - 1]**2) - up_down_offset;
 
                 if (acceleration_downshift < car.data.idle_rpm) {
                     acceleration_downshift = car.data.idle_rpm;
