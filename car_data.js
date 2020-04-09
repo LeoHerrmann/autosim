@@ -4,7 +4,7 @@ var car_data = [
             oscillators: [],
             gains: [],
             setup_sound: function() {
-                for (let i = 0; i < 7; i++) {
+                for (let i = 0; i < 8; i++) {
                     car.sound.oscillators[i] = context.createOscillator();
                     car.sound.gains[i] = context.createGain();
                     car.sound.oscillators[i].connect(car.sound.gains[i]);
@@ -22,23 +22,26 @@ var car_data = [
                 car.sound.gains[0].gain.value = 0.05 + (car.data.throttle) * 0.1;
 
                 car.sound.oscillators[1].frequency.value = (car.data.rpm / 60 / 2 * 4) * (1 / 4);
-                car.sound.gains[1].gain.value = 0.02 + (car.data.throttle) * 0.03;
+                car.sound.gains[1].gain.value = 0.01 + (car.data.throttle) * 0.01;
 
                 //Crankshaft
                 car.sound.oscillators[2].frequency.value = (car.data.rpm / 60 / 2 * 4) * (2 / 4);
-                car.sound.gains[2].gain.value = 0.07 + (car.data.throttle) * 0.05;
+                car.sound.gains[2].gain.value = 0.04 + (car.data.throttle) * 0.04;
+
+                car.sound.oscillators[7].frequency.value = (car.data.rpm / 60 / 2 * 4) * (6 / 4);
+                car.sound.gains[7].gain.value = 0.03 + (car.data.throttle) * 0.05;
 
                 car.sound.oscillators[3].frequency.value = (car.data.rpm / 60 / 2 * 4) * (8 / 4);
-                car.sound.gains[3].gain.value = 0.03 + (car.data.throttle) * 0.05;
+                car.sound.gains[3].gain.value = 0.02 + (car.data.throttle) * 0.04;
 
                 car.sound.oscillators[4].frequency.value = (car.data.rpm / 60 / 2 * 4) * (12 / 4);
                 car.sound.gains[4].gain.value = 0.02 + (car.data.throttle) * 0.04;
 
-                car.sound.oscillators[5].frequency.value = (car.data.rpm / 60 / 2 * 4) * (16 / 4);
-                car.sound.gains[5].gain.value = 0.01 + (car.data.throttle) * 0.05;
+                car.sound.oscillators[6].frequency.value = (car.data.rpm / 60 / 2 * 4) * (16 / 4);
+                car.sound.gains[6].gain.value = 0.02 + (car.data.throttle) * 0.02;
 
-                car.sound.oscillators[6].frequency.value = (car.data.rpm / 60 / 2 * 4) * (20 / 4);
-                car.sound.gains[6].gain.value = 0.003 + (car.data.throttle) * 0.02;
+                car.sound.oscillators[5].frequency.value = (car.data.rpm / 60 / 2 * 4) * (20 / 4);
+                car.sound.gains[5].gain.value = 0.01 + (car.data.throttle) * 0.01;
             },
         },
 
@@ -75,7 +78,7 @@ var car_data = [
             oscillators: [],
             gains: [],
             setup_sound: function() {
-                for (let i = 0; i < 7; i++) {
+                for (let i = 0; i < 8; i++) {
                     car.sound.oscillators[i] = context.createOscillator();
                     car.sound.gains[i] = context.createGain();
                     car.sound.oscillators[i].connect(car.sound.gains[i]);
@@ -93,22 +96,26 @@ var car_data = [
                 car.sound.gains[0].gain.value = 0.05 + (car.data.throttle) * 0.1;
 
                 car.sound.oscillators[1].frequency.value = (car.data.rpm / 60 / 2 * 6) * (1 / 6);
-                car.sound.gains[1].gain.value = 0.025 + (car.data.throttle) * 0.05;
+                car.sound.gains[1].gain.value = 0.02 + (car.data.throttle) * 0.02;
 
+                //Crankshaft
                 car.sound.oscillators[2].frequency.value = (car.data.rpm / 60 / 2 * 6) * (2 / 6);
-                car.sound.gains[2].gain.value = 0.07 + (car.data.throttle) * 0.05;
+                car.sound.gains[2].gain.value = 0.05 + (car.data.throttle) * 0.05;
 
-                car.sound.oscillators[6].frequency.value = (car.data.rpm / 60 / 2 * 6) * (9 / 6);
-                car.sound.gains[6].gain.value = 0.05 + (car.data.throttle) * 0.08;
+                car.sound.oscillators[5].frequency.value = (car.data.rpm / 60 / 2 * 6) * (8 / 6);
+                car.sound.gains[5].gain.value = 0.03 + (car.data.throttle) * 0.05;
+
+                car.sound.oscillators[6].frequency.value = (car.data.rpm / 60 / 2 * 6) * (10 / 6);
+                car.sound.gains[6].gain.value = 0.03 + (car.data.throttle) * 0.04;
 
                 car.sound.oscillators[3].frequency.value = (car.data.rpm / 60 / 2 * 6) * (12 / 6);
-                car.sound.gains[3].gain.value = 0.03 + (car.data.throttle) * 0.02;
+                car.sound.gains[3].gain.value = 0.02 + (car.data.throttle) * 0.03;
+
+                car.sound.oscillators[7].frequency.value = (car.data.rpm / 60 / 2 * 6) * (15 / 6);
+                car.sound.gains[7].gain.value = 0.005 + (car.data.throttle) * 0.01;
 
                 car.sound.oscillators[4].frequency.value = (car.data.rpm / 60 / 2 * 6) * (18 / 6);
-                car.sound.gains[4].gain.value = 0.01 + (car.data.throttle) * 0.005;
-
-                car.sound.oscillators[5].frequency.value = (car.data.rpm / 60 / 2 * 6) * (24 / 6);
-                car.sound.gains[5].gain.value = 0.005 + (car.data.throttle) * 0.005;
+                car.sound.gains[4].gain.value = 0.005 + (car.data.throttle) * 0.01;
             },
         },
 
