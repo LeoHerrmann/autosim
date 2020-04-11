@@ -14,6 +14,7 @@ target_acceleration bestimmen mit Gas
 Gang nehmen, der target_acceleration am nächsten kommt
 Problem: Komisches Schaltverhalten bei konstantem Gas
 Lösung: geringere Potenz nach car.throttle
+Problem: Ineffizienz Bergauf
 
 Variante 4
 gear_ratio_accel und gear_ratio_eco bestimmen
@@ -69,6 +70,14 @@ function autoshift_logic_4() {
     var target_gear_ratio = (1 - car.data.throttle ** 2) * eco_gear_ratio + (car.data.throttle ** 2) * accel_gear_ratio;
 
 
+    if (target_gear_ratio < car.data.gear_ratios[car.data.gear_ratios.length - 1]) {
+        target_gear_ratio = car.data.gear_ratios[car.data.gear_ratios.length - 1];
+    }
+    else if (target_gear_ratio > car.data.gear_ratios[0]) {
+        target_gear_ratio = car.data.gear_ratios[0];
+    }
+
+
     var best_gear = car.data.gear;
     var smallest_difference = Math.abs(target_gear_ratio - car.data.gear_ratios[car.data.gear - 1]);
 
@@ -81,7 +90,6 @@ function autoshift_logic_4() {
         }
     }
 
-            console.log();
 
     if (car.data.shift_progress == 1) {
         if (car.data.gear != best_gear) {
@@ -105,6 +113,13 @@ function autoshift_logic_3() {
 
 
     var optimal_gear_ratio = (temp_car.data.rpm * Math.PI * temp_car.data.tire_diameter) / (60 * temp_car.data.speed * temp_car.data.final_drive);
+
+    if (optimal_gear_ratio < car.data.gear_ratios[car.data.gear_ratios.length - 1]) {
+        optimal_gear_ratio = car.data.gear_ratios[car.data.gear_ratios.length - 1];
+    }
+    else if (optimal_gear_ratio > car.data.gear_ratios[0]) {
+        optimal_gear_ratio = car.data.gear_ratios[0];
+    }
 
 
     temp_car.data.gear_ratios[0] = optimal_gear_ratio;
@@ -131,7 +146,7 @@ function autoshift_logic_3() {
         let temp_accel = calculator.acceleration(temp_car_2);
         let temp_diff = Math.abs(target_acceleration - temp_accel); 
 
-        if (temp_diff < smallest_difference && temp_diff < current_difference * 0.85) {
+        if (temp_diff < smallest_difference && temp_diff < current_difference * 0.9) {
             best_gear = temp_gear;
             smallest_difference = temp_diff;
         }
@@ -224,20 +239,8 @@ function autoshift_logic_2() {
 
 
 function autoshift_logic_1() {
-        var sportiness;
-
+        var sportiness = car.data.throttle ** 3;
         var up_down_offset = car.data.rpm_limiter / 8;
-
-
-        if (document.getElementById("autostrategy_input").checked === true) {
-            sportiness = car.data.throttle ** 3;
-            document.querySelector("#shift_strategy_input").value = sportiness;
-            document.querySelector("#shift_strategy_input").disabled = true;
-        }
-        else {
-            sportiness = parseFloat(document.querySelector("#shift_strategy_input").value);
-            document.querySelector("#shift_strategy_input").disabled = false;
-        }
 
 
 
