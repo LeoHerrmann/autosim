@@ -176,17 +176,6 @@ button, select {
 	width: 100%;
 }
 
-/*#shift_strategy_input_container {
-	display: flex;
-	flex-direction: column;
-	width: 100px;
-}
-
-#shift_strategy_input_container > label {
-	display: block;
-	text-align: center;
-}*/
-
 #pedals_container {
 	display: inline-grid;
 	grid-template-columns: 1fr 1fr;
