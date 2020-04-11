@@ -25,6 +25,41 @@ Gas bestimmt die Drehzahl
 */
 
 
+function autoshift_logic_5() {
+    var target_rpm = (1 - car.data.throttle ** 3) * car.data.idle_rpm + (car.data.throttle ** 3) * car.data.rpm_limiter;
+
+    var best_gear = car.data.gear;
+    var smallest_difference = Math.abs(target_rpm - car.data.rpm);
+    var current_difference = smallest_difference;
+
+    for (let i = 0; i < car.data.gear_ratios.length; i++) {
+        temp_rpm = car.data.rpm * (car.data.gear_ratios[i] / car.data.gear_ratios[car.data.gear - 1]);
+        var temp_diff = Math.abs(target_rpm - temp_rpm);
+
+        if (temp_diff < smallest_difference && temp_diff < current_difference * 0.75) {
+            best_gear = i + 1;
+            smallest_difference = temp_diff;
+        }
+    }
+
+    if (frame_number == 40) {
+        console.log(target_rpm, temp_rpm);
+    }
+
+    if (car.data.shift_progress == 1) {
+        if (car.data.gear != best_gear) {
+            car.shift_into_gear(best_gear);
+        }
+        else if (car.data.rpm >= car.data.rpm_limiter - 2) {
+            car.shift_up();
+        }
+        else if (car.data.rpm < car.data.idle_rpm) {
+            car.shift_down();
+        }
+    }
+}
+
+
 
 function autoshift_logic_4() {
     var accel_gear_ratio = (car.data.max_power_rpm * Math.PI * car.data.tire_diameter) / (60 * car.data.speed * car.data.final_drive);
@@ -88,6 +123,7 @@ function autoshift_logic_3() {
     var temp_car_2 = JSON.parse(JSON.stringify(car));
     var best_gear = car.data.gear;
     var smallest_difference = Math.abs(target_acceleration - calculator.acceleration(car));
+    var current_difference = smallest_difference;
 
     for (let temp_gear = 1; temp_gear <= temp_car_2.data.gear_ratios.length; temp_gear += 1) {
         temp_car_2.data.gear = temp_gear;
@@ -95,7 +131,7 @@ function autoshift_logic_3() {
         let temp_accel = calculator.acceleration(temp_car_2);
         let temp_diff = Math.abs(target_acceleration - temp_accel); 
 
-        if (temp_diff < smallest_difference) {
+        if (temp_diff < smallest_difference && temp_diff < current_difference * 0.85) {
             best_gear = temp_gear;
             smallest_difference = temp_diff;
         }

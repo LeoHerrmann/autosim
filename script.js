@@ -217,10 +217,11 @@ function frame() {
 
     //automatic shifting
     if (autoshift == true) {
-        //autoshift_logic_1();
+        //autoshift_logic_1(); //gut
         //autoshift_logic_2();
-        autoshift_logic_3();
+        autoshift_logic_3(); //gut
         //autoshift_logic_4();
+        //autoshift_logic_5();
     }
 
 
