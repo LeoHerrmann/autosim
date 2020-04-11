@@ -1,3 +1,7 @@
+10.04.2020
+Shift logics 2, 3 and 4
+
+
 09.04.2020
 Reduced gear hunting on steeper inclines 
 Introduction of up_down_offset

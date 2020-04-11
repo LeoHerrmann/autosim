@@ -117,20 +117,20 @@ var calculator = {
     },
 
     wheel_torque: function(tcar) {
-        return car.engine_torque(tcar.data.rpm, tcar.data.throttle) * (car.data.shift_progress * tcar.data.gear_ratios[tcar.data.gear - 1] + (1 - car.data.shift_progress) * tcar.data.gear_ratios[tcar.data.previous_gear - 1]) * tcar.data.final_drive;
+        return car.engine_torque(tcar.data.rpm, tcar.data.throttle) * (tcar.data.shift_progress * tcar.data.gear_ratios[tcar.data.gear - 1] + (1 - tcar.data.shift_progress) * tcar.data.gear_ratios[tcar.data.previous_gear - 1]) * tcar.data.final_drive;
     },
 
     wheel_force: function(tcar) {
-        return calculator.wheel_torque(tcar) / (car.data.tire_diameter / 2);
+        return calculator.wheel_torque(tcar) / (tcar.data.tire_diameter / 2);
     },
 
-    acceleration: function(car) {
-        var car_accel = (calculator.wheel_force(car) - car.data.maximum_braking_force * car.data.brake) / car.data.mass;
+    acceleration: function(tcar) {
+        var car_accel = (calculator.wheel_force(tcar) - tcar.data.maximum_braking_force * tcar.data.brake) / tcar.data.mass;
         var angle_accel = -1 * Math.sin(angle * Math.PI/180) * 9.81;
         var air_accel = 0;
 
         if (aerodynamics === true) {
-            air_accel = (-1 * 0.5 * 1.23 * (car.data.speed ** 2) * car.data.drag_coefficient * car.data.frontal_area) / car.data.mass;
+            air_accel = (-1 * 0.5 * 1.23 * (tcar.data.speed ** 2) * tcar.data.drag_coefficient * tcar.data.frontal_area) / tcar.data.mass;
         }
 
         return car_accel + angle_accel + air_accel;
@@ -218,7 +218,9 @@ function frame() {
     //automatic shifting
     if (autoshift == true) {
         //autoshift_logic_1();
-        autoshift_logic_2();
+        //autoshift_logic_2();
+        autoshift_logic_3();
+        //autoshift_logic_4();
     }
 
 
