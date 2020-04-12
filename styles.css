@@ -1,9 +1,10 @@
 body {
-	background-color: #555;
+	background-color: #05F;
 	height: 100%;
 	font-family: sans-serif;
 	line-height: 1.3;
 	color: #FFF;
+	box-shadow: inset 0 0 20px rgba(0,0,0,1);
 }
 
 :root {
@@ -162,10 +163,13 @@ button, select {
 #car_controls_box {
 	bottom: 0;
 	height: 150px;
+	display: flex;
+	flex-direction: column;
 }
 
 #car_controls_box > .controls {
 	display: flex;
+	flex-grow: 1;
 }
 
 #other_controls_container {
@@ -180,25 +184,30 @@ button, select {
 	display: inline-grid;
 	grid-template-columns: 1fr 1fr;
 }
+
 #pedals_container > .input_set {
 	display: flex;
 	flex-direction: column;
 	text-align: center;
 	width: 75px;
 }
+
 #pedals_container input, [orient="vertical"] {
 	-webkit-appearance: slider-vertical;
 	flex-grow: 1;
 	height: 50px;
 }
+
 #car_controls_box #shift_button_container {
 	display: flex;
 	flex-direction: column;
 	width: 100px;
 }
+
 #car_controls_box #shift_button_container > button {
 	flex-grow: 1;
 }
+
 #car_controls_box button {
 	height: 50px;
 }
@@ -232,40 +241,42 @@ button, select {
 	left: 20vw;
 	width: calc(4.5vw * var(--scale));
 	height: calc(1.5vw * var(--scale));
+	z-index: 10;
+}
+
+#car > .relative_thing {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	filter: drop-shadow(0 0 1vmin rgba(0,0,0,0.3));
+}
+
+#car .chassis {
+	position: absolute;
+	top: 0;
+	left: 0;
 	background-color: #FFF;
+	width: 100%;
+	height: 100%;
+	clip-path: polygon(56% 0, 74% 33%, 100% 36%, 100% 100%, 0 100%, 0 33%, 14% 33%, 25% 0);
 }
-#car::after {
-	content: "";
-	position: fixed;
-	bottom: calc(30vh + 0.25vw * var(--scale) + 1.5vw * var(--scale) - 0.5vw * var(--scale));
-	left: calc(20vw + 4.5vw * var(--scale) - 1.5vw * var(--scale));
-	width: calc(1.5vw * var(--scale));
-	height: calc(0.5vw * var(--scale));
-	background-color: #555;
-}
-#car::before {
-	content: "";
-	position: fixed;
-	bottom: calc(30vh + 0.25vw * var(--scale) + 1.5vw * var(--scale) - 0.5vw * var(--scale));
-	left: 20vw;
-	width: calc(1vw * var(--scale));
-	height: calc(0.5vw * var(--scale));
-	background-color: #555;
-}
-#car > .tyre {
+
+#car .tyre {
+	position: absolute;
+	bottom: calc(-0.25vw * var(--scale));
 	width: calc(0.7vw * var(--scale));
 	height: calc(0.7vw * var(--scale));
 	background-color: #000;
-	position: fixed;
-	bottom: 30vh;
 	border-radius: 50%;
 }
-#car > .tyre:nth-child(1) {
-	left: calc(20vw + 0.5vw * var(--scale));
+#car .tyre:nth-child(2) {
+	left: calc(0.5vw * var(--scale));
 }
-#car > .tyre:nth-child(2) {
-	left: calc(20vw + 4.5vw * var(--scale) - 1.2vw * var(--scale));
+#car .tyre:nth-child(3) {
+	left: calc(4.5vw * var(--scale) - 1.2vw * var(--scale));
 }
+
+
 
 #street {
 	position: fixed;
@@ -273,14 +284,34 @@ button, select {
 	left: 0;
 	height: 30vh;
 	background-color: #0F0;
-
 	display: grid;
 	grid-template-columns: repeat(11, calc(10vw * var(--scale)));
 }
 
 #street > .street_part {
+    position: relative;
 	height: 100%;
-	background-color: #00A;
+	background-color: #555;
 	box-sizing: border_box;
-	border: 1px solid #AAA;
+	border: 1px solid #AAA 0 0 0;
+	z-index: 15;
+}
+
+#street > .street_part::before {
+	content: "";
+    position: absolute;
+    top: calc(0.5vw * var(--scale));
+    left: 0;
+    height: calc(0.3vw * var(--scale));
+    width: 50%;
+    background-color: #FFF;
+}
+
+#street_shadow {
+	position: fixed;
+	top: 70vh;
+	left: 0;
+	height: 30vh;
+	width: 100%;
+	box-shadow: 0 0 10vmin rgba(0,0,0,0.7);
 }
