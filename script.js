@@ -180,13 +180,13 @@ function frame() {
     aerodynamics = document.getElementById("aerodynamics_input").checked;
 
 
+    //adjust shift progress
     if (car.data.shift_progress < 1) {
         car.data.shift_progress += 1 / car.data.shift_time * (frame_rate / 1000) ;
     }
     if (car.data.shift_progress > 1) {
         car.data.shift_progress = 1;
     }
-
 
 
     //set speed and rpm
@@ -214,13 +214,12 @@ function frame() {
     }
 
 
-
     //automatic shifting
     if (autoshift == true) {
         //autoshift_logic_1(); //gut
         //autoshift_logic_2();
-        autoshift_logic_3(); //gut
-        //autoshift_logic_4();
+        //autoshift_logic_3(); //gut
+        autoshift_logic_4();
         //autoshift_logic_5();
     }
 

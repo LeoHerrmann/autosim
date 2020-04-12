@@ -20,6 +20,7 @@ Variante 4
 gear_ratio_accel und gear_ratio_eco bestimmen
 Gang nehmen, der target_gear_ratio am nächsten kommt
 Problem: Gear hunting bergauf
+Lösung: aktuellen Gang bevorzugen
 
 Variante 5
 Gas bestimmt die Drehzahl
@@ -80,11 +81,12 @@ function autoshift_logic_4() {
 
     var best_gear = car.data.gear;
     var smallest_difference = Math.abs(target_gear_ratio - car.data.gear_ratios[car.data.gear - 1]);
+    var current_difference = smallest_difference;
 
     for (let i = 0; i < car.data.gear_ratios.length; i++) {
         let difference = Math.abs(target_gear_ratio - car.data.gear_ratios[i]);
 
-        if (difference * 1 < smallest_difference * 1.15) {
+        if (difference * 1 < smallest_difference && difference < current_difference * 0.7) {
             best_gear = i + 1;
             smallest_difference = Math.abs(difference);
         }
@@ -95,7 +97,7 @@ function autoshift_logic_4() {
         if (car.data.gear != best_gear) {
             car.shift_into_gear(best_gear);
         }
-        else if (car.data.rpm >= car.data.rpm_limiter - 2) {
+        if (car.data.rpm >= car.data.rpm_limiter - 2) {
             car.shift_up();
         }
         else if (car.data.rpm < car.data.idle_rpm) {
@@ -117,21 +119,22 @@ function autoshift_logic_3() {
     if (optimal_gear_ratio < car.data.gear_ratios[car.data.gear_ratios.length - 1]) {
         optimal_gear_ratio = car.data.gear_ratios[car.data.gear_ratios.length - 1];
     }
-    else if (optimal_gear_ratio > car.data.gear_ratios[0]) {
+    /*else if (optimal_gear_ratio > car.data.gear_ratios[0]) {
         optimal_gear_ratio = car.data.gear_ratios[0];
-    }
+    }*/
 
 
     temp_car.data.gear_ratios[0] = optimal_gear_ratio;
     temp_car.data.gear = 1;
+    temp_car.data.shift_progress = 1;
     temp_car.data.throttle = 1;
     var maximum_acceleration = calculator.acceleration(temp_car);
 
 
-    var target_acceleration = (car.data.throttle ** 2) * maximum_acceleration;
+    var target_acceleration = ((car.data.throttle ** 2) * maximum_acceleration);
 
-    if (frame_number == 40) {
-        console.log(Math.round(target_acceleration * 100) / 100, Math.round(maximum_acceleration * 100) / 100);
+    if (frame_number % 40 == 0) {
+        console.log(Math.round(target_acceleration * 100) / 100, Math.round(maximum_acceleration * 100) / 100, calculator.acceleration(car), car.data.gear);
     }
 
 
@@ -146,7 +149,7 @@ function autoshift_logic_3() {
         let temp_accel = calculator.acceleration(temp_car_2);
         let temp_diff = Math.abs(target_acceleration - temp_accel); 
 
-        if (temp_diff < smallest_difference && temp_diff < current_difference * 0.9) {
+        if (temp_diff < smallest_difference && temp_diff < current_difference * 0.95) {
             best_gear = temp_gear;
             smallest_difference = temp_diff;
         }

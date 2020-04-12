@@ -1,5 +1,7 @@
 12.04.2020
 Updated appearance
+Fixed bug in shift logic 3
+Reduced gear hunting in shift logic 4
 
 11.04.2020
 Shift logic 5
