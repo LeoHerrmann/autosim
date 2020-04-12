@@ -248,7 +248,7 @@ button, select {
 	position: relative;
 	width: 100%;
 	height: 100%;
-	filter: drop-shadow(0 0 1vmin rgba(0,0,0,0.3));
+	filter: drop-shadow(0 0 1vw rgba(0,0,0,0.5));
 }
 
 #car .chassis {
@@ -313,5 +313,5 @@ button, select {
 	left: 0;
 	height: 30vh;
 	width: 100%;
-	box-shadow: 0 0 10vmin rgba(0,0,0,0.7);
+	box-shadow: 0 0 3vw rgba(0,0,0,0.5);
 }

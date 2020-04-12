@@ -268,6 +268,8 @@ function frame() {
 	    `<span>${(car.data.throttle * 100).toFixed(2) + "%"}</span>` +
 	    "<span>Bremse:</span>" +
 	    `<span>${car.data.brake * 100 + "%"}</span>` +
+	    "<span>Steigung:</span>" +
+	    `<span>${angle + "°"}; ${(Math.tan(angle * (2 * Math.PI) / 360) * 100).toFixed(2) + "%"}</span>` +
 	    "<span>FPS:</span>" +
 	    `<span>${current_frame_rate.toFixed(0)}`;
 
