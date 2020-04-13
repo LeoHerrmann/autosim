@@ -1,5 +1,5 @@
 body {
-	background-color: #05F;
+	background-color: #05B;
 	height: 100%;
 	font-family: sans-serif;
 	line-height: 1.3;
@@ -248,14 +248,15 @@ button, select {
 	position: relative;
 	width: 100%;
 	height: 100%;
-	filter: drop-shadow(0 0 1vw rgba(0,0,0,0.5));
+	filter: drop-shadow(0 0 0.75vw rgba(0,0,0,0.5));
 }
 
 #car .chassis {
 	position: absolute;
 	top: 0;
 	left: 0;
-	background-color: #FFF;
+	background-color: #9F9;
+	background-color: #FF0;
 	width: 100%;
 	height: 100%;
 	clip-path: polygon(56% 0, 74% 33%, 100% 36%, 100% 100%, 0 100%, 0 33%, 14% 33%, 25% 0);
@@ -266,7 +267,9 @@ button, select {
 	bottom: calc(-0.25vw * var(--scale));
 	width: calc(0.7vw * var(--scale));
 	height: calc(0.7vw * var(--scale));
-	background-color: #000;
+	background-color: #DEE;
+	border: calc(0.3vw * var(--scale) / 2) solid #000;
+	box-sizing: border-box;
 	border-radius: 50%;
 }
 #car .tyre:nth-child(2) {
@@ -283,7 +286,7 @@ button, select {
 	top: 70vh;
 	left: 0;
 	height: 30vh;
-	background-color: #0F0;
+	z-index: 20;
 	display: grid;
 	grid-template-columns: repeat(11, calc(10vw * var(--scale)));
 }
@@ -291,10 +294,7 @@ button, select {
 #street > .street_part {
     position: relative;
 	height: 100%;
-	background-color: #555;
-	box-sizing: border_box;
-	border: 1px solid #AAA 0 0 0;
-	z-index: 15;
+	background-color: #567;
 }
 
 #street > .street_part::before {

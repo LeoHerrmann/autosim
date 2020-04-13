@@ -1,13 +1,7 @@
-//10vw -> 10m
-//speed in m/s
-//frame_rate in ms
-
 /*
-Always shift up when redline is reached
-Always shift down when idle rpm is reached
-100% throttle: Shift for maximum acceleration -> when peak power is reached
-0% throttle: Shift to the gear that maintains current speed best. -> Downshift on downhills
-In between: Shift for maximum fuel economy; Go closer to redline the more throttle you give
+10vw -> 10m
+speed in m/s
+frame_rate in ms
 */
 
 
@@ -175,7 +169,6 @@ function frame() {
     car.data.throttle = parseInt(document.getElementById("throttle_input").value) / 100;
     car.data.brake = parseInt(document.getElementById("brake_input").value) / 100;
     angle = parseInt(document.getElementById("angle_input").value);
-    document.getElementById("container").style.transform = `rotate(${-angle}deg)`;
     autoshift = document.getElementById("autoshift_input").checked;
     aerodynamics = document.getElementById("aerodynamics_input").checked;
 
@@ -208,19 +201,18 @@ function frame() {
     }
 
 
-    //sound
-    if (sound === true) {
-        car.sound.update_sound();
-    }
-
-
     //automatic shifting
     if (autoshift == true) {
         //autoshift_logic_1(); //gut
-        //autoshift_logic_2();
         //autoshift_logic_3(); //gut
-        autoshift_logic_4();
+        autoshift_logic_4(); //gut
         //autoshift_logic_5();
+    }
+
+
+    //sound
+    if (sound === true) {
+        car.sound.update_sound();
     }
 
 
@@ -231,7 +223,7 @@ function frame() {
     var scale = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--scale'));
 
 	street.style.left = (street_position_relative - car.data.speed * frame_rate / 1000 * scale) % (10 * scale) + "vw";
-
+    document.getElementById("container").style.transform = `rotate(${-angle}deg)`;
 
 
     //frame rate calulation
@@ -243,7 +235,6 @@ function frame() {
     }
 
     frame_number += 1;
-
 
 
     //print information
