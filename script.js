@@ -247,14 +247,14 @@ function frame() {
 	    `<span>${car.data.gear}</span>` +
 	    "<span>Vorheriger Gang:</span>" +
 	    `<span>${car.data.previous_gear}</span>` +
+	    "<span>Shiftprogress:</span>" +
+	    `<span>${parseInt(car.data.shift_progress * 100) + "%"}</span>` +
 	    "<span>Beschleunigung:</span>" +
 	    `<span>${(calculator.acceleration(car)).toFixed(2)} m/s²</span>` +
 	    "<span>Motordrehmoment:</span>" +
 	    `<span>${car.engine_torque().toFixed(2)} Nm</span>` +
 	    "<span>Raddrehmoment:</span>" +
 	    `<span>${calculator.wheel_torque(car).toFixed(2)} Nm</span>` +
-	    "<span>Shiftprogress:</span>" +
-	    `<span>${parseInt(car.data.shift_progress * 100) + "%"}</span>` +
 	    "<span>Gas:</span>" +
 	    `<span>${(car.data.throttle * 100).toFixed(2) + "%"}</span>` +
 	    "<span>Bremse:</span>" +

@@ -48,20 +48,18 @@ var car = {
 
 
     shift_into_gear: function(gear_number) {
-        //if (car.data.gear != 1) {
-            var temp_car = JSON.parse(JSON.stringify(car));
-            temp_car.data.gear = gear_number;
+        var temp_car = JSON.parse(JSON.stringify(car));
+        temp_car.data.gear = gear_number;
 
-            if (calculator.rpm_from_speed(temp_car, temp_car.data.speed) <= car.data.rpm_limiter && calculator.rpm_from_speed(temp_car, temp_car.data.speed) >= car.data.idle_rpm) {
-                if (car.data.shift_progress == 1) {
-                    car.data.previous_gear = car.data.gear;
-                }
-                car.data.shift_progress = 0;
-                car.data.gear = gear_number;
-                car.data.rpm = calculator.rpm_from_speed(car, car.data.speed);
-                return true;
+        if (calculator.rpm_from_speed(temp_car, temp_car.data.speed) <= car.data.rpm_limiter && calculator.rpm_from_speed(temp_car, temp_car.data.speed) >= car.data.idle_rpm) {
+            if (car.data.shift_progress == 1) {
+                car.data.previous_gear = car.data.gear;
             }
-        //}
+            car.data.shift_progress = 0;
+            car.data.gear = gear_number;
+            car.data.rpm = calculator.rpm_from_speed(car, car.data.speed);
+            return true;
+        }
 
         return false;
     },

@@ -20,7 +20,7 @@ Variante 4
 gear_ratio_accel und gear_ratio_eco bestimmen
 Gang nehmen, der target_gear_ratio am nächsten kommt
 Problem: Gear hunting bergauf
-Lösung: aktuellen Gang bevorzugen
+Lösung: aktuellen Gang bevorzugen (nur bergauf?)
 
 Variante 5
 Gas bestimmt die Drehzahl
@@ -68,17 +68,25 @@ function autoshift_logic_5() {
 function autoshift_logic_4() {
     var accel_gear_ratio = (car.data.max_power_rpm * Math.PI * car.data.tire_diameter) / (60 * car.data.speed * car.data.final_drive);
 
+    if (accel_gear_ratio > car.data.gear_ratios[0]) {
+        accel_gear_ratio = car.data.gear_ratios[0];
+    }
+
+    else if (accel_gear_ratio < car.data.gear_ratios[car.data.gear_ratios.length - 1]) {
+        accel_gear_ratio = car.data.gear_ratios[car.data.gear_ratios.length - 1];
+    }
+
     var eco_gear_ratio = (car.data.idle_rpm / car.data.rpm) * car.data.gear_ratios[car.data.gear - 1];
 
+    if (eco_gear_ratio > car.data.gear_ratios[0]) {
+        eco_gear_ratio = car.data.gear_ratios[0];
+    }
+
+    else if (eco_gear_ratio < car.data.gear_ratios[car.data.gear_ratios.length - 1]) {
+        eco_gear_ratio = car.data.gear_ratios[car.data.gear_ratios.length - 1];
+    }
+
     var target_gear_ratio = (1 - car.data.throttle ** 2) * eco_gear_ratio + (car.data.throttle ** 2) * accel_gear_ratio;
-
-
-    if (target_gear_ratio < car.data.gear_ratios[car.data.gear_ratios.length - 1]) {
-        target_gear_ratio = car.data.gear_ratios[car.data.gear_ratios.length - 1];
-    }
-    else if (target_gear_ratio > car.data.gear_ratios[0]) {
-        target_gear_ratio = car.data.gear_ratios[0];
-    }
 
 
     var best_gear = car.data.gear;
@@ -88,7 +96,7 @@ function autoshift_logic_4() {
     for (let i = 0; i < car.data.gear_ratios.length; i++) {
         let difference = Math.abs(target_gear_ratio - car.data.gear_ratios[i]);
 
-        if (difference * 1 < smallest_difference && difference < current_difference * 0.7) {
+        if (difference < smallest_difference && difference < current_difference * 0.75) {
             best_gear = i + 1;
             smallest_difference = Math.abs(difference);
         }
@@ -99,6 +107,7 @@ function autoshift_logic_4() {
         if (car.data.gear != best_gear) {
             car.shift_into_gear(best_gear);
         }
+
         if (car.data.rpm >= car.data.rpm_limiter - 2) {
             car.shift_up();
         }
