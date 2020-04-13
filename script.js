@@ -14,7 +14,7 @@ var current_frame_rate = 0;
 const sound = true;
 var context = new AudioContext();
 
-const first_car_index = 0;
+const first_car_index = 1;
 
 var autoshift;
 var aerodynamics;
