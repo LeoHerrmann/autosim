@@ -110,8 +110,12 @@ var calculator = {
         return engine_rpm;
     },
 
-    wheel_torque: function(tcar) {
-        return car.engine_torque(tcar.data.rpm, tcar.data.throttle) * (tcar.data.shift_progress * tcar.data.gear_ratios[tcar.data.gear - 1] + (1 - tcar.data.shift_progress) * tcar.data.gear_ratios[tcar.data.previous_gear - 1]) * tcar.data.final_drive;
+    wheel_torque: function(tcar) { //smooth_shift_progress?
+        var smooth_shift_progress = Math.sin(tcar.data.shift_progress / 2 * Math.PI);
+    
+        return car.engine_torque(tcar.data.rpm, tcar.data.throttle) * (smooth_shift_progress * tcar.data.gear_ratios[tcar.data.gear - 1] + (1 - smooth_shift_progress) * tcar.data.gear_ratios[tcar.data.previous_gear - 1]) * tcar.data.final_drive;
+    
+        //return car.engine_torque(tcar.data.rpm, tcar.data.throttle) * (tcar.data.shift_progress * tcar.data.gear_ratios[tcar.data.gear - 1] + (1 - tcar.data.shift_progress) * tcar.data.gear_ratios[tcar.data.previous_gear - 1]) * tcar.data.final_drive;
     },
 
     wheel_force: function(tcar) {
