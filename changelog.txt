@@ -1,3 +1,6 @@
+17.04.2020
+Improved shift logic 5
+
 13.04.2020
 Reduction of gear hunting in shift logic 4
 Small correction concerning shift_progress
