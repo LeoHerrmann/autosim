@@ -30,40 +30,250 @@ Gas bestimmt die Drehzahl
 */
 
 
-function autoshift_logic_5() {
-    //var target_rpm = (1 - car.data.throttle ** 3) * car.data.idle_rpm + (car.data.throttle ** 3) * car.data.rpm_limiter;
-    var target_rpm = (1 - car.data.throttle ** 3) * (car.data.idle_rpm + 500) + (car.data.throttle ** 3) * car.data.rpm_limiter;
 
-    var best_gear = car.data.gear;
-    var smallest_difference = Math.abs(target_rpm - car.data.rpm);
-    var current_difference = smallest_difference;
+function autoshift_logic_5_3() {
+    if (car.data.shift_progress == 1) {
+        if (car.data.throttle < 0.02 && angle < 0) {
+            var angle_force = 1 * Math.sin(angle * Math.PI/180) * 9.81 * car.data.mass;
 
-    if (current_difference > 800 || car.data.throttle == 1) {
-        for (let i = 0; i < car.data.gear_ratios.length; i++) {
-            let temp_rpm = car.data.rpm * (car.data.gear_ratios[i] / car.data.gear_ratios[car.data.gear - 1]);
-            let temp_diff = Math.abs(target_rpm - temp_rpm);
+            angle_force -= (-1 * 0.5 * 1.23 * (car.data.speed ** 2) * car.data.drag_coefficient * car.data.frontal_area);
+            //angle_force *= 0.8;
 
-            if (temp_diff < smallest_difference) {
-                best_gear = i + 1;
-                smallest_difference = temp_diff;
+            var temp_car = JSON.parse(JSON.stringify(car));
+            temp_car.data.gear = car.data.gear_ratios.length;
+            temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
+            var wheel_force = calculator.wheel_force(temp_car);
+
+
+            var smallest_difference = wheel_force - angle_force;
+            var best_gear = temp_car.data.gear;
+
+
+            for (let i = 1; i <= car.data.gear_ratios.length; i++) {
+                temp_car.data.gear = i;
+                temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
+                var wheel_force = calculator.wheel_force(temp_car);
+                let difference = wheel_force - angle_force;
+
+                if (difference > 0 && difference < smallest_difference) {
+                    best_gear = i;
+                    smallest_difference = difference;
+                }
+            }
+
+
+            if (car.data.gear != best_gear) {
+                car.shift_into_gear(best_gear);
+            }
+        }
+
+
+
+        else {
+            did_shift = true;
+
+            while (did_shift) {
+                did_shift = false;
+
+
+                var maximum_sensible_rpm;
+
+                if (car.data.gear < car.data.gear_ratios.length) {
+                    maximum_sensible_rpm = (2 * car.data.gear_ratios[car.data.gear - 1] * car.data.max_torque_rpm * (1 * car.data.gear_ratios[car.data.gear] + 1 * car.data.gear_ratios[car.data.gear - 1])) / (car.data.gear_ratios[car.data.gear]**2 + car.data.gear_ratios[car.data.gear] * car.data.gear_ratios[car.data.gear - 1] + car.data.gear_ratios[car.data.gear - 1]**2);
+                }
+                else {
+                    maximum_sensible_rpm = (2 * car.data.gear_ratios[car.data.gear - 2] * car.data.max_torque_rpm * (1 * car.data.gear_ratios[car.data.gear - 1] + 1 * car.data.gear_ratios[car.data.gear - 2])) / (car.data.gear_ratios[car.data.gear - 1]**2 + car.data.gear_ratios[car.data.gear - 1] * car.data.gear_ratios[car.data.gear - 2] + car.data.gear_ratios[car.data.gear - 2]**2);
+                }
+
+                if (maximum_sensible_rpm > car.data.rpm_limiter) {
+                    maximum_sensible_rpm = car.data.rpm_limiter;
+                }
+
+
+                var target_rpm = (1 - car.data.throttle ** 3) * (car.data.idle_rpm) + (car.data.throttle ** 3) * maximum_sensible_rpm;
+
+                let temp_car = JSON.parse(JSON.stringify(car));
+                temp_car.data.shift_progress = 1;
+                temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
+
+                var best_gear = car.data.gear;
+                var current_difference = Math.abs(target_rpm - temp_car.data.rpm);
+                var gear_hunt_threshold = (car.data.rpm_limiter - car.data.idle_rpm) / 10;
+                var smallest_difference = current_difference;
+
+                if (current_difference > gear_hunt_threshold || car.data.throttle == 1) {
+                    for (let i = 0; i < car.data.gear_ratios.length; i++) {
+                        let temp_rpm = temp_car.data.rpm * (car.data.gear_ratios[i] / car.data.gear_ratios[temp_car.data.gear - 1]);
+
+                        let temp_diff = Math.abs(target_rpm - temp_rpm);
+
+                        if (temp_diff < smallest_difference) {
+                            best_gear = i + 1;
+                            smallest_difference = temp_diff;
+                        }
+                    }
+                }
+
+
+                if (frame_number == 40) {
+                    console.log(Math.round(target_rpm), Math.round(target_rpm - gear_hunt_threshold), Math.round(target_rpm + gear_hunt_threshold));
+                }
+
+
+                temp_car.data.gear = best_gear;
+                temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
+
+                if (car.data.gear < best_gear && temp_car.data.rpm > car.data.idle_rpm) {
+                    car.shift_up();
+                    did_shift = true;
+                }
+                else if (car.data.gear > best_gear && temp_car.data.rpm < maximum_sensible_rpm) {
+                    car.shift_down();
+                    did_shift = true;
+                }
+
+                if (car.data.rpm >= maximum_sensible_rpm) {
+                    car.shift_up();
+                }
+                else if (car.data.rpm < car.data.idle_rpm) {
+                    car.shift_down();
+                }
             }
         }
     }
+}
 
-    if (frame_number == 40) {
-        console.log(Math.round(target_rpm), Math.round(target_rpm - 800), Math.round(target_rpm + 800));
-    }
 
+
+function autoshift_logic_5_2() {
     if (car.data.shift_progress == 1) {
-        if (car.data.gear != best_gear) {
-            car.shift_into_gear(best_gear);
-        }
+        did_shift = true;
 
-        if (car.data.rpm >= car.data.rpm_limiter - 2) {
-            car.shift_up();
+        while (did_shift) {
+            did_shift = false;
+
+
+            var maximum_sensible_rpm;
+
+            if (car.data.gear < car.data.gear_ratios.length) {
+                maximum_sensible_rpm = (2 * car.data.gear_ratios[car.data.gear - 1] * car.data.max_torque_rpm * (1 * car.data.gear_ratios[car.data.gear] + 1 * car.data.gear_ratios[car.data.gear - 1])) / (car.data.gear_ratios[car.data.gear]**2 + car.data.gear_ratios[car.data.gear] * car.data.gear_ratios[car.data.gear - 1] + car.data.gear_ratios[car.data.gear - 1]**2);
+            }
+            else {
+                maximum_sensible_rpm = (2 * car.data.gear_ratios[car.data.gear - 2] * car.data.max_torque_rpm * (1 * car.data.gear_ratios[car.data.gear - 1] + 1 * car.data.gear_ratios[car.data.gear - 2])) / (car.data.gear_ratios[car.data.gear - 1]**2 + car.data.gear_ratios[car.data.gear - 1] * car.data.gear_ratios[car.data.gear - 2] + car.data.gear_ratios[car.data.gear - 2]**2);
+            }
+
+            if (maximum_sensible_rpm > car.data.rpm_limiter) {
+                maximum_sensible_rpm = car.data.rpm_limiter;
+            }
+
+
+            var target_rpm = (1 - car.data.throttle ** 3) * (car.data.idle_rpm) + (car.data.throttle ** 3) * maximum_sensible_rpm;
+
+            let temp_car = JSON.parse(JSON.stringify(car));
+            temp_car.data.shift_progress = 1;
+            temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
+
+            var best_gear = car.data.gear;
+            var current_difference = Math.abs(target_rpm - temp_car.data.rpm);
+            var gear_hunt_threshold = (car.data.rpm_limiter - car.data.idle_rpm) / 10;
+            var smallest_difference = current_difference;
+
+            if (current_difference > gear_hunt_threshold || car.data.throttle == 1) {
+                for (let i = 0; i < car.data.gear_ratios.length; i++) {
+                    let temp_rpm = temp_car.data.rpm * (car.data.gear_ratios[i] / car.data.gear_ratios[temp_car.data.gear - 1]);
+
+                    let temp_diff = Math.abs(target_rpm - temp_rpm);
+
+                    if (temp_diff < smallest_difference) {
+                        best_gear = i + 1;
+                        smallest_difference = temp_diff;
+                    }
+                }
+            }
+
+
+            if (frame_number == 40) {
+                console.log(Math.round(target_rpm), Math.round(target_rpm - gear_hunt_threshold), Math.round(target_rpm + gear_hunt_threshold));
+            }
+
+
+            temp_car.data.gear = best_gear;
+            temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
+
+            if (car.data.gear < best_gear && temp_car.data.rpm > car.data.idle_rpm) {
+                car.shift_up();
+                did_shift = true;
+            }
+            else if (car.data.gear > best_gear && temp_car.data.rpm < maximum_sensible_rpm) {
+                car.shift_down();
+                did_shift = true;
+            }
+
+            if (car.data.rpm >= maximum_sensible_rpm) {
+                car.shift_up();
+            }
+            else if (car.data.rpm < car.data.idle_rpm) {
+                car.shift_down();
+            }
         }
-        else if (car.data.rpm < car.data.idle_rpm) {
-            car.shift_down();
+    }
+}
+
+
+
+function autoshift_logic_5() {
+    if (car.data.shift_progress == 1) {
+        did_shift = true;
+
+        while (did_shift) {
+            did_shift = false;
+
+            var target_rpm = (1 - car.data.throttle ** 3) * (car.data.idle_rpm) + (car.data.throttle ** 3) * car.data.rpm_limiter;
+
+            let temp_car = JSON.parse(JSON.stringify(car));
+            temp_car.data.shift_progress = 1;
+            temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
+
+            var best_gear = car.data.gear;
+            var current_difference = Math.abs(target_rpm - temp_car.data.rpm);
+            var gear_hunt_threshold = (car.data.rpm_limiter - car.data.idle_rpm) / 10;
+            var smallest_difference = current_difference;
+
+            if (current_difference > gear_hunt_threshold || car.data.throttle == 1) {
+                for (let i = 0; i < car.data.gear_ratios.length; i++) {
+                    let temp_rpm = temp_car.data.rpm * (car.data.gear_ratios[i] / car.data.gear_ratios[temp_car.data.gear - 1]);
+                    let temp_diff = Math.abs(target_rpm - temp_rpm);
+
+                    if (temp_diff < smallest_difference) {
+                        best_gear = i + 1;
+                        smallest_difference = temp_diff;
+                    }
+                }
+            }
+
+            if (frame_number == 40) {
+                console.log(Math.round(target_rpm), Math.round(target_rpm - gear_hunt_threshold), Math.round(target_rpm + gear_hunt_threshold));
+            }
+
+
+            temp_car.data.gear = best_gear;
+            temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
+
+            if (car.data.gear < best_gear && temp_car.data.rpm > car.data.idle_rpm) {
+                car.shift_up();
+                did_shift = true;
+            }
+            else if (car.data.gear > best_gear && temp_car.data.rpm < car.data.rpm_limiter) {
+                car.shift_down();
+                did_shift = true;
+            }
+
+            if (car.data.rpm >= car.data.rpm_limiter - 1) {
+                car.shift_up();
+            }
+            else if (car.data.rpm < car.data.idle_rpm) {
+                car.shift_down();
+            }
         }
     }
 }

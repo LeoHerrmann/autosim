@@ -208,7 +208,9 @@ function frame() {
         //autoshift_logic_1(); //gut
         //autoshift_logic_4(); //gut
         //autoshift_logic_3(); //interessant
-        autoshift_logic_5(); //Alternative zu 1
+        //autoshift_logic_5(); //Alternative zu 1
+        //autoshift_logic_5_2(); //5, aber mit besserer Maximalbeschleunigung
+        autoshift_logic_5_3(); //5_2, aber mit Motorbremse
     }
 
 
