@@ -113,7 +113,19 @@ var calculator = {
     wheel_torque: function(tcar) {
         var smooth_shift_progress = Math.sin(tcar.data.shift_progress / 2 * Math.PI);
 
-        return car.engine_torque(tcar.data.rpm, tcar.data.throttle) * (smooth_shift_progress * tcar.data.gear_ratios[tcar.data.gear - 1] + (1 - smooth_shift_progress) * tcar.data.gear_ratios[tcar.data.previous_gear - 1]) * tcar.data.final_drive;
+        var temp_car = JSON.parse(JSON.stringify(car));
+        temp_car.data.shift_progress = 1;
+        temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
+
+        var engine_rpm_new = temp_car.data.rpm;
+        var engine_rpm_old = temp_car.data.rpm * (car.data.gear_ratios[car.data.previous_gear - 1] / car.data.gear_ratios[car.data.gear - 1]);
+
+        var wheel_torque_new = car.engine_torque(engine_rpm_new, tcar.data.throttle) * tcar.data.gear_ratios[tcar.data.gear - 1] * car.data.final_drive;
+        var wheel_torque_old = car.engine_torque(engine_rpm_old, tcar.data.throttle) * tcar.data.gear_ratios[tcar.data.previous_gear - 1] * car.data.final_drive;
+
+        var wheel_torque = (1 - smooth_shift_progress) * wheel_torque_old + smooth_shift_progress * wheel_torque_new;
+
+        return wheel_torque; 
     },
 
     wheel_force: function(tcar) {
