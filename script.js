@@ -16,7 +16,6 @@ var context = new AudioContext();
 
 const first_car_index = 1;
 
-var autoshift;
 var aerodynamics;
 var angle = 0;
 
@@ -183,7 +182,6 @@ function frame() {
     car.data.throttle = parseInt(document.getElementById("throttle_input").value) / 100;
     car.data.brake = parseInt(document.getElementById("brake_input").value) / 100;
     angle = parseInt(document.getElementById("angle_input").value);
-    autoshift = document.getElementById("autoshift_input").checked;
     aerodynamics = document.getElementById("aerodynamics_input").checked;
 
 
@@ -216,13 +214,24 @@ function frame() {
 
 
     //automatic shifting
-    if (autoshift == true) {
-        //autoshift_logic_1(); //gut
-        //autoshift_logic_4(); //gut
-        //autoshift_logic_3(); //interessant
-        //autoshift_logic_5(); //Alternative zu 1
-        //autoshift_logic_5_2(); //5, aber mit besserer Maximalbeschleunigung
-        autoshift_logic_5_3(); //5_2, aber mit Motorbremse
+    var strategy_input_value = document.getElementById("strategy_select").value;
+
+    switch (strategy_input_value) {
+        case "r1":
+            autoshift_logic_5();
+            break;
+        case "r2":
+            autoshift_logic_5_2(); //5, aber mit besserer Maximalbeschleunigung
+            break;
+        case "r3":
+            autoshift_logic_5_3(); //5_2, aber mit Motorbremse
+            break;
+        case "g1":
+            autoshift_logic_4(); //gut
+            break;
+        case "a1":
+            autoshift_logic_3(); //interessant
+            break;
     }
 
 

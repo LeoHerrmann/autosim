@@ -1,3 +1,6 @@
+19.04.2020
+Shift strategy input
+
 18.04.2020
 Improved shift logic 5
 Correction of behaviour of wheel torque during shifting

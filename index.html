@@ -49,38 +49,46 @@
 
 
 		<div id="environment_controls_box">
-			<h2>Andere</h2>
+			<h2>Umgebung</h2>
 
 
 			<div class="input_set">
-				<label>Steigung</label>
+				<label for="angle_input">Steigung</label>
 				<input id="angle_input" type="range" min="-26" max="26" step="2" value="0"/>
 			</div>
 
 
 			<div class="input_set">
-				<label>Aerodynamik</label>
+				<label for="aerodynamics_input">Aerodynamik</label>
 				<input id="aerodynamics_input" type="checkbox" checked/>
 			</div>
-
-
-			<select id="car_select"></select>
 		</div>
 
 
 
 		<div id="car_controls_box">
-			<h2>Auto</h2>
+			<h2>Fahrzeug</h2>
+
+
+			<div id="selects_container">
+				<label for="car_select">Fahrzeug: </label>
+				<select id="car_select"></select>
+
+
+				<label for="strategy_select">Strategie: </label>
+				<select id="strategy_select">
+					<option value="0">Manuell</option>
+					<option value="r1">Drehzahl 1</option>
+					<option value="r2">Drehzahl 2</option>
+					<option value="r3" selected="selected">Drehzahl 3</option>
+					<option value="g1">Übersetzung</option>
+					<option value="a1">Beschleunigung</option>
+				</select>
+			</div>
 
 			<div class="controls">
 				<div id="other_controls_container">
 					<button onclick="car.start();">Start</button>
-
-
-					<div class="input_set">
-						<label>Autoshift</label>
-						<input id="autoshift_input" type="checkbox" checked/>
-					</div>
 				</div>
 
 
@@ -93,13 +101,13 @@
 				<div id="pedals_container">
 					<div class="input_set">
 						<input id="brake_input" type="range" min="0" max="100" value="0" orient="vertical"/>
-						<label>Bremse</label>
+						<label for="brake_input">Bremse</label>
 					</div>
 
 
 					<div class="input_set">
 						<input id="throttle_input" type="range" min="1" max="100" value="0" orient="vertical"/>
-						<label>Gas</label>
+						<label for="throttle_input">Gas</label>
 					</div>
 				</div>
 			</div>

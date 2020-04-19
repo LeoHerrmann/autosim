@@ -162,9 +162,15 @@ button, select {
 
 #car_controls_box {
 	bottom: 0;
-	height: 150px;
+	height: 250px;
 	display: flex;
 	flex-direction: column;
+}
+
+#car_controls_box > #selects_container {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	align-items: center;
 }
 
 #car_controls_box > .controls {
@@ -215,11 +221,7 @@ button, select {
 
 
 #environment_controls_box {
-	bottom: 150px;
-}
-
-#environment_controls_box > select {
-	width: 100%;
+	bottom: 250px;
 }
 
 
