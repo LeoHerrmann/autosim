@@ -112,7 +112,7 @@ var calculator = {
     wheel_torque: function(tcar) {
         var smooth_shift_progress = Math.sin(tcar.data.shift_progress / 2 * Math.PI);
 
-        var temp_car = JSON.parse(JSON.stringify(car));
+        var temp_car = JSON.parse(JSON.stringify(tcar));
         temp_car.data.shift_progress = 1;
         temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
 

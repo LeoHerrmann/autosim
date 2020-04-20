@@ -34,10 +34,7 @@ Gas bestimmt die Drehzahl
 function autoshift_logic_5_3() {
     if (car.data.shift_progress == 1) {
         if (car.data.throttle < 0.02 && angle < 0) {
-            var angle_force = 1 * Math.sin(angle * Math.PI/180) * 9.81 * car.data.mass;
-
-            angle_force -= (-1 * 0.5 * 1.23 * (car.data.speed ** 2) * car.data.drag_coefficient * car.data.frontal_area);
-            //angle_force *= 0.8;
+            var angle_force = -1 * Math.sin(angle * Math.PI/180) * 9.81 * car.data.mass;
 
             var temp_car = JSON.parse(JSON.stringify(car));
             temp_car.data.gear = car.data.gear_ratios.length;
@@ -45,22 +42,21 @@ function autoshift_logic_5_3() {
             var wheel_force = calculator.wheel_force(temp_car);
 
 
-            var smallest_difference = wheel_force - angle_force;
+            var smallest_difference = angle_force + wheel_force ;
             var best_gear = temp_car.data.gear;
 
 
             for (let i = 1; i <= car.data.gear_ratios.length; i++) {
                 temp_car.data.gear = i;
                 temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
-                var wheel_force = calculator.wheel_force(temp_car);
-                let difference = wheel_force - angle_force;
+                wheel_force = calculator.wheel_force(JSON.parse(JSON.stringify(temp_car)));
+                let difference = angle_force + wheel_force;
 
-                if (difference > 0 && difference < smallest_difference) {
+                if (difference >= 0 && Math.abs(difference) < Math.abs(smallest_difference)) {
                     best_gear = i;
                     smallest_difference = difference;
                 }
             }
-
 
             if (car.data.gear != best_gear) {
                 car.shift_into_gear(best_gear);
