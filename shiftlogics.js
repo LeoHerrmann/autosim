@@ -119,11 +119,12 @@ function autoshift_logic_5_3() {
                 temp_car.data.gear = best_gear;
                 temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
 
+
                 if (car.data.gear < best_gear && temp_car.data.rpm > car.data.idle_rpm) {
                     car.shift_up();
                     did_shift = true;
                 }
-                else if (car.data.gear > best_gear && temp_car.data.rpm < maximum_sensible_rpm) {
+                else if (car.data.gear > best_gear && temp_car.data.rpm <= maximum_sensible_rpm) {
                     car.shift_down();
                     did_shift = true;
                 }
@@ -200,7 +201,7 @@ function autoshift_logic_5_2() {
                 car.shift_up();
                 did_shift = true;
             }
-            else if (car.data.gear > best_gear && temp_car.data.rpm < maximum_sensible_rpm) {
+            else if (car.data.gear > best_gear && temp_car.data.rpm <= maximum_sensible_rpm) {
                 car.shift_down();
                 did_shift = true;
             }
