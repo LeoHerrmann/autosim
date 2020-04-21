@@ -1,3 +1,6 @@
+21.04.2020
+Restructured car_data.js
+
 20.04.2020
 Bug Fix concerning calculator.wheel_torque
 Fixed shift_logic_5_3 and shift_logic_2 not behaving correctly under full load

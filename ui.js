@@ -18,7 +18,7 @@ window.addEventListener("load", function() {
     var car_select = document.getElementById("car_select");
 
     for (let car_index in car_data) {
-        let car_name = car_data[car_index].data.name;
+        let car_name = car_data[car_index].properties.name;
         car_select.innerHTML += `<option value='${car_index}'>${car_name}</option>`;
     }
 
