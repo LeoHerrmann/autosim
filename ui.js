@@ -26,6 +26,19 @@ window.addEventListener("load", function() {
 
     car_select.addEventListener("change", function(event) {
         var car_index = event.target.value;
-        change_car(car_index);
+
+        car.properties = car_data[car_index].properties;
+        car.data.rpm = car.properties.idle_rpm;
+        car.data.gear = 1;
+        car.data.shift_progress = 1;
+        car.data.speed = calculator.speed_from_rpm(car, car.data.rpm);
+
+        context.close();
+        context = new AudioContext();
+        car.sound = car_data[car_index].sound;
+        car.sound.setup_sound();
+
+        gauges.clear();
+        gauges.initialize();
     });
 });

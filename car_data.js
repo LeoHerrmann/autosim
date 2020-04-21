@@ -15,7 +15,7 @@ const car_data = [
             idle_throttle: 0.15,
             drag_coefficient: 0.35,
             frontal_area: 1.94,
-            maximum_braking_force: 10000,
+            maximum_brake_deceleration: 10
         },
 
         sound: {
@@ -82,7 +82,7 @@ const car_data = [
             idle_throttle: 0.075,
             drag_coefficient: 0.29,
             frontal_area: 2.01, 
-            maximum_braking_force: 10000,
+            maximum_brake_deceleration: 10
         },
 
         sound: {

@@ -1,11 +1,3 @@
-/*
-10vw -> 10m
-speed in m/s
-frame_rate in ms
-*/
-
-
-
 const frame_rate = 1000 / 60;
 var frame_number = 0;
 var first_frame_date = Date.now();
@@ -16,7 +8,7 @@ var context = new AudioContext();
 
 const first_car_index = 1;
 
-var aerodynamics;
+var aerodynamics = true;
 var angle = 0;
 
 
@@ -132,7 +124,7 @@ var calculator = {
     },
 
     acceleration: function(tcar) {
-        var car_accel = (calculator.wheel_force(tcar) - tcar.properties.maximum_braking_force * tcar.data.brake) / tcar.properties.mass;
+        var car_accel = (calculator.wheel_force(tcar)) / tcar.properties.mass - tcar.data.brake * tcar.properties.maximum_brake_deceleration;
 
         var angle_accel = -1 * Math.sin(angle * Math.PI/180) * 9.81;
         var air_accel = 0;
@@ -144,22 +136,6 @@ var calculator = {
         return car_accel + angle_accel + air_accel;
     }
 };
-
-
-
-function change_car(car_index) {
-    car.properties = car_data[car_index].properties;
-    car.data.rpm = car.properties.idle_rpm;
-    car.data.speed = calculator.speed_from_rpm(car, car.data.rpm);
-
-    context.close();
-    context = new AudioContext();
-    car.sound = car_data[car_index].sound;
-    car.sound.setup_sound();
-
-    gauges.clear();
-    gauges.initialize();
-}
 
 
 

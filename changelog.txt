@@ -2,6 +2,7 @@
 Restructured car_data.js
 Bug fix concerning shift_logic_5_x
 Removed obsolete shift_logic_1
+Replaced maximum_braking_force with maximum_brake_deceleration
 
 20.04.2020
 Bug Fix concerning calculator.wheel_torque
