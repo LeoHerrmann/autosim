@@ -34,6 +34,10 @@ Gas bestimmt die Drehzahl
 function autoshift_logic_5_3() {
     if (car.data.shift_progress == 1) {
         if (car.data.throttle < 0.02 && angle < 0) {
+            if (car.data.brake != 0) {
+                return false;
+            }
+
             var angle_force = -1 * Math.sin(angle * Math.PI/180) * 9.81 * car.data.mass;
 
             var temp_car = JSON.parse(JSON.stringify(car));
