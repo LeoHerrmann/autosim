@@ -107,7 +107,7 @@ function autoshift_logic_5_3() {
 
                         let temp_diff = Math.abs(target_rpm - temp_rpm);
 
-                        if (temp_diff < smallest_difference) {
+                        if (temp_diff < smallest_difference && temp_rpm < maximum_sensible_rpm) {
                             best_gear = i + 1;
                             smallest_difference = temp_diff;
                         }
@@ -123,6 +123,10 @@ function autoshift_logic_5_3() {
                 temp_car.data.gear = best_gear;
                 temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
 
+
+                if (frame_number == 40) {
+                    console.log(best_gear, temp_car.data.rpm);
+                }
 
                 if (car.data.gear < best_gear && temp_car.data.rpm > car.properties.idle_rpm) {
                     car.shift_up();
@@ -185,7 +189,7 @@ function autoshift_logic_5_2() {
 
                     let temp_diff = Math.abs(target_rpm - temp_rpm);
 
-                    if (temp_diff < smallest_difference) {
+                        if (temp_diff < smallest_difference && temp_rpm < maximum_sensible_rpm) {
                         best_gear = i + 1;
                         smallest_difference = temp_diff;
                     }
@@ -245,7 +249,7 @@ function autoshift_logic_5() {
                     let temp_rpm = temp_car.data.rpm * (car.properties.gear_ratios[i] / car.properties.gear_ratios[temp_car.data.gear - 1]);
                     let temp_diff = Math.abs(target_rpm - temp_rpm);
 
-                    if (temp_diff < smallest_difference) {
+                    if (temp_diff < smallest_difference && temp_rpm < car.properties.rpm_limiter) {
                         best_gear = i + 1;
                         smallest_difference = temp_diff;
                     }
@@ -432,99 +436,5 @@ function autoshift_logic_3() {
         else if (car.data.rpm < car.properties.idle_rpm) {
             car.shift_down();
         }
-    }
-}
-
-
-
-
-
-
-function autoshift_logic_1() {
-    var sportiness = car.data.throttle ** 3;
-    var up_down_offset = 0;
-
-
-    if (car.data.throttle != 1) {
-        var deceleration;
-
-        var angle_accel = -1 * Math.sin(angle * Math.PI/180) * 9.81;
-        var air_accel = 0;
-
-        if (aerodynamics === true) {
-            air_accel = (-1 * 0.5 * 1.23 * (car.data.speed ** 2) * car.properties.drag_coefficient * car.properties.frontal_area) / car.properties.mass;
-        }
-
-        deceleration = -1 * angle_accel + -1 * air_accel;
-
-
-        /*if (frame_number % 40 == 0) {
-            console.log(deceleration);
-        }*/
-
-        if (deceleration > 0.75) {
-            up_down_offset = car.properties.rpm_limiter / 5;
-        }
-        else if (deceleration > 0.5) {
-            up_down_offset = car.properties.rpm_limiter / 7.5;
-        }
-        else {
-            up_down_offset = car.properties.rpm_limiter / 10;
-        }
-    }
-
-
-    if (car.data.shift_progress == 1) {
-        var did_shift = true;
-
-        while (did_shift == true) {
-           did_shift = false;
-
-            var acceleration_upshift = (2 * car.properties.gear_ratios[car.data.gear - 1] * car.properties.max_torque_rpm * (car.data.throttle * car.properties.gear_ratios[car.data.gear] + car.data.throttle * car.properties.gear_ratios[car.data.gear - 1])) / (car.properties.gear_ratios[car.data.gear]**2 + car.properties.gear_ratios[car.data.gear] * car.properties.gear_ratios[car.data.gear - 1] + car.properties.gear_ratios[car.data.gear - 1]**2);
-
-            if (acceleration_upshift > car.properties.rpm_limiter) {
-                acceleration_upshift = car.properties.rpm_limiter - 1;
-            }
-
-            var eco_upshift = (car.properties.idle_rpm + up_down_offset) * (car.properties.gear_ratios[car.data.gear - 1] / car.properties.gear_ratios[car.data.gear]);
-
-            var upshift = (1 - sportiness) * eco_upshift + sportiness * acceleration_upshift;
-
-            var temp_car = JSON.parse(JSON.stringify(car));
-            temp_car.data.shift_progress = 1;
-
-            if (calculator.rpm_from_speed(temp_car, car.data.speed) >= upshift) {
-                did_shift = car.shift_up();
-            }
-        }
-    }
-
-
-    if (car.data.shift_progress == 1) {
-        var did_shift = true;
-
-        while (did_shift == true) {
-            did_shift = false;
-
-            var acceleration_downshift = (2 * car.properties.gear_ratios[car.data.gear - 1] * car.properties.max_torque_rpm * (car.data.throttle * car.properties.gear_ratios[car.data.gear - 2] + car.data.throttle * car.properties.gear_ratios[car.data.gear - 1])) / (car.properties.gear_ratios[car.data.gear - 2]**2 + car.properties.gear_ratios[car.data.gear - 2] * car.properties.gear_ratios[car.data.gear - 1] + car.properties.gear_ratios[car.data.gear - 1]**2) - up_down_offset;
-
-            if (acceleration_downshift < car.properties.idle_rpm) {
-                acceleration_downshift = car.properties.idle_rpm;
-            }
-
-            var eco_downshift = car.properties.idle_rpm;
-
-            var downshift = (1 - sportiness) * eco_downshift + sportiness * acceleration_downshift;
-            var temp_car = JSON.parse(JSON.stringify(car));
-            temp_car.data.shift_progress = 1;
-
-            if (calculator.rpm_from_speed(temp_car, car.data.speed) <= downshift) {
-                did_shift = car.shift_down();
-            }
-        }
-    }
-
-    if (frame_number % 10 == 0) {
-        console.log(upshift, downshift);
     }
 }
