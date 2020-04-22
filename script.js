@@ -9,6 +9,7 @@ var context = new AudioContext();
 const first_car_index = 1;
 
 var aerodynamics = true;
+var rolling_resistance = true;
 var angle = 0;
 
 
@@ -128,12 +129,17 @@ var calculator = {
 
         var angle_accel = -1 * Math.sin(angle * Math.PI/180) * 9.81;
         var air_accel = 0;
+        var rolling_accel = 0;
 
         if (aerodynamics === true) {
             air_accel = (-1 * 0.5 * 1.23 * (tcar.data.speed ** 2) * tcar.properties.drag_coefficient * tcar.properties.frontal_area) / tcar.properties.mass;
         }
 
-        return car_accel + angle_accel + air_accel;
+        if (rolling_resistance === true) {
+            rolling_accel = -1 * (0.01 * Math.cos((angle * 2 * Math.PI) / 360) * tcar.properties.mass * 9.81) / tcar.properties.mass;
+        }
+
+        return car_accel + angle_accel + air_accel + rolling_accel;
     }
 };
 
@@ -164,6 +170,7 @@ function frame() {
     car.data.brake = parseInt(document.getElementById("brake_input").value) / 100;
     angle = parseInt(document.getElementById("angle_input").value);
     aerodynamics = document.getElementById("aerodynamics_input").checked;
+    rolling_resistance = document.getElementById("rolling_resistance_input").checked;
 
 
     //adjust shift progress

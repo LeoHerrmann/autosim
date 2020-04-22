@@ -1,3 +1,6 @@
+22.04.2020
+Implementation of rolling resistance
+
 21.04.2020
 Restructured car_data.js
 Bug fix concerning shift_logic_5_x

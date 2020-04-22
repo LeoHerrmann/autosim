@@ -1,36 +1,3 @@
-/*
-Variante 1
-Drehzahlen zum hoch und runterschaten werden bestimmt
-Runterschalten, wenn unter Runterdrehzahl; hochschalten, wenn über Hochdrehzahl
-Problem: Gear hunting bergauf
-Lösung: up_down_offset
-Problem: Ineffizienz
-Lösung: up_down_offset mit incline vergrößern?
-
-Variante 3
-gear_ratio_accel wird bestimmt
-target_acceleration bestimmen mit Gas
-Gang nehmen, der target_acceleration am nächsten kommt
-Problem: Komisches Schaltverhalten bei konstantem Gas
-Lösung: geringere Potenz nach car.throttle
-Problem: Ineffizienz Bergauf
-Lösung: Drehzahlbegrenzer bei Teillast runterstellen?
-
-Variante 4
-gear_ratio_accel und gear_ratio_eco bestimmen
-Gang nehmen, der target_gear_ratio am nächsten kommt
-Problem: Gear hunting bergauf
-Lösung: aktuellen Gang bevorzugen
-Problem: Ineffizienz bergauf und bei hohen Geschwindigkeiten
-Lösung: Faktor mit Fahrwiderstand erhöhen
-Verbesserung: Mehrere Target gear ratios bestimmen und dazwischen ist okay?
-
-Variante 5
-Gas bestimmt die Drehzahl
-*/
-
-
-
 function autoshift_logic_5_3() {
     if (car.data.shift_progress == 1) {
         if (car.data.throttle < 0.02 && angle < 0) {
