@@ -1,5 +1,6 @@
 22.04.2020
 Implementation of rolling resistance
+Adjustment of sound volume
 
 21.04.2020
 Restructured car_data.js
