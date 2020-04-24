@@ -65,7 +65,7 @@ function autoshift_logic_5_3() {
 
                 var best_gear = car.data.gear;
                 var current_difference = Math.abs(target_rpm - temp_car.data.rpm);
-                var gear_hunt_threshold = (car.properties.rpm_limiter - car.properties.idle_rpm) / 10;
+                var gear_hunt_threshold = (car.properties.rpm_limiter - car.properties.idle_rpm) / 8;
                 var smallest_difference = current_difference;
 
                 if (current_difference > gear_hunt_threshold || car.data.throttle == 1) {
@@ -147,7 +147,7 @@ function autoshift_logic_5_2() {
 
             var best_gear = car.data.gear;
             var current_difference = Math.abs(target_rpm - temp_car.data.rpm);
-            var gear_hunt_threshold = (car.properties.rpm_limiter - car.properties.idle_rpm) / 10;
+            var gear_hunt_threshold = (car.properties.rpm_limiter - car.properties.idle_rpm) / 8;
             var smallest_difference = current_difference;
 
             if (current_difference > gear_hunt_threshold || car.data.throttle == 1) {
@@ -208,7 +208,7 @@ function autoshift_logic_5() {
 
             var best_gear = car.data.gear;
             var current_difference = Math.abs(target_rpm - temp_car.data.rpm);
-            var gear_hunt_threshold = (car.properties.rpm_limiter - car.properties.idle_rpm) / 10;
+            var gear_hunt_threshold = (car.properties.rpm_limiter - car.properties.idle_rpm) / 8;
             var smallest_difference = current_difference;
 
             if (current_difference > gear_hunt_threshold || car.data.throttle == 1) {
