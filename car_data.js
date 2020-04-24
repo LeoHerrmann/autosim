@@ -1,10 +1,11 @@
 const car_data = [
     {
+        //1985 Mercedes-Benz 190 D; 1997ccm² Diesel; 4-speed automatic
         properties: {
-            name: "Mercedes-Benz W201 1997ccm² Diesel",
+            name: "1985 Mercedes-Benz 190 D",
             gear_ratios: [4.25, 2.41, 1.49, 1.0],
             shift_time: 0.7,
-            final_drive: 3.07,
+            final_drive: 3.23,
             tire_diameter: 0.6,
             mass: 1290,
             max_torque: 122,
@@ -67,8 +68,9 @@ const car_data = [
 
 
     {
+        //2012 Porsche 911 Carrera Coupe PDK
         properties: {
-            name: "Porsche 911 991 Carrera", 
+            name: "2012 Porsche 911 Carrera", 
             gear_ratios: [3.91, 2.29, 1.65, 1.3, 1.08, 0.88, 0.62],
             shift_time: 0.2,
             final_drive: 3.44,
