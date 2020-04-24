@@ -1,5 +1,6 @@
 24.04.2020
 Reduction of gear hunting on steep slopes on shift_logic_5_x
+Small UI improvements
 
 22.04.2020
 Implementation of rolling resistance

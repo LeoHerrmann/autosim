@@ -169,8 +169,14 @@ button, select {
 
 #car_controls_box > #selects_container {
 	display: grid;
-	grid-template-columns: 1fr auto;
+	grid-template-columns: auto 1fr;
+	justify-items: left;
+	grid-gap: 0 1ch;
 	align-items: center;
+}
+
+#car_controls_box > #selects_container select {
+	width: 100%;
 }
 
 #car_controls_box > .controls {
@@ -223,6 +229,16 @@ button, select {
 #environment_controls_box {
 	bottom: 250px;
 }
+#resistance_inputs {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-gap: 0 1ch;
+	justify-items: left;
+}
+#resistance_inputs input[type="range"] {
+	width: 90%;
+}
+
 
 
 
