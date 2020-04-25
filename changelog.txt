@@ -1,5 +1,6 @@
 25.04.2020
 More efficient way of saving sound data
+Improved sound
 
 24.04.2020
 Reduction of gear hunting on steep slopes on shift_logic_5_x
