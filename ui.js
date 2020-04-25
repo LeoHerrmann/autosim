@@ -35,7 +35,6 @@ window.addEventListener("load", function() {
 
         context.close();
         context = new AudioContext();
-        car.sound = car_data[car_index].sound;
         car.sound.setup_sound();
 
         gauges.clear();

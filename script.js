@@ -6,7 +6,7 @@ var current_frame_rate = 0;
 const sound = true;
 var context = new AudioContext();
 
-const first_car_index = 1;
+const first_car_index = 0;
 
 var aerodynamics = true;
 var rolling_resistance = true;
@@ -147,7 +147,6 @@ var calculator = {
 
 window.onload = function() {
     car.properties = car_data[first_car_index].properties;
-    car.sound = car_data[first_car_index].sound;
 
 	gauges.initialize();
 

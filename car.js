@@ -89,5 +89,29 @@ var car = {
         previous_gear: 1,
         throttle: 0.01,
         brake: 0.01
+    },
+
+    sound: {
+        oscillators: [],
+        gains: [],
+        setup_sound: function() {
+            for (let i = 0; i < car.properties.sound.frequencies.length; i++) {
+                car.sound.oscillators[i] = context.createOscillator();
+                car.sound.gains[i] = context.createGain();
+                car.sound.oscillators[i].connect(car.sound.gains[i]);
+                car.sound.gains[i].connect(context.destination);
+                car.sound.oscillators[i].type = "sine";
+                car.sound.oscillators[i].frequency.value = car.data.rpm / 60 / 2 * car.properties.cylinder_count * car.properties.sound.frequencies[i];
+                car.sound.gains[i].gain.value = car.properties.sound.base_gains[i] + car.data.throttle * car.properties.sound.throttle_gains[i];
+                car.sound.oscillators[i].start(0);
+            }
+        },
+
+        update_sound: function() {
+            for (let i = 0; i < car.properties.sound.frequencies.length; i++) {
+                car.sound.oscillators[i].frequency.value = car.data.rpm / 60 / 2 * car.properties.cylinder_count * car.properties.sound.frequencies[i];
+                car.sound.gains[i].gain.value = car.properties.sound.base_gains[i] + car.data.throttle * car.properties.sound.throttle_gains[i];
+            }
+        }
     }
 };
