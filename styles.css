@@ -24,33 +24,37 @@ button, select {
 
 
 
-#info_box, #car_controls_box, #environment_controls_box {
+#menu {
 	position: fixed;
+	width: 100%;
+	max-width: 400px;
+	height: 100%;
+	top: 0;
+	right: 0;
 	z-index: 10;
 	background-color: rgba(0,0,0,0.5);
 	box-sizing: border-box;
-	width: 100%;
-	max-width: 400px;
-	right: 0;
+	flex-direction: column;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
-#info_box {
-	top: 0;
+#menu .submenu_header {
+	display: flex;
+	align-items: center;
 }
 
-#info_box > span {
-	display: block;
+.submenu_header > h2 {
+	flex-grow: 1;
 }
 
-#info_box > button {
-	width: 100%;
+.submenu_header > button {
+	width: 50px;
+	height: 50px;
 }
 
-#additional_info_container {
-	display: none;
-	/*display: grid;*/
-	grid-template-columns: auto 1fr;
-	grid-gap: 0 1ch;
+.submenu_content.closed {
+	display: none !important;
 }
 
 
@@ -160,14 +164,34 @@ button, select {
 
 
 
-#car_controls_box {
-	bottom: 0;
-	height: 250px;
+#info_submenu > #additional_info_container {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-gap: 0 1ch;
+}
+
+
+
+#resistances_submenu > .submenu_content {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-gap: 0 1ch;
+	justify-items: left;
+}
+
+#resistances_submenu > .submenu_content > input[type="range"] {
+	width: 90%;
+}
+
+
+
+
+#car_submenu > .submenu_content {
 	display: flex;
 	flex-direction: column;
 }
 
-#car_controls_box > #selects_container {
+#selects_container {
 	display: grid;
 	grid-template-columns: auto 1fr;
 	justify-items: left;
@@ -175,21 +199,13 @@ button, select {
 	align-items: center;
 }
 
-#car_controls_box > #selects_container select {
+#selects_container select {
 	width: 100%;
 }
 
-#car_controls_box > .controls {
+#car_controls {
 	display: flex;
 	flex-grow: 1;
-}
-
-#other_controls_container {
-	flex-grow: 1;
-}
-
-#other_controls_container > button {
-	width: 100%;
 }
 
 #pedals_container {
@@ -202,6 +218,7 @@ button, select {
 	flex-direction: column;
 	text-align: center;
 	width: 75px;
+	min-height: 150px;
 }
 
 #pedals_container input, [orient="vertical"] {
@@ -210,34 +227,16 @@ button, select {
 	height: 50px;
 }
 
-#car_controls_box #shift_button_container {
+#car_submenu #shift_button_container {
 	display: flex;
 	flex-direction: column;
 	width: 100px;
 }
 
-#car_controls_box #shift_button_container > button {
+#car_submenu #shift_button_container > button {
 	flex-grow: 1;
 }
 
-#car_controls_box button {
-	height: 50px;
-}
-
-
-
-#environment_controls_box {
-	bottom: 250px;
-}
-#resistance_inputs {
-	display: grid;
-	grid-template-columns: auto 1fr;
-	grid-gap: 0 1ch;
-	justify-items: left;
-}
-#resistance_inputs input[type="range"] {
-	width: 90%;
-}
 
 
 

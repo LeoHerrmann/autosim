@@ -15,59 +15,80 @@
 
 
 	<body>
-		<div id="info_box">
-			<h2>Info</h2>
 
+		<div id="menu">
 
-			<div id="instrument_cluster">
-				<div class="gauge_container">
-					<div id="rpm_gauge" class="gauge">
-						<div class="needle current_needle"><span></span></div>
-						<div class="center"></div>
-					</div>
+			<div id="instruments_submenu">
+				<div class="submenu_header">
+					<h2>Instrumente</h2>
+					<button>-</button>
 				</div>
 
 
-				<div class="gauge_container">
-					<div id="speed_gauge" class="gauge">
-						<div class="needle current_needle"><span></span></div>
-						<div class="center"></div>
+				<div class="submenu_content">
+					<div id="instrument_cluster">
+						<div class="gauge_container">
+							<div id="rpm_gauge" class="gauge">
+								<div class="needle current_needle"><span></span></div>
+								<div class="center"></div>
+							</div>
+						</div>
+
+
+						<div class="gauge_container">
+							<div id="speed_gauge" class="gauge">
+								<div class="needle current_needle"><span></span></div>
+								<div class="center"></div>
+							</div>
+						</div>
+
+
+						<div id="gear_indicator">0</div>
 					</div>
 				</div>
-
-
-				<div id="gear_indicator">0</div>
 			</div>
 
 
-			<div id="additional_info_container"></div>
 
+			<div id="info_submenu">
+				<div class="submenu_header">
+					<h2>Informationen</h2>
+					<button>+</button>
+				</div>
 
-			<button onclick="toggle_additional_info_container(this);">+</button>
-		</div>
-
-
-
-		<div id="environment_controls_box">
-			<h2>Fahrwiderstände</h2>
-
-            <div id="resistance_inputs">
-				<label for="angle_input">Steigung</label>
-				<input id="angle_input" type="range" min="-26" max="26" step="2" value="0"/>
-
-				<label for="aerodynamics_input">Aerodynamik</label>
-				<input id="aerodynamics_input" type="checkbox" checked/>
-
-				<label for="rolling_resistance_input">Rollwiderstand</label>
-				<input id="rolling_resistance_input" type="checkbox" checked/>
-            </div>
-		</div>
+				<div id="additional_info_container" class="submenu_content closed"></div>
+			</div>
 
 
 
-		<div id="car_controls_box">
-			<h2>Fahrzeug</h2>
+			<div id="resistances_submenu">
+				<div class="submenu_header">
+					<h2>Fahrwiderstände</h2>
+					<button>-</button>
+				</div>
 
+    	        <div class="submenu_content">
+					<label for="angle_input">Steigung</label>
+					<input id="angle_input" type="range" min="-26" max="26" step="2" value="0"/>
+
+					<label for="aerodynamics_input">Aerodynamik</label>
+					<input id="aerodynamics_input" type="checkbox" checked/>
+
+					<label for="rolling_resistance_input">Rollwiderstand</label>
+					<input id="rolling_resistance_input" type="checkbox" checked/>
+    	        </div>
+			</div>
+
+
+
+		<div id="car_submenu">
+			<div class="submenu_header">
+				<h2>Fahrzeug</h2>
+				<button>-</button>
+			</div>
+
+
+			<div class="submenu_content">
 
 			<div id="selects_container">
 				<label for="car_select">Fahrzeug: </label>
@@ -85,10 +106,8 @@
 				</select>
 			</div>
 
-			<div class="controls">
-				<div id="other_controls_container">
-					<button onclick="car.start();">Start</button>
-				</div>
+			<div id="car_controls">
+				<button onclick="car.start();">Start</button>
 
 
 				<div id="shift_button_container">
@@ -110,8 +129,12 @@
 					</div>
 				</div>
 			</div>
+
+			</div>
+
 		</div>
 
+		</div>
 
 
 

@@ -1,3 +1,6 @@
+26.04.2020
+Improved menu structure
+
 25.04.2020
 More efficient way of saving sound data
 Improved sound
