@@ -20,8 +20,8 @@ const car_data = [
             cylinder_count: 4,
             sound: {
                 frequencies: [1, 1/4, 2/4, 6/4, 8/4, 10/4, 12/4, 16/4],
-                base_gains: [0.05, 0.02, 0.04, 0.04, 0.03, 0.03, 0.02, 0.01],
-                throttle_gains: [0.1, 0.02, 0.05, 0.04, 0.05, 0.03, 0.03, 0.005]
+                base_gains: [0.05, 0.02, 0.05, 0.04, 0.03, 0.03, 0.02, 0.005],
+                throttle_gains: [0.1, 0.02, 0.075, 0.05, 0.05, 0.03, 0.03, 0.005]
             }
         }
     },
@@ -48,9 +48,38 @@ const car_data = [
             maximum_brake_deceleration: 10,
             cylinder_count: 6,
             sound: {
-                frequencies: [1, 1 / 6, 2 / 6, 3 / 6, 8 / 6, 10 / 6, 12 / 6, 15 / 6],
-                base_gains: [0.05, 0.02, 0.05, 0.02, 0.02, 0.02, 0.02, 0.005],
-                throttle_gains: [0.1, 0.02, 0.06, 0.04, 0.09, 0.03, 0.02, 0.005]
+                frequencies: [1, 2 / 6, 3 / 6, 8 / 6, 10 / 6, 12 / 6, 15 / 6],
+                base_gains: [0.05, 0.05, 0.05, 0.03, 0.02, 0.005, 0.0005],
+                throttle_gains: [0.1, 0.05, 0.1, 0.075, 0.03, 0.0075, 0.0005]
+            }
+        }
+    },
+
+
+
+    {
+        //2006 BMW E91 320i Touring Steptronic
+        properties: {
+            name: "2006 BMW 320i", 
+            gear_ratios: [4.17, 2.34, 1.52, 1.14, 0.87, 0.69],
+            shift_time: 0.5,
+            final_drive: 3.9,
+            tire_diameter: 0.6319,
+            mass: 1460,
+            max_torque: 200,
+            max_torque_rpm: 3600,
+            max_power_rpm: 4800,
+            rpm_limiter: 6500,
+            idle_rpm: 900,
+            idle_throttle: 0.12,
+            drag_coefficient: 0.27,
+            frontal_area: 2.17, 
+            maximum_brake_deceleration: 10,
+            cylinder_count: 4,
+            sound: {
+                frequencies: [1, 2 / 4, 3 / 4, 8 / 4, 10 / 4, 12 / 4, 14 / 4],
+                base_gains: [0.05, 0.05, 0.05, 0.03, 0.02, 0.007, 0.0005],
+                throttle_gains: [0.1, 0.05, 0.1, 0.075, 0.03, 0.01, 0.0005]
             }
         }
     }
