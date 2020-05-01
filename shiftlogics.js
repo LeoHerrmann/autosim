@@ -289,7 +289,7 @@ function autoshift_logic_4() {
         var angle_accel = -1 * Math.sin(angle * Math.PI/180) * 9.81;
         var air_accel = 0;
 
-        if (aerodynamics === true) {
+        if (air_resistance === true) {
             air_accel = (-1 * 0.5 * 1.23 * (car.data.speed ** 2) * car.properties.drag_coefficient * car.properties.frontal_area) / car.properties.mass;
         }
 

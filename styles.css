@@ -17,9 +17,16 @@ h1, h2, h3, h4, h5, h6 {
 
 button, select {
 	font-size: 1rem;
-	background-color: #FFF;
-	border: 2px solid #AAA;
+	color: #FFF;
+	background-color: rgba(0,0,0,0.3);
+	border: 2px solid #CCC;
 	box-sizing: border-box;
+	transition: background-color 0.2s;
+}
+
+button:active, select:active {
+	background-color: rgba(0,0,0,0.5);
+	transition: none;
 }
 
 
@@ -250,15 +257,13 @@ button, select {
 }
 
 #pedals_container > .input_set {
-	display: flex;
-	flex-direction: column;
 	text-align: center;
 }
 
 #pedals_container [orient="vertical"] {
 	-webkit-appearance: slider-vertical;
-	flex-grow: 1;
 	height: 150px;
+	width: 25px;
 }
 
 

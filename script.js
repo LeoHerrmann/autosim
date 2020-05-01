@@ -8,7 +8,7 @@ var context = new AudioContext();
 
 const first_car_index = 2;
 
-var aerodynamics = true;
+var air_resistance = true;
 var rolling_resistance = true;
 var angle = 0;
 
@@ -131,7 +131,7 @@ var calculator = {
         var air_accel = 0;
         var rolling_accel = 0;
 
-        if (aerodynamics === true) {
+        if (air_resistance === true) {
             air_accel = (-1 * 0.5 * 1.23 * (tcar.data.speed ** 2) * tcar.properties.drag_coefficient * tcar.properties.frontal_area) / tcar.properties.mass;
         }
 
@@ -168,7 +168,7 @@ function frame() {
     car.data.throttle = parseInt(document.getElementById("throttle_input").value) / 100;
     car.data.brake = parseInt(document.getElementById("brake_input").value) / 100;
     angle = parseInt(document.getElementById("angle_input").value);
-    aerodynamics = document.getElementById("aerodynamics_input").checked;
+    air_resistance = document.getElementById("air_resistance_input").checked;
     rolling_resistance = document.getElementById("rolling_resistance_input").checked;
 
 
