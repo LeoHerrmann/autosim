@@ -18,7 +18,7 @@
 
 		<div id="menu">
 
-			<div id="instruments_submenu">
+			<div id="instruments_submenu" class="submenu">
 				<div class="submenu_header">
 					<h2>Instrumente</h2>
 					<button>-</button>
@@ -27,6 +27,9 @@
 
 				<div class="submenu_content">
 					<div id="instrument_cluster">
+
+					<div id="gauge_containers_container">
+
 						<div class="gauge_container">
 							<div id="rpm_gauge" class="gauge">
 								<div class="needle current_needle"><span></span></div>
@@ -44,13 +47,16 @@
 
 
 						<div id="gear_indicator">0</div>
+
+					</div>
+
 					</div>
 				</div>
 			</div>
 
 
 
-			<div id="info_submenu">
+			<div id="info_submenu" class="submenu">
 				<div class="submenu_header">
 					<h2>Informationen</h2>
 					<button>+</button>
@@ -61,7 +67,7 @@
 
 
 
-			<div id="resistances_submenu">
+			<div id="resistances_submenu" class="submenu">
 				<div class="submenu_header">
 					<h2>Fahrwiderstände</h2>
 					<button>-</button>
@@ -81,59 +87,57 @@
 
 
 
-		<div id="car_submenu">
-			<div class="submenu_header">
-				<h2>Fahrzeug</h2>
-				<button>-</button>
-			</div>
-
-
-			<div class="submenu_content">
-
-			<div id="selects_container">
-				<label for="car_select">Fahrzeug: </label>
-				<select id="car_select"></select>
-
-
-				<label for="strategy_select">Strategie: </label>
-				<select id="strategy_select">
-					<option value="0">Manuell</option>
-					<option value="r1">Drehzahl 1</option>
-					<option value="r2">Drehzahl 2</option>
-					<option value="r3" selected="selected">Drehzahl 3</option>
-					<option value="g1">Übersetzung</option>
-					<option value="a1">Beschleunigung</option>
-				</select>
-			</div>
-
-			<div id="car_controls">
-				<button onclick="car.start();">Start</button>
-
-
-				<div id="shift_button_container">
-					<button onclick="car.shift_down();">-</button>
-					<button onclick="car.shift_up();">+</button>
+			<div id="car_submenu" class="submenu">
+				<div class="submenu_header">
+					<h2>Fahrzeug</h2>
+					<button>-</button>
 				</div>
 
 
-				<div id="pedals_container">
-					<div class="input_set">
-						<input id="brake_input" type="range" min="0" max="100" value="0" orient="vertical"/>
-						<label for="brake_input">Bremse</label>
+				<div class="submenu_content">
+
+				<div id="selects_container">
+					<label for="car_select">Fahrzeug: </label>
+					<select id="car_select"></select>
+
+
+					<label for="strategy_select">Strategie: </label>
+					<select id="strategy_select">
+						<option value="0">Manuell</option>
+						<option value="r1">Drehzahl 1</option>
+						<option value="r2">Drehzahl 2</option>
+						<option value="r3" selected="selected">Drehzahl 3</option>
+						<option value="g1">Übersetzung</option>
+						<option value="a1">Beschleunigung</option>
+					</select>
+				</div>
+
+				<div id="car_controls">
+					<button onclick="car.start();">Start</button>
+
+
+					<div id="shift_button_container">
+						<button onclick="car.shift_down();">-</button>
+						<button onclick="car.shift_up();">+</button>
 					</div>
 
 
-					<div class="input_set">
-						<input id="throttle_input" type="range" min="1" max="100" value="0" orient="vertical"/>
-						<label for="throttle_input">Gas</label>
+					<div id="pedals_container">
+						<div class="input_set">
+							<input id="brake_input" type="range" min="0" max="100" value="0" orient="vertical"/>
+							<label for="brake_input">Bremse</label>
+						</div>
+
+
+						<div class="input_set">
+							<input id="throttle_input" type="range" min="1" max="100" value="0" orient="vertical"/>
+							<label for="throttle_input">Gas</label>
+						</div>
 					</div>
 				</div>
+
+				</div>
 			</div>
-
-			</div>
-
-		</div>
-
 		</div>
 
 

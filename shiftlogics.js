@@ -366,7 +366,7 @@ function autoshift_logic_3() {
     var maximum_acceleration = calculator.acceleration(temp_car);
 
 
-    var target_acceleration = ((car.data.throttle ** 2) * maximum_acceleration);
+    var target_acceleration = ((car.data.throttle ** 3) * maximum_acceleration);
 
 
     if (frame_number % 40 == 0) {

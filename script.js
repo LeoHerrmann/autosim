@@ -174,7 +174,7 @@ function frame() {
 
     //adjust shift progress
     if (car.data.shift_progress < 1) {
-        car.data.shift_progress += 1 / car.properties.shift_time * (frame_rate / 1000) ;
+        car.data.shift_progress += (frame_rate / 1000) / car.properties.shift_time;
     }
     if (car.data.shift_progress > 1) {
         car.data.shift_progress = 1;
