@@ -1,3 +1,6 @@
+02.05.2020
+Simplified formulas in shiftlogic 5_3 and 5_2
+
 01.05.2020
 UI improvements
 

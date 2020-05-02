@@ -46,10 +46,16 @@ function autoshift_logic_5_3() {
                 var maximum_sensible_rpm;
 
                 if (car.data.gear < car.properties.gear_ratios.length) {
-                    maximum_sensible_rpm = (2 * car.properties.gear_ratios[car.data.gear - 1] * car.properties.max_torque_rpm * (1 * car.properties.gear_ratios[car.data.gear] + 1 * car.properties.gear_ratios[car.data.gear - 1])) / (car.properties.gear_ratios[car.data.gear]**2 + car.properties.gear_ratios[car.data.gear] * car.properties.gear_ratios[car.data.gear - 1] + car.properties.gear_ratios[car.data.gear - 1]**2);
+                    let current_gear = car.properties.gear_ratios[car.data.gear - 1];
+                    let next_gear = car.properties.gear_ratios[car.data.gear];
+
+                    maximum_sensible_rpm = 2 * current_gear * car.properties.max_torque_rpm * (next_gear ** 2 - current_gear ** 2) / (next_gear ** 3 - current_gear ** 3);
                 }
                 else {
-                    maximum_sensible_rpm = (2 * car.properties.gear_ratios[car.data.gear - 2] * car.properties.max_torque_rpm * (1 * car.properties.gear_ratios[car.data.gear - 1] + 1 * car.properties.gear_ratios[car.data.gear - 2])) / (car.properties.gear_ratios[car.data.gear - 1]**2 + car.properties.gear_ratios[car.data.gear - 1] * car.properties.gear_ratios[car.data.gear - 2] + car.properties.gear_ratios[car.data.gear - 2]**2);
+                    let last_gear = car.properties.gear_ratios[car.properties.gear_ratios.length - 1];
+                    let second_last_gear = car.properties.gear_ratios[car.properties.gear_ratios.length - 2];
+
+                    maximum_sensible_rpm = 2 * last_gear * car.properties.max_torque_rpm * (second_last_gear ** 2 - last_gear ** 2) / (second_last_gear ** 3 - last_gear ** 3);
                 }
 
                 if (maximum_sensible_rpm > car.properties.rpm_limiter) {
@@ -128,10 +134,16 @@ function autoshift_logic_5_2() {
             var maximum_sensible_rpm;
 
             if (car.data.gear < car.properties.gear_ratios.length) {
-                maximum_sensible_rpm = (2 * car.properties.gear_ratios[car.data.gear - 1] * car.properties.max_torque_rpm * (1 * car.properties.gear_ratios[car.data.gear] + 1 * car.properties.gear_ratios[car.data.gear - 1])) / (car.properties.gear_ratios[car.data.gear]**2 + car.properties.gear_ratios[car.data.gear] * car.properties.gear_ratios[car.data.gear - 1] + car.properties.gear_ratios[car.data.gear - 1]**2);
+                let current_gear = car.properties.gear_ratios[car.data.gear - 1];
+                let next_gear = car.properties.gear_ratios[car.data.gear];
+
+                maximum_sensible_rpm = 2 * current_gear * car.properties.max_torque_rpm * (next_gear ** 2 - current_gear ** 2) / (next_gear ** 3 - current_gear ** 3);
             }
             else {
-                maximum_sensible_rpm = (2 * car.properties.gear_ratios[car.data.gear - 2] * car.properties.max_torque_rpm * (1 * car.properties.gear_ratios[car.data.gear - 1] + 1 * car.properties.gear_ratios[car.data.gear - 2])) / (car.properties.gear_ratios[car.data.gear - 1]**2 + car.properties.gear_ratios[car.data.gear - 1] * car.properties.gear_ratios[car.data.gear - 2] + car.properties.gear_ratios[car.data.gear - 2]**2);
+                let last_gear = car.properties.gear_ratios[car.properties.gear_ratios.length - 1];
+                let second_last_gear = car.properties.gear_ratios[car.properties.gear_ratios.length - 2];
+
+                maximum_sensible_rpm = 2 * last_gear * car.properties.max_torque_rpm * (second_last_gear ** 2 - last_gear ** 2) / (second_last_gear ** 3 - last_gear ** 3);
             }
 
             if (maximum_sensible_rpm > car.properties.rpm_limiter) {
@@ -385,7 +397,7 @@ function autoshift_logic_3() {
         let temp_accel = calculator.acceleration(temp_car_2);
         let temp_diff = Math.abs(target_acceleration - temp_accel); 
 
-        if (temp_diff < smallest_difference && temp_diff < current_difference * 1){//0.95) {
+        if (temp_diff < smallest_difference && temp_diff < current_difference){
             best_gear = temp_gear;
             smallest_difference = temp_diff;
         }
