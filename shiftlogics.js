@@ -37,10 +37,10 @@ function autoshift_logic_5_3() {
 
 
         else {
-            did_shift = true;
+            var gear_found = false;
 
-            while (did_shift) {
-                did_shift = false;
+            while (gear_found === false) {
+                gear_found = true;
 
 
                 var maximum_sensible_rpm;
@@ -103,11 +103,11 @@ function autoshift_logic_5_3() {
 
                 if (car.data.gear < best_gear && temp_car.data.rpm > car.properties.idle_rpm) {
                     car.shift_up();
-                    did_shift = true;
+                    gear_found = false;
                 }
                 else if (car.data.gear > best_gear && temp_car.data.rpm <= maximum_sensible_rpm) {
                     car.shift_down();
-                    did_shift = true;
+                    gear_found = false;
                 }
 
                 if (car.data.rpm >= maximum_sensible_rpm) {
@@ -125,10 +125,10 @@ function autoshift_logic_5_3() {
 
 function autoshift_logic_5_2() {
     if (car.data.shift_progress == 1) {
-        did_shift = true;
+        var gear_found = false;
 
-        while (did_shift) {
-            did_shift = false;
+        while (gear_found === false) {
+            gear_found = true;
 
 
             var maximum_sensible_rpm;
@@ -186,11 +186,11 @@ function autoshift_logic_5_2() {
 
             if (car.data.gear < best_gear && temp_car.data.rpm > car.properties.idle_rpm) {
                 car.shift_up();
-                did_shift = true;
+                gear_found = false;
             }
             else if (car.data.gear > best_gear && temp_car.data.rpm <= maximum_sensible_rpm) {
                 car.shift_down();
-                did_shift = true;
+                gear_found = false;
             }
 
             if (car.data.rpm >= maximum_sensible_rpm) {
@@ -207,10 +207,10 @@ function autoshift_logic_5_2() {
 
 function autoshift_logic_5() {
     if (car.data.shift_progress == 1) {
-        did_shift = true;
+        var gear_found = false;
 
-        while (did_shift) {
-            did_shift = false;
+        while (gear_found === false) {
+            gear_found = true;
 
             var target_rpm = (1 - car.data.throttle ** 3) * (car.properties.idle_rpm) + (car.data.throttle ** 3) * car.properties.rpm_limiter;
 
@@ -245,11 +245,11 @@ function autoshift_logic_5() {
 
             if (car.data.gear < best_gear && temp_car.data.rpm > car.properties.idle_rpm) {
                 car.shift_up();
-                did_shift = true;
+                gear_found = false;
             }
             else if (car.data.gear > best_gear && temp_car.data.rpm < car.properties.rpm_limiter) {
                 car.shift_down();
-                did_shift = true;
+                gear_found = false;
             }
 
             if (car.data.rpm >= car.properties.rpm_limiter - 1) {
