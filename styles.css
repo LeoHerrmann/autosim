@@ -49,7 +49,7 @@ button:active, select:active {
 
 
 #menu > .submenu {
-	margin-top: 10px;
+	margin: 10px 0;
 }
 
 #menu .submenu_header {

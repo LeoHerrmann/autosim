@@ -250,31 +250,18 @@ function frame() {
 
 
     //print information
-    document.getElementById("additional_info_container").innerHTML = 
-	    "<span>Geschwindigkeit:</span>" +
-	    `<span>${(car.data.speed * 3.6).toFixed(2)} km/h</span>` +
-	    "<span>Drehzahl:</span>" +
-	    `<span>${car.data.rpm.toFixed(2)} U/min</span>` +
-	    "<span>Gang:</span>" +
-	    `<span>${car.data.gear}</span>` +
-	    "<span>Vorheriger Gang:</span>" +
-	    `<span>${car.data.previous_gear}</span>` +
-	    "<span>Shiftprogress:</span>" +
-	    `<span>${parseInt(car.data.shift_progress * 100) + "%"}</span>` +
-	    "<span>Beschleunigung:</span>" +
-	    `<span>${(calculator.acceleration(car)).toFixed(2)} m/s²</span>` +
-	    "<span>Motordrehmoment:</span>" +
-	    `<span>${car.engine_torque().toFixed(2)} Nm</span>` +
-	    "<span>Raddrehmoment:</span>" +
-	    `<span>${calculator.wheel_torque(car).toFixed(2)} Nm</span>` +
-	    "<span>Gas:</span>" +
-	    `<span>${(car.data.throttle * 100).toFixed(2) + "%"}</span>` +
-	    "<span>Bremse:</span>" +
-	    `<span>${car.data.brake * 100 + "%"}</span>` +
-	    "<span>Steigung:</span>" +
-	    `<span>${angle + "°"}; ${(Math.tan(angle * (2 * Math.PI) / 360) * 100).toFixed(2) + "%"}</span>` +
-	    "<span>FPS:</span>" +
-	    `<span>${current_frame_rate.toFixed(0)}`;
+    document.getElementById("velocity_label").innerText = `${(car.data.speed * 3.6).toFixed(2)} km/h`;
+    document.getElementById("engine_speed_label").innerText = `${car.data.rpm.toFixed(2)} U/min`;
+    document.getElementById("gear_label").innerText = `${car.data.gear}`;
+    document.getElementById("previous_gear_label").innerText = `${car.data.previous_gear}`;
+    document.getElementById("shift_progress_label").innerText = `${parseInt(car.data.shift_progress * 100) + "%"}`;
+    document.getElementById("acceleration_label").innerText = `${(calculator.acceleration(car)).toFixed(2)} m/s²`;
+    document.getElementById("engine_torque_label").innerText = `${car.engine_torque().toFixed(2)} Nm`;
+    document.getElementById("wheel_torque_label").innerText = `${calculator.wheel_torque(car).toFixed(2)} Nm`;
+    document.getElementById("load_label").innerText = `${(car.data.throttle * 100).toFixed(0) + "%"}`;
+    document.getElementById("brake_label").innerText = `${(car.data.brake * 100).toFixed(0) + "%"}`;
+    document.getElementById("slope_label").innerText = `${angle + "°"}; ${(Math.tan(angle * (2 * Math.PI) / 360) * 100).toFixed(2) + "%"}`;
+    document.getElementById("frame_rate_label").innerText = `${current_frame_rate.toFixed(0)} FPS`;
 
     gauges.update();
 }
