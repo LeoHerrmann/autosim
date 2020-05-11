@@ -132,7 +132,7 @@ var calculator = {
         var rolling_accel = 0;
 
         if (air_resistance === true) {
-            air_accel = (-1 * 0.5 * 1.23 * (tcar.data.speed ** 2) * tcar.properties.drag_coefficient * tcar.properties.frontal_area) / tcar.properties.mass;
+            air_accel = (-1 * 0.5 * 1.204 * (tcar.data.speed ** 2) * tcar.properties.drag_coefficient * tcar.properties.frontal_area) / tcar.properties.mass;
         }
 
         if (rolling_resistance === true) {
@@ -181,7 +181,7 @@ function frame() {
     }
 
 
-    //set speed and rpm
+    //set speed and engine rpm
     if (car.data.rpm <= car.properties.idle_rpm && car.data.throttle <= car.properties.idle_throttle) {
         car.data.throttle = car.properties.idle_throttle;
     }
@@ -205,19 +205,19 @@ function frame() {
 
     switch (strategy_input_value) {
         case "r1":
-            autoshift_logic_5();
+            autoshift_strategy_5();
             break;
         case "r2":
-            autoshift_logic_5_2(); //5, aber mit besserer Maximalbeschleunigung
+            autoshift_strategy_5_2(); //5, aber mit besserer Maximalbeschleunigung
             break;
         case "r3":
-            autoshift_logic_5_3(); //5_2, aber mit Motorbremse
+            autoshift_strategy_5_3(); //5_2, aber mit Motorbremse
             break;
         case "g1":
-            autoshift_logic_4(); //gut
+            autoshift_strategy_4();
             break;
         case "a1":
-            autoshift_logic_3(); //interessant
+            autoshift_strategy_3();
             break;
     }
 
