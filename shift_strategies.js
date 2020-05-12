@@ -65,7 +65,7 @@ function autoshift_strategy_5_2() {
             }
 
             if (maximum_sensible_rpm > car.properties.rpm_limiter) {
-                maximum_sensible_rpm = car.properties.rpm_limiter;
+                maximum_sensible_rpm = car.properties.rpm_limiter - 1;
             }
 
 
@@ -75,6 +75,15 @@ function autoshift_strategy_5_2() {
             let temp_car = JSON.parse(JSON.stringify(car));
             temp_car.data.shift_progress = 1;
             temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
+
+
+            if (temp_car.data.rpm >= maximum_sensible_rpm) {
+                car.shift_up();
+            }
+            else if (temp_car.data.rpm < car.properties.idle_rpm) {
+                car.shift_down();
+            }
+
 
             var best_gear = car.data.gear;
             var current_difference = Math.abs(target_rpm - temp_car.data.rpm);
@@ -105,14 +114,6 @@ function autoshift_strategy_5_2() {
             else if (car.data.gear > best_gear && temp_car.data.rpm <= maximum_sensible_rpm) {
                 car.shift_down();
                 gear_found = false;
-            }
-
-
-            if (car.data.rpm >= maximum_sensible_rpm) {
-                car.shift_up();
-            }
-            else if (car.data.rpm < car.properties.idle_rpm) {
-                car.shift_down();
             }
         }
     }
