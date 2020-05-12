@@ -1,4 +1,7 @@
-11.06.2020
+12.05.2020
+Fixed bug in shift_strategy_5_2 resulting in compromised acceleration in last gear
+
+11.05.2020
 Improved all shift strategies
 Improved the way information is displayed
 

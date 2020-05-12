@@ -44,6 +44,7 @@ function autoshift_strategy_5_2() {
     if (car.data.shift_progress == 1) {
         var gear_found = false;
 
+
         while (gear_found === false) {
             gear_found = true;
 
@@ -60,12 +61,13 @@ function autoshift_strategy_5_2() {
                 let last_gear = car.properties.gear_ratios[car.properties.gear_ratios.length - 1];
                 let second_last_gear = car.properties.gear_ratios[car.properties.gear_ratios.length - 2];
 
-                maximum_sensible_rpm = 2 * last_gear * car.properties.max_torque_rpm * (second_last_gear ** 2 - last_gear ** 2) / (second_last_gear ** 3 - last_gear ** 3);
+                maximum_sensible_rpm = 2 * second_last_gear * car.properties.max_torque_rpm * (last_gear ** 2 - second_last_gear ** 2) / (last_gear ** 3 - second_last_gear ** 3);
             }
 
             if (maximum_sensible_rpm > car.properties.rpm_limiter) {
                 maximum_sensible_rpm = car.properties.rpm_limiter;
             }
+
 
             var target_rpm = (1 - car.data.throttle ** 3) * (car.properties.idle_rpm) + (car.data.throttle ** 3) * maximum_sensible_rpm;
 
@@ -104,6 +106,7 @@ function autoshift_strategy_5_2() {
                 car.shift_down();
                 gear_found = false;
             }
+
 
             if (car.data.rpm >= maximum_sensible_rpm) {
                 car.shift_up();
@@ -145,10 +148,6 @@ function autoshift_strategy_5() {
                         smallest_difference = temp_diff;
                     }
                 }
-            }
-
-            if (frame_number == 40) {
-                console.log(Math.round(target_rpm), Math.round(target_rpm - gear_hunt_threshold), Math.round(target_rpm + gear_hunt_threshold));
             }
 
 
