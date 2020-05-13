@@ -1,5 +1,6 @@
 13.05.2020
 Improved sound
+Moved gauges to ui.js
 
 12.05.2020
 Fixed bug in shift_strategy_5_2 resulting in compromised acceleration in last gear
