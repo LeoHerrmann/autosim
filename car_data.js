@@ -82,5 +82,32 @@ const car_data = [
                 throttle_gains: [0.2, 0.05, 0.1, 0.075, 0.03, 0.01, 0.0005]
             }
         }
+    },
+
+    {
+        //2004 Lexus IS 300 automatic
+        properties: {
+            name: "2004 Lexus IS 300", 
+            gear_ratios: [3.38, 2.18, 1.42, 1, 0.75],
+            shift_time: 0.5,
+            final_drive: 3.58,
+            tire_diameter: 0.6523,
+            mass: 1500, 
+            max_torque: 280,
+            max_torque_rpm: 3800,
+            max_power_rpm: 5067,
+            rpm_limiter: 6200,
+            idle_rpm: 900,
+            idle_throttle: 0.12,
+            drag_coefficient: 0.29,
+            frontal_area: 2.01, 
+            maximum_brake_deceleration: 10,
+            cylinder_count: 6,
+            sound: {
+                frequencies: [1, 2 / 6, 3 / 6, 8 / 6, 10 / 6, 12 / 6, 15 / 6],
+                base_gains: [0.05, 0.05, 0.1, 0.03, 0.02, 0.005, 0.0005],
+                throttle_gains: [0.2, 0.05, 0.1, 0.075, 0.03, 0.0075, 0.0005]
+            }
+        }
     }
 ];
