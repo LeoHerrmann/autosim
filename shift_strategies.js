@@ -206,7 +206,7 @@ function autoshift_strategy_4() {
                 eco_gear_ratio = car.properties.gear_ratios[car.properties.gear_ratios.length - 1];
             }
 
-            var target_gear_ratio = (1 - car.data.throttle ** 3.1) * eco_gear_ratio + (car.data.throttle ** 3.1) * accel_gear_ratio;
+            var target_gear_ratio = (1 - car.data.throttle ** 3) * eco_gear_ratio + (car.data.throttle ** 3) * accel_gear_ratio;
 
 
             var gear_hunt_factor;
