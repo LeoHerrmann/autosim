@@ -1,5 +1,6 @@
 14.05.2020
 New car
+More consistency in shift strategies
 
 13.05.2020
 Improved sound

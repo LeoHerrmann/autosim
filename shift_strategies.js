@@ -68,8 +68,7 @@ function autoshift_strategy_5_2() {
                 maximum_sensible_rpm = car.properties.rpm_limiter - 1;
             }
 
-
-            var target_rpm = (1 - car.data.throttle ** 3) * (car.properties.idle_rpm) + (car.data.throttle ** 3) * maximum_sensible_rpm;
+            var target_rpm = (1 - car.data.throttle ** 3) * (car.properties.idle_rpm) + (car.data.throttle ** 3) * (maximum_sensible_rpm);
 
 
             let temp_car = JSON.parse(JSON.stringify(car));
@@ -86,17 +85,16 @@ function autoshift_strategy_5_2() {
 
 
             var best_gear = car.data.gear;
-            var current_difference = Math.abs(target_rpm - temp_car.data.rpm);
-            var gear_hunt_threshold = (car.properties.rpm_limiter - car.properties.idle_rpm) / 8;
-            var smallest_difference = current_difference;
+            var smallest_difference = Math.abs(target_rpm - temp_car.data.rpm);
+            var gear_hunt_threshold = (car.properties.rpm_limiter - car.properties.idle_rpm) / 6;
 
-            if (current_difference > gear_hunt_threshold || car.data.throttle == 1) {
+            if (smallest_difference > gear_hunt_threshold) {
                 for (let i = 0; i < car.properties.gear_ratios.length; i++) {
                     let temp_rpm = temp_car.data.rpm * (car.properties.gear_ratios[i] / car.properties.gear_ratios[temp_car.data.gear - 1]);
 
                     let temp_diff = Math.abs(target_rpm - temp_rpm);
 
-                        if (temp_diff < smallest_difference && temp_rpm < maximum_sensible_rpm) {
+                    if (temp_diff < smallest_difference) {
                         best_gear = i + 1;
                         smallest_difference = temp_diff;
                     }
@@ -135,16 +133,15 @@ function autoshift_strategy_5() {
             temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
 
             var best_gear = car.data.gear;
-            var current_difference = Math.abs(target_rpm - temp_car.data.rpm);
+            var smallest_difference = Math.abs(target_rpm - temp_car.data.rpm);
             var gear_hunt_threshold = (car.properties.rpm_limiter - car.properties.idle_rpm) / 8;
-            var smallest_difference = current_difference;
 
-            if (current_difference > gear_hunt_threshold || car.data.throttle == 1) {
+            if (smallest_difference > gear_hunt_threshold) {
                 for (let i = 0; i < car.properties.gear_ratios.length; i++) {
                     let temp_rpm = temp_car.data.rpm * (car.properties.gear_ratios[i] / car.properties.gear_ratios[temp_car.data.gear - 1]);
                     let temp_diff = Math.abs(target_rpm - temp_rpm);
 
-                    if (temp_diff < smallest_difference && temp_rpm < car.properties.rpm_limiter) {
+                    if (temp_diff < smallest_difference) {
                         best_gear = i + 1;
                         smallest_difference = temp_diff;
                     }
@@ -212,10 +209,10 @@ function autoshift_strategy_4() {
             var target_gear_ratio = (1 - car.data.throttle ** 3.1) * eco_gear_ratio + (car.data.throttle ** 3.1) * accel_gear_ratio;
 
 
-            var factor;
+            var gear_hunt_factor;
 
             if (car.data.throttle == 1) {
-                factor = 1;
+                gear_hunt_factor = 1;
             }
 
             else {
@@ -228,19 +225,19 @@ function autoshift_strategy_4() {
                     air_accel = (-1 * 0.5 * 1.204 * (car.data.speed ** 2) * car.properties.drag_coefficient * car.properties.frontal_area) / car.properties.mass;
                 }
 
-                deceleration = -1 * angle_accel + -1 * air_accel;
+                deceleration = -1 * (angle_accel + air_accel);
 
                 if (deceleration > 0.7) {
-                    factor = 0.2;
+                    gear_hunt_factor = 0.2;
                 }
                 else if (deceleration > 0.5) {
-                    factor = 0.3;
+                    gear_hunt_factor = 0.3;
                 }
                 else if (deceleration > 0.2) {
-                    factor = 0.5;
+                    gear_hunt_factor = 0.5;
                 }
                 else {
-                    factor = 0.75;
+                    gear_hunt_factor = 0.75;
                 }
             }
 
@@ -252,7 +249,7 @@ function autoshift_strategy_4() {
             for (let i = 0; i < car.properties.gear_ratios.length; i++) {
                 let difference = Math.abs(target_gear_ratio - car.properties.gear_ratios[i]);
 
-                if (difference < smallest_difference && difference < current_difference * factor) {
+                if (difference < smallest_difference && difference < current_difference * gear_hunt_factor) {
                     best_gear = i + 1;
                     smallest_difference = Math.abs(difference);
                 }
