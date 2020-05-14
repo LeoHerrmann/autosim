@@ -102,16 +102,23 @@ function autoshift_strategy_5_2() {
             }
 
 
-            temp_car.data.gear = best_gear;
-            temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
+            if (car.data.gear < best_gear) {
+                temp_car.data.gear = car.data.gear + 1;
+                temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
 
-            if (car.data.gear < best_gear && temp_car.data.rpm > car.properties.idle_rpm) {
-                car.shift_up();
-                gear_found = false;
+                if (temp_car.data.rpm > car.properties.idle_rpm) {
+                    car.shift_up();
+                    gear_found = false;
+                }
             }
-            else if (car.data.gear > best_gear && temp_car.data.rpm <= maximum_sensible_rpm) {
-                car.shift_down();
-                gear_found = false;
+            else if (car.data.gear > best_gear) {
+                temp_car.data.gear = car.data.gear - 1;
+                temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
+
+                if (temp_car.data.rpm <= maximum_sensible_rpm) {
+                    car.shift_down();
+                    gear_found = false;
+                }
             }
         }
     }
@@ -149,16 +156,23 @@ function autoshift_strategy_5() {
             }
 
 
-            temp_car.data.gear = best_gear;
-            temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
+            if (car.data.gear < best_gear) {
+                temp_car.data.gear = car.data.gear + 1;
+                temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
 
-            if (car.data.gear < best_gear && temp_car.data.rpm > car.properties.idle_rpm) {
-                car.shift_up();
-                gear_found = false;
+                if (temp_car.data.rpm > car.properties.idle_rpm) {
+                    car.shift_up();
+                    gear_found = false;
+                }
             }
-            else if (car.data.gear > best_gear && temp_car.data.rpm < car.properties.rpm_limiter) {
-                car.shift_down();
-                gear_found = false;
+            else if (car.data.gear > best_gear) {
+                temp_car.data.gear = car.data.gear - 1;
+                temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
+
+                if (temp_car.data.rpm <= car.properties.rpm_limiter) {
+                    car.shift_down();
+                    gear_found = false;
+                }
             }
 
             if (car.data.rpm >= car.properties.rpm_limiter - 1) {

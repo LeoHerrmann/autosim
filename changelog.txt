@@ -1,6 +1,7 @@
 14.05.2020
 New car
 More consistency in shift strategies
+Improved acceleration from last gear in shift_strategy_5_2
 
 13.05.2020
 Improved sound
