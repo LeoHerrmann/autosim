@@ -126,7 +126,7 @@ function autoshift_strategy_5_2() {
 
 
 
-function autoshift_strategy_5() {
+function autoshift_strategy_5_1() {
     if (car.data.shift_progress == 1) {
         var gear_found = false;
 

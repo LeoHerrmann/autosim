@@ -109,16 +109,19 @@ function frame() {
     if (car.data.shift_progress < 1) {
         car.data.shift_progress += (frame_rate / 1000) / car.properties.shift_time;
     }
+
     if (car.data.shift_progress > 1) {
         car.data.shift_progress = 1;
     }
 
 
-    //set speed and engine rpm
+    //increase throttle if the engine is below idle_rpm
     if (car.data.rpm <= car.properties.idle_rpm && car.data.throttle <= car.properties.idle_throttle) {
         car.data.throttle = car.properties.idle_throttle;
     }
 
+
+    //set speed and engine rpm
     car.data.speed = car.data.speed + calculator.acceleration(car) * (frame_rate / 1000);
 
     if (car.data.speed < 0) {
@@ -138,13 +141,13 @@ function frame() {
 
     switch (strategy_input_value) {
         case "r1":
-            autoshift_strategy_5();
+            autoshift_strategy_5_1();
             break;
         case "r2":
-            autoshift_strategy_5_2(); //5, aber mit besserer Maximalbeschleunigung
+            autoshift_strategy_5_2();
             break;
         case "r3":
-            autoshift_strategy_5_3(); //5_2, aber mit Motorbremse
+            autoshift_strategy_5_3();
             break;
         case "g1":
             autoshift_strategy_4();
@@ -161,17 +164,17 @@ function frame() {
     }
 
 
-    //visualization
+    //visualize
 	var street = document.getElementById("street");
 	street_position_relative = parseFloat(street.style.left);
 
     var scale = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--scale'));
 
 	street.style.left = (street_position_relative - car.data.speed * frame_rate / 1000 * scale) % (10 * scale) + "vw";
-    document.getElementById("container").style.transform = `rotate(${-angle}deg)`;
+    document.getElementById("simulation_container").style.transform = `rotate(${-angle}deg)`;
 
 
-    //frame rate calulation
+    //calculate frame rate
     if (frame_number >= 50) {
         let current_date = Date.now();
         current_frame_rate = 1000 / ((current_date - first_frame_date) / 50);
