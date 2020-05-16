@@ -1,6 +1,6 @@
 const car_data = [
     {
-        //1985 Mercedes-Benz 190 D; 1997ccm² Diesel; 4-speed automatic
+        //1985 Mercedes-Benz 190 D; 1997ccm² Diesel; automatic
         properties: {
             name: "1985 Mercedes-Benz 190 D",
             gear_ratios: [4.25, 2.41, 1.49, 1.0],
@@ -48,9 +48,9 @@ const car_data = [
             maximum_brake_deceleration: 10,
             cylinder_count: 6,
             sound: {
-                frequencies: [1, 2 / 6, 3 / 6, 8 / 6, 10 / 6, 12 / 6, 15 / 6],
-                base_gains: [0.05, 0.05, 0.1, 0.03, 0.02, 0.005, 0.0005],
-                throttle_gains: [0.2, 0.05, 0.1, 0.075, 0.03, 0.0075, 0.0005]
+                frequencies: [3/6, 5/6, 1, 8/6, 9/6, 10/6, 12/6],
+                base_gains: [0.10, 0.05, 0.10, 0.02, 0.02, 0.005, 0.003],
+                throttle_gains: [0.05, 0.06, 0.15, 0.01, 0.01, 0.005, 0.003]
             }
         }
     },
@@ -77,7 +77,7 @@ const car_data = [
             maximum_brake_deceleration: 10,
             cylinder_count: 4,
             sound: {
-                frequencies: [1, 2 / 4, 3 / 4, 8 / 4, 10 / 4, 12 / 4, 14 / 4],
+                frequencies: [1, 2/4, 3/4, 8/4, 10/4, 12/4, 14/4],
                 base_gains: [0.05, 0.05, 0.05, 0.03, 0.02, 0.007, 0.0005],
                 throttle_gains: [0.2, 0.05, 0.1, 0.075, 0.03, 0.01, 0.0005]
             }
@@ -105,8 +105,8 @@ const car_data = [
             cylinder_count: 6,
             sound: {
                 frequencies: [3/6, 1, 8/6, 9/6, 10/6, 12/6],
-                base_gains: [0.075, 0.075, 0.05, 0.03, 0.01, 0.01],
-                throttle_gains: [0.075, 0.125, 0.05, 0.03, 0.01, 0.01]
+                base_gains: [0.075, 0.075, 0.03, 0.03, 0.01, 0.005],
+                throttle_gains: [0.075, 0.125, 0.03, 0.03, 0.01, 0.005]
             }
         }
     }
