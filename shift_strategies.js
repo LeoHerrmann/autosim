@@ -141,7 +141,7 @@ function autoshift_strategy_5_1() {
 
             var best_gear = car.data.gear;
             var smallest_difference = Math.abs(target_rpm - temp_car.data.rpm);
-            var gear_hunt_threshold = (car.properties.rpm_limiter - car.properties.idle_rpm) / 8;
+            var gear_hunt_threshold = (car.properties.rpm_limiter - car.properties.idle_rpm) / 6;
 
             if (smallest_difference > gear_hunt_threshold) {
                 for (let i = 0; i < car.properties.gear_ratios.length; i++) {
