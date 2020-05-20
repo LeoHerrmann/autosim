@@ -1,6 +1,10 @@
+//functions and objects responsible for controlling the selected car
+
+
 var car = {
     engine_torque: function(rpm = car.data.rpm, throttle = car.data.throttle) {
-        return - (car.properties.max_torque / (car.properties.max_torque_rpm ** 2)) * throttle ** 2 * (1 / throttle * rpm - car.properties.max_torque_rpm) ** 2 + throttle ** 2 * car.properties.max_torque;
+        return - (car.properties.max_torque / (car.properties.max_torque_rpm ** 2)) * throttle ** 2
+               * (1 / throttle * rpm - car.properties.max_torque_rpm) ** 2 + throttle ** 2 * car.properties.max_torque;
     },
 
 
@@ -14,14 +18,12 @@ var car = {
                 if (car.data.shift_progress == 1) {
                     car.data.previous_gear = car.data.gear;
                 }
+
                 car.data.shift_progress = 0;
                 car.data.gear += 1;
                 car.data.rpm = calculator.rpm_from_speed(car, car.data.speed);
-                return true;
             }
         }
-
-        return false;
     },
 
 
@@ -35,14 +37,12 @@ var car = {
                 if (car.data.shift_progress == 1) {
                     car.data.previous_gear = car.data.gear;
                 }
+
                 car.data.shift_progress = 0;
                 car.data.gear -= 1;
                 car.data.rpm = calculator.rpm_from_speed(car, car.data.speed);
-                return true;
             }
         }
-
-        return false;
     },
 
 
@@ -51,7 +51,8 @@ var car = {
         var temp_car = JSON.parse(JSON.stringify(car));
         temp_car.data.gear = gear_number;
 
-        if (calculator.rpm_from_speed(temp_car, temp_car.data.speed) <= car.properties.rpm_limiter && calculator.rpm_from_speed(temp_car, temp_car.data.speed) >= car.properties.idle_rpm) {
+        if (calculator.rpm_from_speed(temp_car, temp_car.data.speed) <= car.properties.rpm_limiter 
+        && calculator.rpm_from_speed(temp_car, temp_car.data.speed) >= car.properties.idle_rpm) {
             if (car.data.shift_progress == 1) {
                 car.data.previous_gear = car.data.gear;
             }
@@ -88,8 +89,10 @@ var car = {
         gear: 1,
         previous_gear: 1,
         throttle: 0.01,
-        brake: 0.01
+        brake: 0
     },
+
+
 
     sound: {
         oscillators: [],
@@ -101,16 +104,20 @@ var car = {
                 car.sound.oscillators[i].connect(car.sound.gains[i]);
                 car.sound.gains[i].connect(context.destination);
                 car.sound.oscillators[i].type = "sine";
-                car.sound.oscillators[i].frequency.value = car.data.rpm / 60 / 2 * car.properties.cylinder_count * car.properties.sound.frequencies[i];
-                car.sound.gains[i].gain.value = car.properties.sound.base_gains[i] + car.data.throttle * car.properties.sound.throttle_gains[i];
+                car.sound.oscillators[i].frequency.value = car.data.rpm / 60 / 2 * car.properties.cylinder_count 
+                                                           * car.properties.sound.frequencies[i];
+                car.sound.gains[i].gain.value = car.properties.sound.base_gains[i] + car.data.throttle
+                                                * car.properties.sound.throttle_gains[i];
                 car.sound.oscillators[i].start(0);
             }
         },
 
         update_sound: function() {
             for (let i = 0; i < car.properties.sound.frequencies.length; i++) {
-                car.sound.oscillators[i].frequency.value = car.data.rpm / 60 / 2 * car.properties.cylinder_count * car.properties.sound.frequencies[i];
-                car.sound.gains[i].gain.value = car.properties.sound.base_gains[i] + car.data.throttle * car.properties.sound.throttle_gains[i];
+                car.sound.oscillators[i].frequency.value = car.data.rpm / 60 / 2 * car.properties.cylinder_count
+                                                           * car.properties.sound.frequencies[i];
+                car.sound.gains[i].gain.value = car.properties.sound.base_gains[i] + car.data.throttle
+                                                * car.properties.sound.throttle_gains[i];
             }
         }
     }

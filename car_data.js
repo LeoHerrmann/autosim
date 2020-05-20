@@ -1,3 +1,6 @@
+//specifications for simulated cars
+
+
 const car_data = [
     {
         //1985 Mercedes-Benz 190 D; 1997ccm² Diesel; automatic

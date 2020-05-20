@@ -1,3 +1,5 @@
+/*universal*/
+
 @font-face {
     font-family: "Ubuntu";
     font-weight: 400;
@@ -41,6 +43,8 @@ button:active, select:active {
 }
 
 
+
+/*menu*/
 
 #menu {
 	position: fixed;
@@ -289,7 +293,7 @@ button:active, select:active {
 
 
 
-
+/*simulation container*/
 
 #simulation_container {
 	position: fixed;

@@ -1,7 +1,9 @@
+//functions and objects for controlling the user interface
+
+
 window.addEventListener("load", function() {
     add_menu_button_events();
     setup_car_select();
-
 
 
     function add_menu_button_events() {
@@ -21,7 +23,6 @@ window.addEventListener("load", function() {
             });
         }
     }
-
 
 
     function setup_car_select() {

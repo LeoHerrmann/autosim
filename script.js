@@ -1,3 +1,6 @@
+//main script
+
+
 const frame_rate = 1000 / 60;
 var frame_number = 0;
 var first_frame_date = Date.now();
@@ -14,11 +17,14 @@ var angle = 0;
 
 
 
+//functions for frequently needed calculations
 var calculator = {
     speed_from_rpm: function(car, rpm) {
         var smooth_shift_progress = Math.sin(car.data.shift_progress / 2 * Math.PI);
 
-        var wheel_rpm = rpm / (smooth_shift_progress * car.properties.gear_ratios[car.data.gear - 1] + (1 - smooth_shift_progress) * car.properties.gear_ratios[car.data.previous_gear - 1]) / car.properties.final_drive;
+        var wheel_rpm = rpm / (smooth_shift_progress * car.properties.gear_ratios[car.data.gear - 1]
+                        + (1 - smooth_shift_progress) * car.properties.gear_ratios[car.data.previous_gear - 1])
+                        / car.properties.final_drive;
         var wheel_rps = wheel_rpm / 60;
         var wheel_speed =  Math.PI * car.properties.tire_diameter * wheel_rps;
 
@@ -30,7 +36,9 @@ var calculator = {
 
         var wheel_rps = speed / (Math.PI * car.properties.tire_diameter);
         var wheel_rpm = wheel_rps * 60;
-        var engine_rpm = wheel_rpm * car.properties.final_drive * (smooth_shift_progress * car.properties.gear_ratios[car.data.gear - 1] + (1 - smooth_shift_progress) * car.properties.gear_ratios[car.data.previous_gear - 1]);
+        var engine_rpm = wheel_rpm * car.properties.final_drive* (smooth_shift_progress
+                         * car.properties.gear_ratios[car.data.gear - 1] + (1 - smooth_shift_progress)
+                         * car.properties.gear_ratios[car.data.previous_gear - 1]);
 
         return engine_rpm;
     },
@@ -43,10 +51,13 @@ var calculator = {
         temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
 
         var engine_rpm_new = temp_car.data.rpm;
-        var engine_rpm_old = temp_car.data.rpm * (car.properties.gear_ratios[car.data.previous_gear - 1] / car.properties.gear_ratios[car.data.gear - 1]);
+        var engine_rpm_old = temp_car.data.rpm * (car.properties.gear_ratios[car.data.previous_gear - 1]
+                             / car.properties.gear_ratios[car.data.gear - 1]);
 
-        var wheel_torque_new = car.engine_torque(engine_rpm_new, tcar.data.throttle) * tcar.properties.gear_ratios[tcar.data.gear - 1] * car.properties.final_drive;
-        var wheel_torque_old = car.engine_torque(engine_rpm_old, tcar.data.throttle) * tcar.properties.gear_ratios[tcar.data.previous_gear - 1] * car.properties.final_drive;
+        var wheel_torque_new = car.engine_torque(engine_rpm_new, tcar.data.throttle)
+                               * tcar.properties.gear_ratios[tcar.data.gear - 1] * car.properties.final_drive;
+        var wheel_torque_old = car.engine_torque(engine_rpm_old, tcar.data.throttle)
+                               * tcar.properties.gear_ratios[tcar.data.previous_gear - 1] * car.properties.final_drive;
 
         var wheel_torque = (1 - smooth_shift_progress) * wheel_torque_old + smooth_shift_progress * wheel_torque_new;
 
@@ -58,18 +69,21 @@ var calculator = {
     },
 
     acceleration: function(tcar) {
-        var car_accel = (calculator.wheel_force(tcar)) / tcar.properties.mass - tcar.data.brake * tcar.properties.maximum_brake_deceleration;
+        var car_accel = (calculator.wheel_force(tcar)) / tcar.properties.mass
+                        - tcar.data.brake * tcar.properties.maximum_brake_deceleration;
 
         var angle_accel = -1 * Math.sin(angle * Math.PI/180) * 9.81;
         var air_accel = 0;
         var rolling_accel = 0;
 
         if (air_resistance === true) {
-            air_accel = (-1 * 0.5 * 1.204 * (tcar.data.speed ** 2) * tcar.properties.drag_coefficient * tcar.properties.frontal_area) / tcar.properties.mass;
+            air_accel = (-1 * 0.5 * 1.204 * (tcar.data.speed ** 2)
+                        * tcar.properties.drag_coefficient * tcar.properties.frontal_area) / tcar.properties.mass;
         }
 
         if (rolling_resistance === true) {
-            rolling_accel = -1 * (0.01 * Math.cos((angle * 2 * Math.PI) / 360) * tcar.properties.mass * 9.81) / tcar.properties.mass;
+            rolling_accel = -1 * (0.01 * Math.cos((angle * 2 * Math.PI) / 360) * tcar.properties.mass * 9.81)
+                            / tcar.properties.mass;
         }
 
         return car_accel + angle_accel + air_accel + rolling_accel;
@@ -78,6 +92,7 @@ var calculator = {
 
 
 
+//setup, execution after all files have been loaded
 window.onload = function() {
     car.properties = car_data[first_car_index].properties;
 
@@ -91,12 +106,13 @@ window.onload = function() {
         };
     }
 
-	setInterval(frame, frame_rate);
+	setInterval(main, frame_rate);
 };
 
 
 
-function frame() {
+//main function; execution each frame
+function main() {
     //get inputs
     car.data.throttle = parseInt(document.getElementById("throttle_input").value) / 100;
     car.data.brake = parseInt(document.getElementById("brake_input").value) / 100;
@@ -196,7 +212,8 @@ function frame() {
     document.getElementById("wheel_torque_label").innerText = `${calculator.wheel_torque(car).toFixed(2)} Nm`;
     document.getElementById("load_label").innerText = `${(car.data.throttle * 100).toFixed(0) + "%"}`;
     document.getElementById("brake_label").innerText = `${(car.data.brake * 100).toFixed(0) + "%"}`;
-    document.getElementById("slope_label").innerText = `${angle + "°"}; ${(Math.tan(angle * (2 * Math.PI) / 360) * 100).toFixed(2) + "%"}`;
+    document.getElementById("slope_label").innerText = `${angle + "°"}; ${(Math.tan(angle * (2 * Math.PI)
+                                                        / 360) * 100).toFixed(2) + "%"}`;
     document.getElementById("frame_rate_label").innerText = `${current_frame_rate.toFixed(0)} FPS`;
 
     gauges.update();

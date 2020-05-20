@@ -1,3 +1,6 @@
+20.05.2020
+Improved code readability: added comments, wrapped long lines
+
 15.05.2020
 Visual improvements
 
