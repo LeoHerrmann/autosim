@@ -1,57 +1,79 @@
 //shift strategies for automatic shifting
 
 
-/*
-Gear selection based on engine speed
-Maximum acceleration
-Use of engine braking on slopes
-*/
+//gear selection based on engine speed
+function autoshift_strategy_5_1() {
+    if (car.data.shift_progress == 1) {
+        var gear_found = false;
 
-function autoshift_strategy_5_3() {
-    if (car.data.throttle < 0.02 && angle < 0 && car.data.shift_progress == 1) {
-        if (car.data.brake != 0) {
-            return false;
-        }
+        while (gear_found === false) {
+            gear_found = true;
 
 
-        //calculate grade resistance force and current wheel force
-        var grade_resistance_force = -1 * Math.sin(angle * Math.PI/180) * 9.81 * car.properties.mass;
-
-        var temp_car = JSON.parse(JSON.stringify(car));
-        temp_car.data.gear = car.properties.gear_ratios.length;
-        temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
-        var wheel_force = calculator.wheel_force(temp_car);
+            var target_rpm = (1 - car.data.throttle ** 3) * (car.properties.idle_rpm)
+                             + (car.data.throttle ** 3) * car.properties.rpm_limiter;
 
 
-        //find and select the gear with the lowest positive difference between wheel force and grade resistance force
-        var smallest_difference = grade_resistance_force + wheel_force;
-        var best_gear = temp_car.data.gear;
-
-        for (let i = 1; i <= car.properties.gear_ratios.length; i++) {
-            temp_car.data.gear = i;
+            //find the gear in which the engine speed is as close as possible to the target
+            let temp_car = JSON.parse(JSON.stringify(car));
+            temp_car.data.shift_progress = 1;
             temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
-            wheel_force = calculator.wheel_force(JSON.parse(JSON.stringify(temp_car)));
-            let difference = grade_resistance_force + wheel_force;
 
-            if (difference >= 0 && Math.abs(difference) < Math.abs(smallest_difference)) {
-                best_gear = i;
-                smallest_difference = difference;
+            var best_gear = car.data.gear;
+            var smallest_difference = Math.abs(target_rpm - temp_car.data.rpm);
+            var gear_hunt_threshold = (car.properties.rpm_limiter - car.properties.idle_rpm) / 6;
+
+            if (smallest_difference > gear_hunt_threshold) {
+                //this section is skipped if the current gear is good enough -> reduction of gear hunting
+                for (let i = 0; i < car.properties.gear_ratios.length; i++) {
+                    let temp_rpm = temp_car.data.rpm * (car.properties.gear_ratios[i]
+                                   / car.properties.gear_ratios[temp_car.data.gear - 1]);
+                    let temp_diff = Math.abs(target_rpm - temp_rpm);
+
+                    if (temp_diff < smallest_difference) {
+                        best_gear = i + 1;
+                        smallest_difference = temp_diff;
+                    }
+                }
+            }
+
+
+            //shift into the gear which is next to the current gear and closer to the best gear
+            if (car.data.gear < best_gear) {
+                temp_car.data.gear = car.data.gear + 1;
+                temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
+
+                if (temp_car.data.rpm > car.properties.idle_rpm) {
+                    car.shift_up();
+                    gear_found = false;
+                }
+            }
+            else if (car.data.gear > best_gear) {
+                temp_car.data.gear = car.data.gear - 1;
+                temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
+
+                if (temp_car.data.rpm <= car.properties.rpm_limiter) {
+                    car.shift_down();
+                    gear_found = false;
+                }
+            }
+
+
+            //shift up or down to prevent the engine from exeeding its operating speeds
+            if (car.data.rpm >= car.properties.rpm_limiter - 1) {
+                car.shift_up();
+            }
+            else if (car.data.rpm < car.properties.idle_rpm) {
+                car.shift_down();
             }
         }
-
-        if (car.data.gear != best_gear) {
-            car.shift_into_gear(best_gear);
-        }
-    }
-
-    else {
-        autoshift_strategy_5_2();
     }
 }
 
 
 
 /*
+Enhancement of shift_strategy_5_1()
 Gear selection based on engine speed
 Maximum acceleration
 */
@@ -104,15 +126,13 @@ function autoshift_strategy_5_2() {
             }
 
 
-            /*
-            if the current gear is not good enough, find the gear in
-            which the engine speed is as close as possible to the target
-            */
+            //find the gear in which the engine speed is as close as possible to the target
             var best_gear = car.data.gear;
             var smallest_difference = Math.abs(target_rpm - temp_car.data.rpm);
             var gear_hunt_threshold = (car.properties.rpm_limiter - car.properties.idle_rpm) / 6;
 
             if (smallest_difference > gear_hunt_threshold) {
+                //this section is skipped if the current gear is good enough -> reduction of gear hunting
                 for (let i = 0; i < car.properties.gear_ratios.length; i++) {
                     let temp_rpm = temp_car.data.rpm * (car.properties.gear_ratios[i] /
                                    car.properties.gear_ratios[temp_car.data.gear - 1]);
@@ -156,77 +176,51 @@ function autoshift_strategy_5_2() {
 
 
 /*
-Gear selection based on engine speed
+Extension of shift_strategy_5_2()
+Use of engine braking on slopes
 */
-function autoshift_strategy_5_1() {
-    if (car.data.shift_progress == 1) {
-        var gear_found = false;
 
-        while (gear_found === false) {
-            gear_found = true;
-
-
-            var target_rpm = (1 - car.data.throttle ** 3) * (car.properties.idle_rpm)
-                             + (car.data.throttle ** 3) * car.properties.rpm_limiter;
+function autoshift_strategy_5_3() {
+    if (car.data.throttle < 0.02 && angle < 0 && car.data.shift_progress == 1) {
+        if (car.data.brake != 0) {
+            return false;
+        }
 
 
-            let temp_car = JSON.parse(JSON.stringify(car));
-            temp_car.data.shift_progress = 1;
+        //calculate the grade resistance force and current wheel force
+        var grade_resistance_force = -1 * Math.sin(angle * Math.PI/180) * 9.81 * car.properties.mass;
+
+        var temp_car = JSON.parse(JSON.stringify(car));
+        temp_car.data.gear = car.properties.gear_ratios.length;
+        temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
+        var wheel_force = calculator.wheel_force(temp_car);
+
+
+        //find the gear with the lowest positive difference between wheel force and grade resistance force
+        var smallest_difference = grade_resistance_force + wheel_force;
+        var best_gear = temp_car.data.gear;
+
+        for (let i = 1; i <= car.properties.gear_ratios.length; i++) {
+            temp_car.data.gear = i;
             temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
+            wheel_force = calculator.wheel_force(JSON.parse(JSON.stringify(temp_car)));
+            let difference = grade_resistance_force + wheel_force;
 
-
-            /*
-            if the current gear is not good enough, find the gear in
-            which the engine speed is as close as possible to the target
-            */
-            var best_gear = car.data.gear;
-            var smallest_difference = Math.abs(target_rpm - temp_car.data.rpm);
-            var gear_hunt_threshold = (car.properties.rpm_limiter - car.properties.idle_rpm) / 6;
-
-            if (smallest_difference > gear_hunt_threshold) {
-                for (let i = 0; i < car.properties.gear_ratios.length; i++) {
-                    let temp_rpm = temp_car.data.rpm * (car.properties.gear_ratios[i]
-                                   / car.properties.gear_ratios[temp_car.data.gear - 1]);
-                    let temp_diff = Math.abs(target_rpm - temp_rpm);
-
-                    if (temp_diff < smallest_difference) {
-                        best_gear = i + 1;
-                        smallest_difference = temp_diff;
-                    }
-                }
-            }
-
-
-            /*
-            shift into the gear which is next to the current gear and closer to the best gear,
-            if it won't cause the engine to spin at unsensible speeds
-            */
-            if (car.data.gear < best_gear) {
-                temp_car.data.gear = car.data.gear + 1;
-                temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
-
-                if (temp_car.data.rpm > car.properties.idle_rpm) {
-                    car.shift_up();
-                    gear_found = false;
-                }
-            }
-            else if (car.data.gear > best_gear) {
-                temp_car.data.gear = car.data.gear - 1;
-                temp_car.data.rpm = calculator.rpm_from_speed(temp_car, temp_car.data.speed);
-
-                if (temp_car.data.rpm <= car.properties.rpm_limiter) {
-                    car.shift_down();
-                    gear_found = false;
-                }
-            }
-
-            if (car.data.rpm >= car.properties.rpm_limiter - 1) {
-                car.shift_up();
-            }
-            else if (car.data.rpm < car.properties.idle_rpm) {
-                car.shift_down();
+            if (difference >= 0 && Math.abs(difference) < Math.abs(smallest_difference)) {
+                best_gear = i;
+                smallest_difference = difference;
             }
         }
+
+
+        //select the appropriate gear, if it is not already selected
+        if (car.data.gear != best_gear) {
+            car.shift_into_gear(best_gear);
+        }
+    }
+
+    else {
+        autoshift_strategy_5_2();
     }
 }
 
@@ -348,6 +342,7 @@ function autoshift_strategy_4() {
                 gear_found = false;
             }
 
+
             //shift up or down to prevent the engine from exeeding its operating speeds
             if (car.data.rpm >= car.properties.rpm_limiter - 1) {
                 car.shift_up();
@@ -430,6 +425,7 @@ function autoshift_strategy_3() {
                 car.shift_down();
                 gear_found = false;
             }
+
 
             //shift up or down to prevent the engine from exeeding its operating speeds
             if (car.data.rpm >= car.properties.rpm_limiter - 1) {
