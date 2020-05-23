@@ -21,7 +21,7 @@ body {
 }
 
 :root {
-	--scale: 1.5;
+	--scale: 2;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -387,5 +387,5 @@ button:active, select:active {
 	height: 30vh;
 	width: 150%;
 	background-color: #567;
-	box-shadow: 0 0 3vw rgba(0,0,0,0.5), 0 5vw 0.3vw rgba(255,255,255,0.3) inset;
+	box-shadow: 0 0 3vw rgba(0,0,0,0.5), 0 calc(var(--scale) * 3vw) 0.3vw rgba(255,255,255,0.3) inset;
 }

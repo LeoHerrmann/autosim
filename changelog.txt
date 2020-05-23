@@ -81,31 +81,24 @@ Removed shift logic 2 due to its poor performance and similarity to shift logic 
 Shift logic 5
 Removed strategy inputs
 
-
 10.04.2020
 Shift logics 2, 3 and 4
-
 
 09.04.2020
 Reduced gear hunting on steeper inclines 
 Introduction of up_down_offset
 
-
 04.03.2020:
 Display and set shift strategy using range input 
-
 
 05.02.2020:
 Lower shift point on low throttle
 
-
 04.02.2020:
 Collapsible additional_info_container
 
-
 03.02.2020:
 Smoother shifting
-
 
 02.02.2020:
 V3
