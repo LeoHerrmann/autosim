@@ -71,6 +71,11 @@ var car = {
         car.data.gear = 1;
         var start_speed = calculator.speed_from_rpm(car, car.properties.idle_rpm);
         car.set_speed(start_speed);
+
+        if (document.getElementById("sync_to_engine_checkbox").checked === true) {
+            stopwatch.reset();
+            stopwatch.toggle();
+        }
     },
 
 

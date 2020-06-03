@@ -8,6 +8,7 @@
 		<script src="car.js"></script>
 		<script src="car_data.js"></script>
 		<script src="shift_strategies.js"></script>
+		<script src="stopwatch.js"></script>
 		<script src="ui.js"></script>
 		<script src="script.js"></script>
 	</head>
@@ -114,7 +115,7 @@
 						</div>
 
 						<div id="car_controls">
-							<button onclick="car.start();">Start</button>
+							<button id="engine_start_button" onclick="car.start();">Start</button>
 
 
 							<div id="shift_button_container">
@@ -156,6 +157,41 @@
 
 						<label for="rolling_resistance_input">Rollwiderstand</label>
 						<input id="rolling_resistance_input" type="checkbox" checked/>
+			        </div>
+				</div>
+
+
+
+				<div id="stopwatch_submenu" class="submenu">
+					<div class="submenu_header">
+						<h2>Stoppuhr</h2>
+						<button>-</button>
+					</div>
+
+			        <div class="submenu_content">
+						<div id="stopwatch_controls_container">
+							<div id="stopwatch_value">00:00:00</div>
+
+
+							<div id="stopwatch_control_buttons_container">
+								<button id="stopwatch_start_button" onclick="stopwatch.toggle();">Start</button>
+								<button onclick="stopwatch.reset();">Reset</button>
+							</div>
+
+							<div>
+								<label for="sync_to_engine_checkbox">Mit Motor starten</label>
+								<input id="sync_to_engine_checkbox" type="checkbox"/>
+							</div>
+						</div>
+
+						<div id="measurements_container">
+							<h3>Messungen</h3>
+
+							<div id="measurement_point_input_container">
+								<input id="measurement_point_input" placeholder="Messpunkt" type="number" size="6"/>
+								<button onclick="stopwatch.add_measurement_point();">+</button>
+							</div>
+						</div>
 			        </div>
 				</div>
 			</div>
