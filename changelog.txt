@@ -1,5 +1,6 @@
 03.06.2020
 Stopwatch
+Visual improvements
 
 20.05.2020
 Improved code readability: added comments, wrapped long lines
