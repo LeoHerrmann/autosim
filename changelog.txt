@@ -1,5 +1,6 @@
 28.06.2020
 Icon
+Fixed measurement_point_input sticking out of its container
 
 03.06.2020
 Stopwatch

@@ -355,6 +355,10 @@ input[type="number"] {
 	grid-gap: var(--space--1);
 }
 
+#measurement_point_input {
+	width: 100%;
+}
+
 
 
 /*simulation container*/
