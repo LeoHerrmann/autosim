@@ -6,6 +6,8 @@ var frame_number = 0;
 var first_frame_date = Date.now();
 var current_frame_rate = 0;
 
+var language = "en";
+
 const sound = true;
 var context = new AudioContext();
 
@@ -94,7 +96,7 @@ var calculator = {
 
 
 
-//setup, execution after all files have been loaded
+//setup; execution after all files have been loaded
 window.onload = function() {
     car.properties = car_data[first_car_index].properties;
 

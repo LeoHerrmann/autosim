@@ -11,6 +11,7 @@
 		<script src="shift_strategies.js"></script>
 		<script src="stopwatch.js"></script>
 		<script src="ui.js"></script>
+		<script src="translator.js"></script>
 		<script src="script.js"></script>
 	</head>
 
@@ -21,7 +22,7 @@
 			<div id="part_one" class="menu_part">
 				<div id="instruments_submenu" class="submenu">
 					<div class="submenu_header">
-						<h2>Instrumente</h2>
+						<h2 data-translation-key="instruments">Instruments</h2>
 						<button>-</button>
 					</div>
 
@@ -56,35 +57,52 @@
 
 				<div id="info_submenu" class="submenu">
 					<div class="submenu_header">
-						<h2>Informationen</h2>
+						<h2 data-translation-key="information">Information</h2>
 						<button>-</button>
 					</div>
 
 					<div id="additional_info_container" class="submenu_content">
-						<span>Geschwindigkeit:</span>
+						<span data-translation-key="velocity:">Velocity:</span>
 						<span id="velocity_label"></span>
-						<span>Motordrehzahl:</span>
+						<span data-translation-key="engine_speed:">Engine speed:</span>
 						<span id="engine_speed_label"></span>
-						<span>Gang:</span>
+						<span data-translation-key="current_gear:">Current gear:</span>
 						<span id="gear_label"></span>
-						<span>Vorheriger Gang:</span>
+						<span data-translation-key="previous_gear:">Previous gear:</span>
 						<span id="previous_gear_label"></span>
-						<span>Schaltfortschritt:</span>
+						<span data-translation-key="shift_progress:">Shift progress:</span>
 						<span id="shift_progress_label"></span>
-						<span>Beschleunigung:</span>
+						<span data-translation-key="acceleration:">Acceleration:</span>
 						<span id="acceleration_label"></span>
-						<span>Motordrehmoment:</span>
+						<span data-translation-key="engine_torque:">Engine torque:</span>
 						<span id="engine_torque_label"></span>
-						<span>Raddrehmoment:</span>
+						<span data-translation-key="wheel_torque:">Wheel torque:</span>
 						<span id="wheel_torque_label"></span>
-						<span>Last:</span>
+						<span data-translation-key="throttle:">Throttle:</span>
 						<span id="load_label"></span>
-						<span>Bremse:</span>
+						<span data-translation-key="brake:">Brake:</span>
 						<span id="brake_label"></span>
-						<span>Steigung:</span>
+						<span data-translation-key="slope:">Slope:</span>
 						<span id="slope_label"></span>
-						<span>Bildrate:</span>
+						<span data-translation-key="frame_rate:">Frame rate:</span>
 						<span id="frame_rate_label"></span>
+					</div>
+				</div>
+
+
+
+				<div id="info_submenu" class="submenu">
+					<div class="submenu_header">
+						<h2 data-translation-key="language">Language</h2>
+						<button>-</button>
+					</div>
+
+					<div id="additional_info_container" class="submenu_content">
+						<input id="language_radio_english" type="radio" name="language_input" value="en" checked/>
+						<label for="language_radio_english" data-translation-key="english">English</label>
+
+						<input id="language_radio_german" type="radio" name="language_input" value="de"/>
+						<label for="language_radio_german" data-translation-key="german">German</label>
 					</div>
 				</div>
 			</div>
@@ -93,30 +111,30 @@
 			<div id="part_two" class="menu_part">
 				<div id="car_submenu" class="submenu">
 					<div class="submenu_header">
-						<h2>Fahrzeug</h2>
+						<h2 data-translation-key="vehicle">Vehicle</h2>
 						<button>-</button>
 					</div>
 
 
 					<div class="submenu_content">
 						<div id="selects_container">
-							<label for="car_select">Fahrzeug: </label>
+							<label for="car_select" data-translation-key="vehicle">Vehicle</label>
 							<select id="car_select"></select>
 
 
-							<label for="strategy_select">Strategie: </label>
+							<label for="strategy_select" data-translation-key="strategy">Strategy</label>
 							<select id="strategy_select">
-								<option value="0">Manuell</option>
-								<option value="r1">Drehzahl 1 (Grundlage)</option>
-								<option value="r2">Drehzahl 2 (bessere Beschleunigung)</option>
-								<option value="r3" selected="selected">Drehzahl 3 (mit Motorbremse bergab)</option>
-								<option value="g1">Übersetzung</option>
-								<option value="a1">Beschleunigung</option>
+								<option value="0" data-translation-key="manual">Manual</option>
+								<option value="r1" data-translation-key="engine_speed_1">Engine speed 1 (foundation)</option>
+								<option value="r2" data-translation-key="engine_speed_2">Engine speed 2 (improved acceleration)</option>
+								<option value="r3" selected="selected" data-translation-key="engine_speed_3">Engine speed 3 (automatic engine braking)</option>
+								<option value="g1" data-translation-key="gearing">Gearing</option>
+								<option value="a1" data-translation-key="acceleration">Acceleration</option>
 							</select>
 						</div>
 
 						<div id="car_controls">
-							<button id="engine_start_button" onclick="car.start();">Start</button>
+							<button id="engine_start_button" onclick="car.start();" data-translation-key="engine_start">Start engine</button>
 
 
 							<div id="shift_button_container">
@@ -128,13 +146,13 @@
 							<div id="pedals_container">
 								<div class="input_set">
 									<input id="brake_input" type="range" min="0" max="100" value="0" orient="vertical"/>
-									<label for="brake_input">Bremse</label>
+									<label for="brake_input" data-translation-key="brake">Brake</label>
 								</div>
 
 
 								<div class="input_set">
 									<input id="throttle_input" type="range" min="1" max="100" value="0" orient="vertical"/>
-									<label for="throttle_input">Gas</label>
+									<label for="throttle_input" data-translation-key="throttle">Throttle</label>
 								</div>
 							</div>
 						</div>
@@ -145,18 +163,18 @@
 
 				<div id="resistances_submenu" class="submenu">
 					<div class="submenu_header">
-						<h2>Fahrwiderstände</h2>
+						<h2 data-translation-key="driving_resistances">Driving resistances</h2>
 						<button>-</button>
 					</div>
 
 			        <div class="submenu_content">
-						<label for="angle_input">Steigung</label>
+						<label for="angle_input" data-translation-key="slope">Steigung</label>
 						<input id="angle_input" type="range" min="-26" max="26" step="2" value="0"/>
 
-						<label for="air_resistance_input">Luftwiderstand</label>
+						<label for="air_resistance_input" data-translation-key="air_resistance">Air resistance</label>
 						<input id="air_resistance_input" type="checkbox" checked/>
 
-						<label for="rolling_resistance_input">Rollwiderstand</label>
+						<label for="rolling_resistance_input" data-translation-key="rolling_resistance">Rolling resistance</label>
 						<input id="rolling_resistance_input" type="checkbox" checked/>
 			        </div>
 				</div>
@@ -165,7 +183,7 @@
 
 				<div id="stopwatch_submenu" class="submenu">
 					<div class="submenu_header">
-						<h2>Stoppuhr</h2>
+						<h2 data-translation-key="stopwatch">Stopwatch</h2>
 						<button>-</button>
 					</div>
 
@@ -175,21 +193,21 @@
 
 
 							<div id="stopwatch_control_buttons_container">
-								<button id="stopwatch_start_button" onclick="stopwatch.toggle();">Start</button>
-								<button onclick="stopwatch.reset();">Reset</button>
+								<button id="stopwatch_start_button" onclick="stopwatch.toggle();" data-translation-key="start">Start</button>
+								<button onclick="stopwatch.reset();" data-translation-key="reset">Reset</button>
 							</div>
 
 							<div>
-								<label for="sync_to_engine_checkbox">Mit Motor starten</label>
+								<label for="sync_to_engine_checkbox" data-translation-key="start_with_engine">Start with engine</label>
 								<input id="sync_to_engine_checkbox" type="checkbox"/>
 							</div>
 						</div>
 
 						<div id="measurements_container">
-							<h3>Messungen</h3>
+							<h3 data-translation-key="measurements">measurements</h3>
 
 							<div id="measurement_point_input_container">
-								<input id="measurement_point_input" placeholder="Messpunkt" type="number"/>
+								<input id="measurement_point_input" placeholder="New value" type="number"/>
 								<button onclick="stopwatch.add_measurement_point();">+</button>
 							</div>
 						</div>
