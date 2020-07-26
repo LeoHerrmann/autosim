@@ -1,5 +1,6 @@
 26.07.2020
 Multilingual support
+Visual improvements
 
 28.06.2020
 Icon
