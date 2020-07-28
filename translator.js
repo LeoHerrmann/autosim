@@ -65,6 +65,10 @@ const translator = {
             "en": "Engine speed:", "de": "Motordrehzahl:"
         },
 
+        "rpm": {
+            "en": "rpm", "de": "U/min"
+        },
+
         "current_gear:": {
             "en": "Current gear:", "de": "Aktueller Gang:"
         },

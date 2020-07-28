@@ -63,29 +63,74 @@
 
 					<div id="additional_info_container" class="submenu_content">
 						<span data-translation-key="velocity:">Velocity:</span>
-						<span id="velocity_label"></span>
+						<div>
+							<span id="velocity_label"></span>
+							<span>km/h</span>
+						</div>
+
 						<span data-translation-key="engine_speed:">Engine speed:</span>
-						<span id="engine_speed_label"></span>
+						<div>
+							<span id="engine_speed_label"></span>
+							<span data-translation-key="rpm">rpm</span>
+						</div>
+
 						<span data-translation-key="current_gear:">Current gear:</span>
-						<span id="gear_label"></span>
+						<div>
+							<span id="gear_label"></span>
+						</div>
+
 						<span data-translation-key="previous_gear:">Previous gear:</span>
-						<span id="previous_gear_label"></span>
+						<div>
+							<span id="previous_gear_label"></span>
+						</div>
+
 						<span data-translation-key="shift_progress:">Shift progress:</span>
-						<span id="shift_progress_label"></span>
+						<div>
+							<span id="shift_progress_label"></span>
+							<span>%</span>
+						</div>
+
 						<span data-translation-key="acceleration:">Acceleration:</span>
-						<span id="acceleration_label"></span>
+						<div>
+							<span id="acceleration_label"></span>
+							<span>m/s²</span>
+						</div>
+
 						<span data-translation-key="engine_torque:">Engine torque:</span>
-						<span id="engine_torque_label"></span>
+						<div>
+							<span id="engine_torque_label"></span>
+							<span>Nm</span>
+						</div>
+
 						<span data-translation-key="wheel_torque:">Wheel torque:</span>
-						<span id="wheel_torque_label"></span>
+						<div>
+							<span id="wheel_torque_label"></span>
+							<span>Nm</span>
+						</div>
+
 						<span data-translation-key="throttle:">Throttle:</span>
+						<div>
 						<span id="load_label"></span>
+						<span>%</span>
+						</div>
+
 						<span data-translation-key="brake:">Brake:</span>
-						<span id="brake_label"></span>
+						<div>
+							<span id="brake_label"></span>
+							<span>%</span>
+						</div>
+
 						<span data-translation-key="slope:">Slope:</span>
-						<span id="slope_label"></span>
+						<div>
+							<span id="slope_label"></span>
+							<span> %</span>
+						</div>
+
 						<span data-translation-key="frame_rate:">Frame rate:</span>
-						<span id="frame_rate_label"></span>
+						<div>
+							<span id="frame_rate_label"></span>
+							<span> FPS</span>
+						</div>
 					</div>
 				</div>
 
@@ -169,7 +214,7 @@
 
 			        <div class="submenu_content">
 						<label for="angle_input" data-translation-key="slope">Steigung</label>
-						<input id="angle_input" type="range" min="-26" max="26" step="2" value="0"/>
+						<input id="angle_input" type="range" min="-22" max="22" step="2" value="0"/>
 
 						<label for="air_resistance_input" data-translation-key="air_resistance">Air resistance</label>
 						<input id="air_resistance_input" type="checkbox" checked/>
