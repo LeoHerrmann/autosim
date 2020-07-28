@@ -2,7 +2,7 @@
 
 A motor vehicle simulator designed to develop shift strategies for automatic transmissions
 
-This project is a fundamental part of my term paper "Controlling and Simulating Automatic Transmissions in Motor Vehicles".
+This project is a fundamental part of my term paper ["Controlling and Simulating Automatic Transmissions in Motor Vehicles"]().
 
 
 
@@ -27,7 +27,9 @@ This project is a fundamental part of my term paper "Controlling and Simulating 
 
 ## How it works
 
-This is just a brief explanation covering the most important aspects of this project. More information can be found in my term paper, which is unfortunately only available in German for now, or by having a closer look at the source code. The primary processes of this application, such as the powertrain simulation, shift strategies or visualization, are coordinated by the main function, which is executed in a fixed time interval (default: 60 times per second) and can be found in script.js.
+This is just a brief explanation covering the most important aspects of this project. More information can be found in my [term paper](), which is unfortunately only available in German for now, or by having a closer look at the source code.
+
+The primary processes of this application, such as the powertrain simulation, shift strategies or visualization, are coordinated by the main function, which is executed in a fixed time interval (default: 60 times per second) and can be found in script.js.
 
 
 
@@ -41,7 +43,7 @@ The root of the powertrain of a motor vehicle is its engine. In the simulation, 
 
 Shift strategies are responsible for choosing the transmission gear which is best suited for the current driving situation. They should keep the engine in an efficient operating speed on low loads, while allowing for quick acceleration on high loads. Furthermore, shift strategies need to be predictable and reliable for the driver.
 
-The general working principle of the shift strategies I developed is quite simple: calculate a target depending on the throttle position and choose the gear which allows reaching the target as closely as possible. I have experimented with three different types of targets: engine speed, gearing and acceleration. Each of these approaches have been optimized regarding fuel economy, acceleration and predictability and it seems as if the engine speed based one performs the best, although admittedly, it is also the one most of the work has been put into.
+The general working principle of the shift strategies I developed is quite simple: calculate a target depending on the throttle position and choose the gear which allows reaching the target as closely as possible. I have experimented with three different types of targets: engine speed, gearing and acceleration. Each of these approaches have been optimized regarding fuel economy, acceleration and predictability and it seems as if the engine speed based approach performs the best, although admittedly, it is also the one most of the work has been put into.
 
 
 
