@@ -8,7 +8,7 @@ This project is a fundamental part of my term paper ["Controlling and Simulating
 
 ## Screenshot
 
-![Screenshot]()
+![Screenshot](https://user-images.githubusercontent.com/53840228/88667650-f5e70b00-d0e1-11ea-889e-b9e739428472.png)
 
 
 
@@ -49,7 +49,7 @@ The general working principle of the shift strategies I developed is quite simpl
 
 ## Installation
 
-Being a web application, there is no special installation procedure required. The project can either be run online by clicking [here]() or locally by cloning the repository and opening index.html using a web browser.
+Being a web application, there is no special installation procedure required. The project can either be run online by clicking [here](https://rahmsauce.github.io/Autosim/index.html) or locally by cloning the repository and opening index.html using a web browser.
 
 
 
