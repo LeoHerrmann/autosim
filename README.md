@@ -61,4 +61,4 @@ If you have any ideas or questions concerning this project, feel free to create 
 
 ## License
 
-This project is licensed under the terms of the [GNU General Public License v3.0](). 
+This project is licensed under the terms of the [GNU General Public License v3.0](https://github.com/Rahmsauce/Autosim/blob/master/LICENSE.txt). 
