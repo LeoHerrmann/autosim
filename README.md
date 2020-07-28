@@ -2,7 +2,7 @@
 
 A motor vehicle simulator designed to develop shift strategies for automatic transmissions
 
-This project is a fundamental part of my term paper ["Controlling and Simulating Automatic Transmissions in Motor Vehicles"]().
+This project is a fundamental part of my term paper ["Controlling and Simulating Automatic Transmissions in Motor Vehicles"](https://github.com/Rahmsauce/Autosim/blob/master/simulation_und_steuerung_von_automatikgetrieben.pdf).
 
 
 
@@ -27,7 +27,7 @@ This project is a fundamental part of my term paper ["Controlling and Simulating
 
 ## How it works
 
-This is just a brief explanation covering the most important aspects of this project. More information can be found in my [term paper](), which is unfortunately only available in German for now, or by having a closer look at the source code.
+This is just a brief explanation covering the most important aspects of this project. More information can be found in my [term paper](https://github.com/Rahmsauce/Autosim/blob/master/simulation_und_steuerung_von_automatikgetrieben.pdf), which is unfortunately only available in German for now, or by having a closer look at the source code.
 
 The primary processes of this application, such as the powertrain simulation, shift strategies or visualization, are coordinated by the main function, which is executed in a fixed time interval (default: 60 times per second) and can be found in script.js.
 
